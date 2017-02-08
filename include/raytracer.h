@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Sun Feb  5 14:37:35 2017 Nicolas Polomack
-** Last update Tue Feb  7 23:30:57 2017 Nicolas Polomack
+** Last update Wed Feb  8 01:51:21 2017 Nicolas Polomack
 */
 
 #ifndef RAYTRACER_H_
@@ -43,8 +43,8 @@ typedef struct	s_params
 /*
 ** calc.c
 */
-void		sub_coords(t_params *, t_obj);
-void		add_coords(t_params *, t_obj);
+void		sub_coords(t_params *, t_obj *);
+void		add_coords(t_params *, t_obj *);
 void		render_frame(t_my_framebuffer *, t_params *);
 
 /*
@@ -58,8 +58,8 @@ float           get_cos_angle_o(float, t_params *, float, int);
 /*
 ** lights.c
 */
-void		sub_coords_vect(sfVector3f *, t_obj);
-void		add_coords_vect(sfVector3f *, t_obj);
+void		sub_coords_vect(sfVector3f *, t_obj *);
+void		add_coords_vect(sfVector3f *, t_obj *);
 float		intersect_light(float, t_params *, int);
 sfColor		set_luminosity(float, sfColor);
 

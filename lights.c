@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Tue Feb  7 00:16:08 2017 Nicolas Polomack
-** Last update Tue Feb  7 23:17:48 2017 Nicolas Polomack
+** Last update Wed Feb  8 01:51:08 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -13,18 +13,18 @@
 #include "raytracer.h"
 #include "sfcaster.h"
 
-void	sub_coords_vect(sfVector3f *imp, t_obj obj)
+void	sub_coords_vect(sfVector3f *imp, t_obj *obj)
 {
-  imp->x -= obj.pos.x;
-  imp->y -= obj.pos.y;
-  imp->z -= obj.pos.z;
+  imp->x -= obj->pos.x;
+  imp->y -= obj->pos.y;
+  imp->z -= obj->pos.z;
 }
 
-void	add_coords_vect(sfVector3f *imp, t_obj obj)
+void	add_coords_vect(sfVector3f *imp, t_obj *obj)
 {
-  imp->x += obj.pos.x;
-  imp->y += obj.pos.y;
-  imp->z += obj.pos.z;
+  imp->x += obj->pos.x;
+  imp->y += obj->pos.y;
+  imp->z += obj->pos.z;
 }
 
 float		check_distance(t_params *params, sfVector3f *imp,
@@ -32,7 +32,7 @@ float		check_distance(t_params *params, sfVector3f *imp,
 {
   float		d;
 
-  sub_coords_vect(imp, params->objs[n]);
+  sub_coords_vect(imp, &(params->objs[n]));
   d = (params->objs[n].type == 's') ?
     intersect_sphere(*imp, *dir, params->objs[n].rad) :
     (params->objs[n].type == 'p') ? intersect_plane(*imp, *dir) :
@@ -41,7 +41,7 @@ float		check_distance(t_params *params, sfVector3f *imp,
     (params->objs[n].type == 'o') ?
     intersect_cone(*imp, *dir, params->objs[n]) :
     2;
-  add_coords_vect(imp, params->objs[n]);
+  add_coords_vect(imp, &(params->objs[n]));
   return (d);
 }
 

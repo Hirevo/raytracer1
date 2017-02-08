@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Tue Feb  7 23:10:06 2017 Nicolas Polomack
-** Last update Tue Feb  7 23:21:42 2017 Nicolas Polomack
+** Last update Wed Feb  8 01:48:50 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
@@ -13,25 +13,25 @@
 #include "sfcaster.h"
 #include "raytracer.h"
 
-void	sub_coords(t_params *params, t_obj obj)
+void	sub_coords(t_params *params, t_obj *obj)
 {
-  params->ray.orig.x -= obj.pos.x;
-  params->ray.orig.y -= obj.pos.y;
-  params->ray.orig.z -= obj.pos.z;
+  params->ray.orig.x -= obj->pos.x;
+  params->ray.orig.y -= obj->pos.y;
+  params->ray.orig.z -= obj->pos.z;
 }
 
-void	add_coords(t_params *params, t_obj obj)
+void	add_coords(t_params *params, t_obj *obj)
 {
-  params->ray.orig.x += obj.pos.x;
-  params->ray.orig.y += obj.pos.y;
-  params->ray.orig.z += obj.pos.z;
+  params->ray.orig.x += obj->pos.x;
+  params->ray.orig.y += obj->pos.y;
+  params->ray.orig.z += obj->pos.z;
 }
 
 float	gather_distances(t_params *params, int i)
 {
   float	f;
 
-  sub_coords(params, params->objs[i]);
+  sub_coords(params, &(params->objs[i]));
   f = ((params->objs[i].type == 's') ?
        intersect_sphere(params->ray.orig, params->ray.dir,
                         params->objs[i].rad) :
@@ -44,7 +44,7 @@ float	gather_distances(t_params *params, int i)
           intersect_cone(params->ray.orig, params->ray.dir,
                          params->objs[i]) :
           FLT_MAX))));
-  add_coords(params, params->objs[i]);
+  add_coords(params, &(params->objs[i]));
   return (f);
 }
 
