@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Tue Feb  7 23:10:06 2017 Nicolas Polomack
-** Last update Wed Feb  8 01:48:50 2017 Nicolas Polomack
+** Last update Wed Feb  8 17:11:54 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
@@ -40,7 +40,7 @@ float	gather_distances(t_params *params, int i)
         ((params->objs[i].type == 'c') ?
          intersect_cyl(params->ray.orig, params->ray.dir,
                        params->objs[i]) :
-         ((params->objs[i].type == 'o') ?
+         ((params->objs[i].type == 'o' || params->objs[i].type == 'x') ?
           intersect_cone(params->ray.orig, params->ray.dir,
                          params->objs[i]) :
           FLT_MAX))));

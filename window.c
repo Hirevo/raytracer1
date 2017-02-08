@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 14:08:22 2017 Nicolas Polomack
-** Last update Tue Feb  7 23:15:42 2017 Nicolas Polomack
+** Last update Wed Feb  8 18:55:45 2017 Nicolas Polomack
 */
 
 #include <SFML/Graphics.h>
@@ -40,7 +40,7 @@ sfColor		evaluate_luminosity(float *dist, t_params *params,
 		       get_cos_angle_p(dist[i], params, i) :
 		       (params->objs[i].type == 'c') ?
 		       get_cos_angle_c(dist[i], params, i) :
-		       (params->objs[i].type == 'o') ?
+		       (params->objs[i].type == 'o' || params->objs[i].type == 'x') ?
 		       get_cos_angle_o(dist[i], params,
 				       params->objs[i].aper, i) : 1,
 		       col);
@@ -77,8 +77,8 @@ sfColor		color_stuff(float *dist, t_params *params)
 
 void	init(t_params *params)
 {
-  params->ray.orig.x = -200;
-  params->ray.orig.y = 0;
+  params->ray.orig.x = -500;
+  params->ray.orig.y = -40;
   params->ray.orig.z = 40;
   params->ray.dir.x = 0;
   params->ray.dir.y = 0;
@@ -86,9 +86,9 @@ void	init(t_params *params)
   params->screen_size.x = 1280;
   params->screen_size.y = 720;
   params->light.x = -200;
-  params->light.y = 0;
-  params->light.z = 100;
-  params->nb_obj = 5;
+  params->light.y = -40;
+  params->light.z = 50;
+  params->nb_obj = 6;
   params->objs = malloc(sizeof(t_obj) * params->nb_obj);
   params->objs[0].type = 's';
   params->objs[0].pos.x = 0;
@@ -102,8 +102,8 @@ void	init(t_params *params)
   params->objs[1].pos.z = -25;
   params->objs[1].col = sfWhite;
   params->objs[2].type = 's';
-  params->objs[2].pos.x = 0;
-  params->objs[2].pos.y = 10;
+  params->objs[2].pos.x = -120;
+  params->objs[2].pos.y = -120;
   params->objs[2].pos.z = 100;
   params->objs[2].rad = 25;
   params->objs[2].col = BLUE;
@@ -116,9 +116,15 @@ void	init(t_params *params)
   params->objs[4].type = 'o';
   params->objs[4].pos.x = -50;
   params->objs[4].pos.y = 75;
-  params->objs[4].pos.z = 30;
+  params->objs[4].pos.z = 50;
   params->objs[4].aper = 25;
   params->objs[4].col = GREEN;
+  params->objs[5].type = 'x';
+  params->objs[5].pos.x = 0;
+  params->objs[5].pos.y = -170;
+  params->objs[5].pos.z = 50;
+  params->objs[5].aper = 25;
+  params->objs[5].col = GREEN;
 }
 
 int			main(int ac, char **av)
@@ -129,16 +135,20 @@ int			main(int ac, char **av)
   sfEvent		event;
   t_my_framebuffer	*buffer;
   t_params		params;
+  sfClock		*clock;
 
   buffer = assemble_texture(&texture, &sprite, 1280, 720);
-  create_window(&window, "Bootstrap Raytracer");
+  create_window(&window, "Raytracer1");
   init(&params);
+  clock = sfClock_create();
   render_frame(buffer, &params);
   sfTexture_updateFromPixels(texture, buffer->pixels,
 			     buffer->width, buffer->height, 0, 0);
   while (sfRenderWindow_isOpen(window))
     {
+      sfClock_restart(clock);
       render_frame(buffer, &params);
+      printf("time taken: %hd\n", sfTime_asMilliseconds(sfClock_restart(clock)));
       sfTexture_updateFromPixels(texture, buffer->pixels,
 				 buffer->width, buffer->height, 0, 0);
       sfRenderWindow_drawSprite(window, sprite, NULL);

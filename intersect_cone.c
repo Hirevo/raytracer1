@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 23:30:22 2017 Nicolas Polomack
-** Last update Tue Feb  7 22:23:54 2017 Nicolas Polomack
+** Last update Wed Feb  8 17:08:47 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -62,7 +62,11 @@ float		intersect_cone(sfVector3f eye_pos, sfVector3f dir_vector,
       {
 	root[0] = (-b - sqrtf(delta)) / (2 * a);
 	root[1] = (-b + sqrtf(delta)) / (2 * a);
-	return (get_value(root));
+	root[1] = get_value(root);
+	if (root[1] == -1 ||
+	    ((eye_pos.z + dir_vector.z * root[1]) > 0 && obj.type == 'o'))
+	  return (-1);
+	return (root[1]);
       }
     else
       return (-b / (2 * a));

@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Tue Feb  7 00:16:08 2017 Nicolas Polomack
-** Last update Wed Feb  8 01:51:08 2017 Nicolas Polomack
+** Last update Wed Feb  8 17:12:11 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -38,7 +38,7 @@ float		check_distance(t_params *params, sfVector3f *imp,
     (params->objs[n].type == 'p') ? intersect_plane(*imp, *dir) :
     (params->objs[n].type == 'c') ?
     intersect_cyl(*imp, *dir, params->objs[n]) :
-    (params->objs[n].type == 'o') ?
+    (params->objs[n].type == 'o' || params->objs[n].type == 'x') ?
     intersect_cone(*imp, *dir, params->objs[n]) :
     2;
   add_coords_vect(imp, &(params->objs[n]));
