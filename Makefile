@@ -5,7 +5,7 @@
 ## Login   <nicolas.polomack@epitech.eu>
 ##
 ## Started on  Tue Nov 15 09:05:43 2016 Nicolas Polomack
-## Last update Thu Feb  9 03:31:11 2017 Nicolas Polomack
+## Last update Thu Feb  9 21:57:33 2017 Nicolas Polomack
 ##
 
 MAKE2	=	make --no-print-directory -C lib/my
@@ -17,9 +17,12 @@ SRC	=	window.c		\
 		events.c		\
 		angles.c		\
 		lights.c		\
+		multi_lights.c		\
 		parse.c			\
 		check.c			\
 		util.c			\
+		rotation.c		\
+		anti_rotation.c		\
 		intersect_sphere.c	\
 		intersect_cyl.c		\
 		intersect_cone.c	\
@@ -33,7 +36,7 @@ OBJ	=	$(SRC:.c=.o)
 
 FLAGS	=	-lm -Llib/my -lmy -Llib/mycsfml -lmycsfml -lc_graph_prog $(CFLAGS) -ansi
 
-CFLAGS	=	-Iinclude -Ofast -march=native -W -Wall -Wextra -Werror -pedantic -g
+CFLAGS	=	-Iinclude -Ofast -march=native -W -Wall -Wextra -Werror -pedantic
 
 NAME	=	raytracer
 

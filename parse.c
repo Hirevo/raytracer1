@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Wed Feb  8 23:10:21 2017 Nicolas Polomack
-** Last update Thu Feb  9 02:38:44 2017 Nicolas Polomack
+** Last update Thu Feb  9 21:54:47 2017 Nicolas Polomack
 */
 
 #include <fcntl.h>
@@ -24,14 +24,15 @@ void	parse_eye(char *line, t_params *params, int *idxs)
   params->ray.rx = get_number(line + idxs[3]);
   params->ray.ry = get_number(line + idxs[4]);
   params->ray.rz = get_number(line + idxs[5]);
+  params->fov = get_number(line + idxs[6]);
 }
 
-void	parse_light(char *line, t_params *params, int *idxs)
+void	parse_light(char *line, t_params *params, int l, int *idxs)
 {
-  params->light.x = get_number(line + idxs[0]);
-  params->light.y = get_number(line + idxs[1]);
-  params->light.z = get_number(line + idxs[2]);
-  params->ambient = ((float)get_number(line + idxs[3])) / 1000.0F;
+  params->light[l].pos.x = get_number(line + idxs[0]);
+  params->light[l].pos.y = get_number(line + idxs[1]);
+  params->light[l].pos.z = get_number(line + idxs[2]);
+  params->light[l].ambient = ((float)get_number(line + idxs[3])) / 1000.0F;
 }
 
 void	parse_object(char *line, t_params *params, int obj, int *idxs)
@@ -53,7 +54,7 @@ void	parse_object(char *line, t_params *params, int obj, int *idxs)
     params->objs[obj].rad = get_number(line + idxs[9]);
 }
 
-void	parse_line(char *line, t_params *params, int *objs)
+void	parse_line(char *line, t_params *params, int *lights, int *objs)
 {
   int	idxs[10];
 
@@ -61,7 +62,10 @@ void	parse_line(char *line, t_params *params, int *objs)
   if (line[0] == 'e')
     parse_eye(line, params, idxs);
   else if (line[0] == 'l')
-    parse_light(line, params, idxs);
+    {
+      parse_light(line, params, *lights, idxs);
+      *lights += 1;
+    }
   else
     {
       parse_object(line, params, *objs, idxs);
@@ -79,17 +83,16 @@ int	parse_config_file(char *file, t_params *params)
 
   eyes = 0;
   lights = 0;
-  if ((objs = get_nbr_objs(file)) == -1 || objs < 2 ||
-      (fd = open(file, O_RDONLY)) == -1)
+  if ((objs = get_nbr_objs(file, &lights)) == -1 || objs < 2 ||
+      (fd = open(file, O_RDONLY)) == -1 ||
+      alloc_all(params, objs, lights) == -1)
     return (-1);
-  if (objs && (params->objs = malloc(sizeof(t_obj) * (objs - 2))) == NULL)
-    return (-1);
-  params->nb_obj = objs - 2;
   objs = 0;
+  lights = 0;
   while ((line = get_next_line(fd)))
     {
-      if (is_valid_line(line, &lights, &eyes))
-	parse_line(line, params, &objs);
+      if (is_valid_line(line, &eyes))
+	parse_line(line, params, &lights, &objs);
       else
 	return (-1);
       free(line);

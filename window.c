@@ -5,22 +5,23 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 14:08:22 2017 Nicolas Polomack
-** Last update Thu Feb  9 03:41:38 2017 Nicolas Polomack
+** Last update Thu Feb  9 22:00:52 2017 Nicolas Polomack
 */
 
 #include <SFML/Graphics.h>
 #include <SFML/Config.h>
 #include <float.h>
 #include <math.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 #include "sfcaster.h"
 #include "raytracer.h"
 #include "bmp.h"
 
-int	create_window(sfRenderWindow **w, char *name)
+int		create_window(sfRenderWindow **w, char *name)
 {
-  sfVideoMode   mode;
+  sfVideoMode	mode;
 
   mode.width = WIDTH;
   mode.height = HEIGHT;
@@ -32,18 +33,19 @@ int	create_window(sfRenderWindow **w, char *name)
 }
 
 sfColor		evaluate_luminosity(float *dist, t_params *params,
-				    sfColor col, int i)
+				    sfColor col, sfVector2i idxs)
 {
-  col = set_luminosity((params->objs[i].type == 's') ?
-		       get_cos_angle_s(dist[i], params, i) :
-		       (params->objs[i].type == 'p') ?
-		       get_cos_angle_p(dist[i], params, i) :
-		       (params->objs[i].type == 'c') ?
-		       get_cos_angle_c(dist[i], params, i) :
-		       (params->objs[i].type == 'o' || params->objs[i].type == 'x') ?
-		       get_cos_angle_o(dist[i], params,
-				       params->objs[i].aper, i) : 1,
-		       col, params->ambient);
+  col = set_luminosity((params->objs[idxs.x].type == 's') ?
+		       get_cos_angle_s(dist[idxs.x], params, idxs) :
+		       (params->objs[idxs.x].type == 'p') ?
+		       get_cos_angle_p(dist[idxs.x], params, idxs) :
+		       (params->objs[idxs.x].type == 'c') ?
+		       get_cos_angle_c(dist[idxs.x], params, idxs) :
+		       (params->objs[idxs.x].type == 'o' ||
+			params->objs[idxs.x].type == 'x') ?
+		       get_cos_angle_o(dist[idxs.x], params,
+				       params->objs[idxs.x].aper, idxs) : 1,
+		       col, params->light[idxs.y].ambient);
   return (col);
 }
 
@@ -62,16 +64,11 @@ sfColor		color_stuff(float *dist, t_params *params)
   while (++i < params->nb_obj)
     if (dist[i] == record)
       {
-	col = intersect_light(dist[i], params, i) ?
-	  params->objs[i].col : sfBlack;
-	if (col.r || col.g || col.b)
-	  {
-	    col = evaluate_luminosity(dist, params, col, i);
-	  }
-	break;
+	col = seek_lights(dist, params, i);
+        break;
       }
   if ((!col.r && !col.g && !col.b))
-    col = set_luminosity(0.0F, params->objs[i].col, params->ambient);
+    col = sfBlack;
   if (i == params->nb_obj)
     col = sfBlack;
   return (col);
@@ -92,20 +89,20 @@ int	init(t_params *params)
 int			main(int ac, char **av)
 {
   t_window		w;
-  //sfEvent		event;
+  sfEvent		event;
   t_params		params;
 
   if (ac != 2)
     return (84);
-  if ((w.buffer = my_framebuffer_create(WIDTH, HEIGHT)) ==//assemble_texture(&w.texture, &w.sprite, WIDTH, HEIGHT)) ==
-      NULL || //create_window(&w.window, "Raytracer1") == -1 ||
+  if ((w.buffer = assemble_texture(&w.texture, &w.sprite, WIDTH, HEIGHT)) ==
+      NULL || create_window(&w.window, "Raytracer1") == -1 ||
       parse_config_file(av[1], &params) == -1 || init(&params) == -1)
     return (84);
   render_frame(&w, &params);
-  //sfRenderWindow_drawSprite(w.window, w.sprite, NULL);
-  //sfRenderWindow_display(w.window);
-  //while (sfRenderWindow_isOpen(w.window))
-  //handle_events(w.window, &event, &params);
+  sfRenderWindow_drawSprite(w.window, w.sprite, NULL);
+  sfRenderWindow_display(w.window);
+  while (sfRenderWindow_isOpen(w.window))
+    handle_events(w.window, &event, &params);
   save_bmp(w.buffer, "capture.bmp");
   return (0);
 }

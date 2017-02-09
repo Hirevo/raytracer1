@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Sun Feb  5 14:37:35 2017 Nicolas Polomack
-** Last update Thu Feb  9 08:51:46 2017 Nicolas Polomack
+** Last update Thu Feb  9 22:01:58 2017 Nicolas Polomack
 */
 
 #ifndef RAYTRACER_H_
@@ -14,8 +14,8 @@
 # include <SFML/Graphics.h>
 # include "sfcaster.h"
 
-# define WIDTH 1280//15360
-# define HEIGHT 720//8640
+# define WIDTH 1280
+# define HEIGHT 720
 
 typedef struct	s_ray
 {
@@ -25,6 +25,13 @@ typedef struct	s_ray
   float		ry;
   float		rz;
 }		t_ray;
+
+typedef struct	s_light
+{
+  sfVector3f	pos;
+  sfColor	col;
+  float		ambient;
+}		t_light;
 
 typedef struct	s_obj
 {
@@ -42,12 +49,13 @@ typedef struct	s_params
 {
   sfVector2i	screen_size;
   sfVector2i	screen_pos;
-  sfVector3f	light;
+  t_light	*light;
+  int		nb_lights;
   int		nb_obj;
   t_ray		ray;
   t_obj		*objs;
-  float		ambient;
   float		*dist;
+  int		fov;
 }		t_params;
 
 typedef struct		s_window
@@ -68,22 +76,30 @@ void		render_frame(t_window *, t_params *);
 /*
 ** angles.c
 */
-float		get_cos_angle_s(float, t_params *, int);
-float		get_cos_angle_p(float, t_params *, int);
-float           get_cos_angle_c(float, t_params *, int);
-float           get_cos_angle_o(float, t_params *, float, int);
+float		get_cos_angle_s(float, t_params *, sfVector2i);
+float		get_cos_angle_p(float, t_params *, sfVector2i);
+float           get_cos_angle_c(float, t_params *, sfVector2i);
+float           get_cos_angle_o(float, t_params *, float, sfVector2i);
 
 /*
 ** lights.c
 */
-void		sub_coords_vect(sfVector3f *, t_obj *);
-void		add_coords_vect(sfVector3f *, t_obj *);
-float		intersect_light(float, t_params *, int);
+void		sub_coords_vect(sfVector3f *, sfVector3f *, t_obj *);
+void		add_coords_vect(sfVector3f *, sfVector3f *, t_obj *);
+float		intersect_light(float, t_params *, sfVector2i);
 sfColor		set_luminosity(float, sfColor, float);
+
+/*
+** multi_lights.c
+*/
+sfColor	average_color(sfColor *, int);
+sfColor	seek_lights(float *, t_params *, int);
 
 /*
 ** window.c
 */
+sfColor		evaluate_luminosity(float *, t_params *,
+				    sfColor, sfVector2i);
 sfColor		color_stuff(float *, t_params *);
 
 /*
@@ -94,20 +110,31 @@ int	parse_config_file(char *, t_params *);
 /*
 ** check.c
 */
-int	is_valid_line(char *, int *, int *);
+int	is_valid_line(char *, int *);
 void	gather_idxs(char *, int[10]);
-int	get_nbr_objs(char *);
+int	get_nbr_objs(char *, int *);
 
 /*
 ** util.c
 */
+int	alloc_all(t_params *, int, int);
 int	is_a_number(char *);
 int	get_number(char *);
 
 /*
+** rotation.c
+*/
+void	rotation(sfVector3f *, sfVector3f *, t_obj *);
+
+/*
+** anti_rotation.c
+*/
+void	anti_rotation(sfVector3f *, sfVector3f *, t_obj *);
+
+/*
 ** calc_dir_vector.c
 */
-sfVector3f	calc_dir_vector(sfVector2i, sfVector2i);
+sfVector3f	calc_dir_vector(sfVector2i, sfVector2i, int);
 
 /*
 ** intersect_sphere.c

@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Tue Feb  7 23:10:06 2017 Nicolas Polomack
-** Last update Thu Feb  9 03:43:09 2017 Nicolas Polomack
+** Last update Thu Feb  9 20:11:54 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
@@ -18,10 +18,12 @@ void	sub_coords(t_params *params, t_obj *obj)
   params->ray.orig.x -= obj->pos.x;
   params->ray.orig.y -= obj->pos.y;
   params->ray.orig.z -= obj->pos.z;
+  anti_rotation(&params->ray.orig, &params->ray.dir, obj);
 }
 
 void	add_coords(t_params *params, t_obj *obj)
 {
+  rotation(&params->ray.orig, &params->ray.dir, obj);
   params->ray.orig.x += obj->pos.x;
   params->ray.orig.y += obj->pos.y;
   params->ray.orig.z += obj->pos.z;
@@ -54,16 +56,16 @@ void		render_frame(t_window *w, t_params *params)
   int		y;
   int		i;
 
-  x = -1;
-  while (++x < w->buffer->width)
+  y = -1;
+  while (++y < w->buffer->height)
     {
-      y = -1;
-      while (++y < w->buffer->height)
+      x = -1;
+      while (++x < w->buffer->width)
         {
           params->screen_pos.x = x;
           params->screen_pos.y = y;
 	  params->ray.dir = calc_dir_vector(params->screen_size,
-					    params->screen_pos);
+					    params->screen_pos, params->fov);
           i = -1;
           while (++i < params->nb_obj)
             {
@@ -72,6 +74,6 @@ void		render_frame(t_window *w, t_params *params)
           put_pixel(w->buffer, x, y, color_stuff(params->dist, params));
         }
     }
-  //  sfTexture_updateFromPixels(w->texture, w->buffer->pixels,
-  //			     w->buffer->width, w->buffer->height, 0, 0);
+  sfTexture_updateFromPixels(w->texture, w->buffer->pixels,
+  			     w->buffer->width, w->buffer->height, 0, 0);
 }
