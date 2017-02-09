@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 23:30:22 2017 Nicolas Polomack
-** Last update Tue Feb  7 22:18:23 2017 Nicolas Polomack
+** Last update Wed Feb  8 23:44:20 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -22,7 +22,7 @@ static float	get_value(float root[2])
     return ((root[1] > 0) ? root[1] : -1);
 }
 
-float	intersect_sphere(sfVector3f eye_pos, sfVector3f dir_vector,
+float	intersect_sphere(sfVector3f *eye_pos, sfVector3f *dir_vector,
 			 float radius)
 {
   float	a;
@@ -31,11 +31,11 @@ float	intersect_sphere(sfVector3f eye_pos, sfVector3f dir_vector,
   float	delta;
   float	root[2];
 
-  a = powf(dir_vector.x, 2) + powf(dir_vector.y, 2) + powf(dir_vector.z, 2);
-  b = (2 * eye_pos.x * dir_vector.x + 2 * eye_pos.y *
-       dir_vector.y + 2 * eye_pos.z * dir_vector.z);
-  c = (powf(eye_pos.x, 2) + powf(eye_pos.y, 2) +
-       powf(eye_pos.z, 2) - powf(radius, 2));
+  a = powf(dir_vector->x, 2) + powf(dir_vector->y, 2) + powf(dir_vector->z, 2);
+  b = (2 * eye_pos->x * dir_vector->x + 2 * eye_pos->y *
+       dir_vector->y + 2 * eye_pos->z * dir_vector->z);
+  c = (powf(eye_pos->x, 2) + powf(eye_pos->y, 2) +
+       powf(eye_pos->z, 2) - powf(radius, 2));
   delta = b * b - 4 * a * c;
   if (delta < 0)
     return (-1.0F);

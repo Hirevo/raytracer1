@@ -5,12 +5,8 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Wed Dec 21 19:31:11 2016 Nicolas Polomack
-** Last update Sun Feb  5 14:53:20 2017 Nicolas Polomack
+** Last update Thu Feb  9 02:40:54 2017 Nicolas Polomack
 */
-
-#include "raytracer.h"
-#include "bmp.h"
-#include "sfcaster.h"
 
 #include <unistd.h>
 #include <stdlib.h>
@@ -19,6 +15,10 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+
+#include "raytracer.h"
+#include "bmp.h"
+#include "sfcaster.h"
 
 t_my_framebuffer	*load_bmp(char *filename, sfSprite **spr,
 				  sfTexture **tex)

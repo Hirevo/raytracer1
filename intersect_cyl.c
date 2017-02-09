@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 23:30:22 2017 Nicolas Polomack
-** Last update Tue Feb  7 22:24:45 2017 Nicolas Polomack
+** Last update Thu Feb  9 02:49:41 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -24,32 +24,18 @@ static float	get_value(float root[2])
   return (root[1]);
 }
 
-static float	ret_value(sfVector3f eye_pos, sfVector3f dir_vector,
-			  float val, float height)
+float		intersect_cyl(sfVector3f *eye_pos, sfVector3f *dir_vector,
+			      t_obj *obj)
 {
-  float	zval;
+  float		a;
+  float		b;
+  float		c;
+  float		delta;
+  float		root[2];
 
-  if (val == -1)
-    return (val);
-  zval = eye_pos.z + dir_vector.z * val;
-  if (zval < (height/2) && zval > -(height/2))
-      return (val);
-  return (-1);
-}
-
-float	intersect_cyl(sfVector3f eye_pos, sfVector3f dir_vector,
-		      t_obj obj)
-{
-  float	a;
-  float	b;
-  float	c;
-  float	delta;
-  float	root[2];
-  sfVector3f	imp;
-
-  a = powf(dir_vector.x, 2) + powf(dir_vector.y, 2);
-  b = (2 * eye_pos.x * dir_vector.x + 2 * eye_pos.y * dir_vector.y);
-  c = (powf(eye_pos.x, 2) + powf(eye_pos.y, 2) - powf(obj.rad, 2));
+  a = powf(dir_vector->x, 2) + powf(dir_vector->y, 2);
+  b = (2 * eye_pos->x * dir_vector->x + 2 * eye_pos->y * dir_vector->y);
+  c = (powf(eye_pos->x, 2) + powf(eye_pos->y, 2) - powf(obj->rad, 2));
   delta = b * b - 4 * a * c;
   if (delta < 0)
     return (-1.0F);

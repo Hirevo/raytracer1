@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 14:08:22 2017 Nicolas Polomack
-** Last update Wed Feb  8 18:55:45 2017 Nicolas Polomack
+** Last update Thu Feb  9 03:41:38 2017 Nicolas Polomack
 */
 
 #include <SFML/Graphics.h>
@@ -22,8 +22,8 @@ int	create_window(sfRenderWindow **w, char *name)
 {
   sfVideoMode   mode;
 
-  mode.width = 1280;
-  mode.height = 720;
+  mode.width = WIDTH;
+  mode.height = HEIGHT;
   mode.bitsPerPixel = 32;
   *w = sfRenderWindow_create(mode, name, sfClose, NULL);
   if (*w == NULL)
@@ -43,7 +43,7 @@ sfColor		evaluate_luminosity(float *dist, t_params *params,
 		       (params->objs[i].type == 'o' || params->objs[i].type == 'x') ?
 		       get_cos_angle_o(dist[i], params,
 				       params->objs[i].aper, i) : 1,
-		       col);
+		       col, params->ambient);
   return (col);
 }
 
@@ -67,94 +67,45 @@ sfColor		color_stuff(float *dist, t_params *params)
 	if (col.r || col.g || col.b)
 	  {
 	    col = evaluate_luminosity(dist, params, col, i);
-	    break;
 	  }
+	break;
       }
+  if ((!col.r && !col.g && !col.b))
+    col = set_luminosity(0.0F, params->objs[i].col, params->ambient);
   if (i == params->nb_obj)
     col = sfBlack;
   return (col);
 }
 
-void	init(t_params *params)
+int	init(t_params *params)
 {
-  params->ray.orig.x = -500;
-  params->ray.orig.y = -40;
-  params->ray.orig.z = 40;
   params->ray.dir.x = 0;
   params->ray.dir.y = 0;
   params->ray.dir.z = 0;
-  params->screen_size.x = 1280;
-  params->screen_size.y = 720;
-  params->light.x = -200;
-  params->light.y = -40;
-  params->light.z = 50;
-  params->nb_obj = 6;
-  params->objs = malloc(sizeof(t_obj) * params->nb_obj);
-  params->objs[0].type = 's';
-  params->objs[0].pos.x = 0;
-  params->objs[0].pos.y = 0;
-  params->objs[0].pos.z = 0;
-  params->objs[0].rad = 50;
-  params->objs[0].col = RED;
-  params->objs[1].type = 'p';
-  params->objs[1].pos.x = 0;
-  params->objs[1].pos.y = 0;
-  params->objs[1].pos.z = -25;
-  params->objs[1].col = sfWhite;
-  params->objs[2].type = 's';
-  params->objs[2].pos.x = -120;
-  params->objs[2].pos.y = -120;
-  params->objs[2].pos.z = 100;
-  params->objs[2].rad = 25;
-  params->objs[2].col = BLUE;
-  params->objs[3].type = 'c';
-  params->objs[3].pos.x = -50;
-  params->objs[3].pos.y = -75;
-  params->objs[3].pos.z = 0;
-  params->objs[3].rad = 10;
-  params->objs[3].col = DARK_BLUE;
-  params->objs[4].type = 'o';
-  params->objs[4].pos.x = -50;
-  params->objs[4].pos.y = 75;
-  params->objs[4].pos.z = 50;
-  params->objs[4].aper = 25;
-  params->objs[4].col = GREEN;
-  params->objs[5].type = 'x';
-  params->objs[5].pos.x = 0;
-  params->objs[5].pos.y = -170;
-  params->objs[5].pos.z = 50;
-  params->objs[5].aper = 25;
-  params->objs[5].col = GREEN;
+  params->screen_size.x = WIDTH;
+  params->screen_size.y = HEIGHT;
+  if ((params->dist = malloc(sizeof(float) * params->nb_obj)) == NULL)
+    return (-1);
+  return (0);
 }
 
 int			main(int ac, char **av)
 {
-  sfRenderWindow	*window;
-  sfTexture		*texture;
-  sfSprite		*sprite;
-  sfEvent		event;
-  t_my_framebuffer	*buffer;
+  t_window		w;
+  //sfEvent		event;
   t_params		params;
-  sfClock		*clock;
 
-  buffer = assemble_texture(&texture, &sprite, 1280, 720);
-  create_window(&window, "Raytracer1");
-  init(&params);
-  clock = sfClock_create();
-  render_frame(buffer, &params);
-  sfTexture_updateFromPixels(texture, buffer->pixels,
-			     buffer->width, buffer->height, 0, 0);
-  while (sfRenderWindow_isOpen(window))
-    {
-      sfClock_restart(clock);
-      render_frame(buffer, &params);
-      printf("time taken: %hd\n", sfTime_asMilliseconds(sfClock_restart(clock)));
-      sfTexture_updateFromPixels(texture, buffer->pixels,
-				 buffer->width, buffer->height, 0, 0);
-      sfRenderWindow_drawSprite(window, sprite, NULL);
-      sfRenderWindow_display(window);
-      handle_events(window, &event, &params);
-    }
-  save_bmp(buffer, "capture.bmp");
+  if (ac != 2)
+    return (84);
+  if ((w.buffer = my_framebuffer_create(WIDTH, HEIGHT)) ==//assemble_texture(&w.texture, &w.sprite, WIDTH, HEIGHT)) ==
+      NULL || //create_window(&w.window, "Raytracer1") == -1 ||
+      parse_config_file(av[1], &params) == -1 || init(&params) == -1)
+    return (84);
+  render_frame(&w, &params);
+  //sfRenderWindow_drawSprite(w.window, w.sprite, NULL);
+  //sfRenderWindow_display(w.window);
+  //while (sfRenderWindow_isOpen(w.window))
+  //handle_events(w.window, &event, &params);
+  save_bmp(w.buffer, "capture.bmp");
   return (0);
 }

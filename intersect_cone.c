@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 23:30:22 2017 Nicolas Polomack
-** Last update Wed Feb  8 17:08:47 2017 Nicolas Polomack
+** Last update Thu Feb  9 02:50:07 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -25,49 +25,38 @@ static float	get_value(float root[2])
   return (root[1]);
 }
 
-static float	ret_value(sfVector3f eye_pos, sfVector3f dir_vector,
-			  float val, float height)
+void	calc_abcd(float *abcd, sfVector3f *eye_pos, sfVector3f *dir_vector,
+		  t_obj *obj)
 {
-  float	zval;
-
-  if (val == -1)
-    return (val);
-  zval = eye_pos.z + dir_vector.z * val;
-  if (zval < (height/2) && zval > -(height/2))
-      return (val);
-  return (-1);
+  abcd[0] = powf(dir_vector->x, 2) + powf(dir_vector->y, 2) -
+    powf(dir_vector->z, 2) * pow(tanr(obj->aper), 2);
+  abcd[1] = (2 * eye_pos->x * dir_vector->x + 2 * eye_pos->y * dir_vector->y -
+             2 * eye_pos->z * dir_vector->z * pow(tanr(obj->aper), 2));
+  abcd[2] = (powf(eye_pos->x, 2) + powf(eye_pos->y, 2) -
+             powf(eye_pos->z, 2) * pow(tanr(obj->aper), 2));
+  abcd[3] = abcd[1] * abcd[1] - 4 * abcd[0] * abcd[2];
 }
 
-float		intersect_cone(sfVector3f eye_pos, sfVector3f dir_vector,
-			       t_obj obj)
+float		intersect_cone(sfVector3f *eye_pos, sfVector3f *dir_vector,
+			       t_obj *obj)
 {
-  float		a;
-  float		b;
-  float		c;
-  float		delta;
+  float		abcd[4];
   float		root[2];
-  sfVector3f	imp;
 
-  a = powf(dir_vector.x, 2) + powf(dir_vector.y, 2) -
-    powf(dir_vector.z, 2) * pow(tanr(obj.aper), 2);
-  b = (2 * eye_pos.x * dir_vector.x + 2 * eye_pos.y * dir_vector.y -
-       2 * eye_pos.z * dir_vector.z * pow(tanr(obj.aper), 2));
-  c = (powf(eye_pos.x, 2) + powf(eye_pos.y, 2) -
-       powf(eye_pos.z, 2) * pow(tanr(obj.aper), 2));
-  delta = b * b - 4 * a * c;
-  if (delta < 0)
+  calc_abcd(abcd, eye_pos, dir_vector, obj);
+  if (abcd[3] < 0)
     return (-1.0F);
   else
-    if (delta)
+    if (abcd[3])
       {
-	root[0] = (-b - sqrtf(delta)) / (2 * a);
-	root[1] = (-b + sqrtf(delta)) / (2 * a);
+	root[0] = (-abcd[1] - sqrtf(abcd[3])) / (2 * abcd[0]);
+	root[1] = (-abcd[1] + sqrtf(abcd[3])) / (2 * abcd[0]);
 	root[1] = get_value(root);
-	if (root[1] == -1 ||
-	    ((eye_pos.z + dir_vector.z * root[1]) > 0 && obj.type == 'o'))
-	  return (-1);
-	return (root[1]);
       }
     else
-      return (-b / (2 * a));
+      root[1] = (-abcd[1] / (2 * abcd[0]));
+  if (root[1] == -1 ||
+      ((eye_pos->z + dir_vector->z * root[1]) > 0 && obj->type == 'o'))
+    return (-1);
+  return (root[1]);
 }
