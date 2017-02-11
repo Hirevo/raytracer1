@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Sun Feb  5 14:37:35 2017 Nicolas Polomack
-** Last update Thu Feb  9 22:01:58 2017 Nicolas Polomack
+** Last update Sat Feb 11 02:46:41 2017 Nicolas Polomack
 */
 
 #ifndef RAYTRACER_H_
@@ -14,8 +14,8 @@
 # include <SFML/Graphics.h>
 # include "sfcaster.h"
 
-# define WIDTH 1280
-# define HEIGHT 720
+# define WIDTH 1920
+# define HEIGHT 1080
 
 typedef struct	s_ray
 {
@@ -43,7 +43,14 @@ typedef struct	s_obj
   float		rad;
   float		aper;
   sfColor	col;
+  float		height;
 }		t_obj;
+
+typedef struct	s_imp
+{
+  float		dist;
+  int		face;
+}		t_imp;
 
 typedef struct	s_params
 {
@@ -79,7 +86,9 @@ void		render_frame(t_window *, t_params *);
 float		get_cos_angle_s(float, t_params *, sfVector2i);
 float		get_cos_angle_p(float, t_params *, sfVector2i);
 float           get_cos_angle_c(float, t_params *, sfVector2i);
-float           get_cos_angle_o(float, t_params *, float, sfVector2i);
+float           get_cos_angle_cc(float, t_params *, sfVector2i);
+float           get_cos_angle_o(float, t_params *, sfVector2i);
+float           get_cos_angle_oo(float, t_params *, sfVector2i);
 
 /*
 ** lights.c
@@ -103,33 +112,44 @@ sfColor		evaluate_luminosity(float *, t_params *,
 sfColor		color_stuff(float *, t_params *);
 
 /*
-** parse.c
+** parse/parse.c
 */
 int	parse_config_file(char *, t_params *);
 
 /*
-** check.c
+** parse/check.c
 */
 int	is_valid_line(char *, int *);
 void	gather_idxs(char *, int[10]);
 int	get_nbr_objs(char *, int *);
 
 /*
-** util.c
+** parse/util.c
 */
 int	alloc_all(t_params *, int, int);
 int	is_a_number(char *);
 int	get_number(char *);
 
 /*
+** normals.c
+*/
+void	get_cone_normal(t_params *, sfVector2i, sfVector3f *, float);
+void	get_cylinder_normal(t_params *, sfVector2i, sfVector3f *, float);
+
+/*
 ** rotation.c
 */
+void	rx(sfVector3f *, float);
+void	ry(sfVector3f *, float);
+void	rz(sfVector3f *, float);
 void	rotation(sfVector3f *, sfVector3f *, t_obj *);
+void	rotation_eye(t_params *, int);
 
 /*
 ** anti_rotation.c
 */
 void	anti_rotation(sfVector3f *, sfVector3f *, t_obj *);
+void	anti_rotation_eye(t_params *);
 
 /*
 ** calc_dir_vector.c
@@ -137,22 +157,31 @@ void	anti_rotation(sfVector3f *, sfVector3f *, t_obj *);
 sfVector3f	calc_dir_vector(sfVector2i, sfVector2i, int);
 
 /*
-** intersect_sphere.c
+** intersect/intersect_sphere.c
 */
 float		intersect_sphere(sfVector3f *, sfVector3f *, float);
 
 /*
-** intersect_cyl.c
+** intersect/intersect_cyl.c
 */
 float		intersect_cyl(sfVector3f *, sfVector3f *, t_obj *);
+float		intersect_closed_cyl(sfVector3f *, sfVector3f *,
+				     t_obj *, float);
 
 /*
-** intersect_cone.c
+** intersect/intersect_cone.c
 */
 float		intersect_cone(sfVector3f *, sfVector3f *, t_obj *);
+float           intersect_closed_cone(sfVector3f *, sfVector3f *,
+				      t_obj *, float);
 
 /*
-** intersect_plane.c
+** intersect/intersect_disk.c
+*/
+float	intersect_disk(sfVector3f *, sfVector3f *, float);
+
+/*
+** intersect/intersect_plane.c
 */
 float		intersect_plane(sfVector3f *, sfVector3f *);
 

@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Tue Feb  7 23:10:06 2017 Nicolas Polomack
-** Last update Thu Feb  9 20:11:54 2017 Nicolas Polomack
+** Last update Sat Feb 11 02:47:30 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
@@ -39,13 +39,14 @@ float	gather_distances(t_params *params, int i)
                         params->objs[i].rad) :
        ((params->objs[i].type == 'p') ?
         intersect_plane(&params->ray.orig, &params->ray.dir) :
-        ((params->objs[i].type == 'c') ?
+	((params->objs[i].type == 'c' || params->objs[i].type == 'h') ?
          intersect_cyl(&params->ray.orig, &params->ray.dir,
-                       &(params->objs[i])) :
-         ((params->objs[i].type == 'o' || params->objs[i].type == 'x') ?
-          intersect_cone(&params->ray.orig, &params->ray.dir,
-                         &(params->objs[i])) :
-          FLT_MAX))));
+		       &(params->objs[i])) :
+	 ((params->objs[i].type == 'o' || params->objs[i].type == 'x' ||
+	   params->objs[i].type == 'u') ?
+	  intersect_cone(&params->ray.orig, &params->ray.dir,
+			 &(params->objs[i])) :
+	  FLT_MAX))));
   add_coords(params, &(params->objs[i]));
   return (f);
 }
@@ -57,23 +58,24 @@ void		render_frame(t_window *w, t_params *params)
   int		i;
 
   y = -1;
+  rotation_eye(params, 0);
   while (++y < w->buffer->height)
     {
       x = -1;
       while (++x < w->buffer->width)
-        {
-          params->screen_pos.x = x;
-          params->screen_pos.y = y;
+	{
+	  params->screen_pos.x = x;
+	  params->screen_pos.y = y;
+	  anti_rotation_eye(params);
 	  params->ray.dir = calc_dir_vector(params->screen_size,
 					    params->screen_pos, params->fov);
-          i = -1;
-          while (++i < params->nb_obj)
-            {
-              params->dist[i] = gather_distances(params, i);
-            }
-          put_pixel(w->buffer, x, y, color_stuff(params->dist, params));
-        }
+	  rotation_eye(params, 1);
+	  i = -1;
+	  while (++i < params->nb_obj)
+	    params->dist[i] = gather_distances(params, i);
+	  put_pixel(w->buffer, x, y, color_stuff(params->dist, params));
+	}
     }
   sfTexture_updateFromPixels(w->texture, w->buffer->pixels,
-  			     w->buffer->width, w->buffer->height, 0, 0);
+			     w->buffer->width, w->buffer->height, 0, 0);
 }

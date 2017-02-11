@@ -5,75 +5,73 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Thu Feb  9 13:15:36 2017 Nicolas Polomack
-** Last update Thu Feb  9 17:43:33 2017 Nicolas Polomack
+** Last update Fri Feb 10 23:43:42 2017 Nicolas Polomack
 */
 
 #include "sfcaster.h"
 #include "raytracer.h"
 
-void		rx(sfVector3f *imp, sfVector3f *dir, t_obj *obj)
+void		rx(sfVector3f *imp, float r)
 {
   sfVector3f	tmp;
 
-  if (obj->rx)
+  if (r)
     {
       tmp.x = imp->x;
-      tmp.y = imp->y * cosr(obj->rx) - imp->z * sinr(obj->rx);
-      tmp.z = imp->y * sinr(obj->rx) + imp->z * cosr(obj->rx);
+      tmp.y = imp->y * cosr(r) - imp->z * sinr(r);
+      tmp.z = imp->y * sinr(r) + imp->z * cosr(r);
       *imp = tmp;
-      if (dir)
-        {
-          tmp.x = dir->x;
-          tmp.y = dir->y * cosr(obj->rx) - dir->z * sinr(obj->rx);
-          tmp.z = dir->y * sinr(obj->rx) + dir->z * cosr(obj->rx);
-          *dir = tmp;
-        }
     }
 }
 
-void		ry(sfVector3f *imp, sfVector3f *dir, t_obj *obj)
+void		ry(sfVector3f *imp, float r)
 {
   sfVector3f	tmp;
 
-  if (obj->ry)
+  if (r)
     {
       tmp.y = imp->y;
-      tmp.x = imp->x * cosr(obj->ry) + imp->z * sinr(obj->ry);
-      tmp.z = imp->z * cosr(obj->ry) - imp->x * sinr(obj->ry);
+      tmp.x = imp->x * cosr(r) + imp->z * sinr(r);
+      tmp.z = imp->z * cosr(r) - imp->x * sinr(r);
       *imp = tmp;
-      if (dir)
-        {
-          tmp.y = dir->y;
-          tmp.x = dir->x * cosr(obj->ry) + dir->z * sinr(obj->ry);
-          tmp.z = dir->z * cosr(obj->ry) - dir->x * sinr(obj->ry);
-          *dir = tmp;
-        }
     }
 }
 
-void		rz(sfVector3f *imp, sfVector3f *dir, t_obj *obj)
+void		rz(sfVector3f *imp, float r)
 {
   sfVector3f	tmp;
 
-  if (obj->rz)
+  if (r)
     {
       tmp.z = imp->z;
-      tmp.x = imp->x * cosr(obj->rz) - imp->y * sinr(obj->rz);
-      tmp.y = imp->x * sinr(obj->rz) + imp->y * cosr(obj->rz);
+      tmp.x = imp->x * cosr(r) - imp->y * sinr(r);
+      tmp.y = imp->x * sinr(r) + imp->y * cosr(r);
       *imp = tmp;
-      if (dir)
-        {
-          tmp.z = dir->z;
-          tmp.x = dir->x * cosr(obj->rz) - dir->y * sinr(obj->rz);
-          tmp.y = dir->x * sinr(obj->rz) + dir->y * cosr(obj->rz);
-          *dir = tmp;
-        }
     }
 }
 
 void	rotation(sfVector3f *imp, sfVector3f *dir, t_obj *obj)
 {
-  rx(imp, dir, obj);
-  ry(imp, dir, obj);
-  rz(imp, dir, obj);
+  rx(imp, obj->rx);
+  ry(imp, obj->ry);
+  rz(imp, obj->rz);
+  if (dir)
+    {
+      rx(dir, obj->rx);
+      ry(dir, obj->ry);
+      rz(dir, obj->rz);
+    }
+}
+
+void	rotation_eye(t_params *params, int i)
+{
+  rx(&params->ray.orig, params->ray.rx);
+  ry(&params->ray.orig, params->ray.ry);
+  rz(&params->ray.orig, params->ray.rz);
+  if (i)
+    {
+      rx(&params->ray.dir, params->ray.rx);
+      ry(&params->ray.dir, params->ray.ry);
+      rz(&params->ray.dir, params->ray.rz);
+    }
 }

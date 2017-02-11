@@ -5,31 +5,33 @@
 ## Login   <nicolas.polomack@epitech.eu>
 ##
 ## Started on  Tue Nov 15 09:05:43 2016 Nicolas Polomack
-## Last update Thu Feb  9 21:57:33 2017 Nicolas Polomack
+## Last update Sat Feb 11 02:54:13 2017 Nicolas Polomack
 ##
 
 MAKE2	=	make --no-print-directory -C lib/my
 
 MAKE1	=	make --no-print-directory -C lib/mycsfml
 
-SRC	=	window.c		\
-		calc.c			\
-		events.c		\
-		angles.c		\
-		lights.c		\
-		multi_lights.c		\
-		parse.c			\
-		check.c			\
-		util.c			\
-		rotation.c		\
-		anti_rotation.c		\
-		intersect_sphere.c	\
-		intersect_cyl.c		\
-		intersect_cone.c	\
-		intersect_plane.c	\
-		calc_dir_vector.c	\
-		get_next_line.c		\
-		load_bmp.c		\
+SRC	=	window.c			\
+		calc.c				\
+		events.c			\
+		angles.c			\
+		lights.c			\
+		multi_lights.c			\
+		parse/parse.c			\
+		parse/check.c			\
+		parse/util.c			\
+		normals.c			\
+		rotation.c			\
+		anti_rotation.c			\
+		intersect/intersect_sphere.c	\
+		intersect/intersect_cyl.c	\
+		intersect/intersect_disk.c	\
+		intersect/intersect_cone.c	\
+		intersect/intersect_plane.c	\
+		calc_dir_vector.c		\
+		get_next_line.c			\
+		load_bmp.c			\
 		save_bmp.c
 
 OBJ	=	$(SRC:.c=.o)

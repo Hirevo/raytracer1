@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 14:08:22 2017 Nicolas Polomack
-** Last update Thu Feb  9 22:00:52 2017 Nicolas Polomack
+** Last update Fri Feb 10 23:11:29 2017 Nicolas Polomack
 */
 
 #include <SFML/Graphics.h>
@@ -39,12 +39,13 @@ sfColor		evaluate_luminosity(float *dist, t_params *params,
 		       get_cos_angle_s(dist[idxs.x], params, idxs) :
 		       (params->objs[idxs.x].type == 'p') ?
 		       get_cos_angle_p(dist[idxs.x], params, idxs) :
-		       (params->objs[idxs.x].type == 'c') ?
+		       (params->objs[idxs.x].type == 'c' ||
+			params->objs[idxs.x].type == 'h') ?
 		       get_cos_angle_c(dist[idxs.x], params, idxs) :
-		       (params->objs[idxs.x].type == 'o' ||
+		       (params->objs[idxs.x].type == 'u' ||
+			params->objs[idxs.x].type == 'o' ||
 			params->objs[idxs.x].type == 'x') ?
-		       get_cos_angle_o(dist[idxs.x], params,
-				       params->objs[idxs.x].aper, idxs) : 1,
+		       get_cos_angle_o(dist[idxs.x], params, idxs) : 1,
 		       col, params->light[idxs.y].ambient);
   return (col);
 }
