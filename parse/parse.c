@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Wed Feb  8 23:10:21 2017 Nicolas Polomack
-** Last update Fri Feb 10 19:05:44 2017 Nicolas Polomack
+** Last update Sat Feb 11 13:09:43 2017 Nicolas Polomack
 */
 
 #include <fcntl.h>
@@ -73,32 +73,48 @@ void	parse_line(char *line, t_params *params, int *lights, int *objs)
       parse_object(line, params, *objs, idxs);
       *objs += 1;
     }
+  free(line);
+}
+
+int	parse_first(char *line, t_params *params)
+{
+  int	idxs[3];
+
+  idxs[0] = -1;
+  while (line[++(idxs[0])])
+    if ((line[idxs[0]] < '0' || line[idxs[0]] > '9') && line[idxs[0]] != ':')
+      return (-1);
+  gather_idxs(line, idxs);
+  params->screen_size.x = get_number(line);
+  params->screen_size.y = get_number(line + idxs[1]);
+  free(line);
+  return (0);
 }
 
 int	parse_config_file(char *file, t_params *params)
 {
-  int	fd;
   char	*line;
-  int	lights;
-  int	eyes;
-  int	objs;
+  int	fleo[4];
 
-  eyes = 0;
-  lights = 0;
-  if ((objs = get_nbr_objs(file, &lights)) == -1 || objs < 2 ||
-      (fd = open(file, O_RDONLY)) == -1 ||
-      alloc_all(params, objs, lights) == -1)
+  fleo[2] = 0;
+  fleo[1] = 0;
+  if ((fleo[3] = get_nbr_objs(file, &(fleo[1]))) == -1 || fleo[3] < 2 ||
+      (fleo[0] = open(file, O_RDONLY)) == -1 ||
+      alloc_all(params, fleo[3], fleo[1]) == -1)
     return (-1);
-  objs = 0;
-  lights = 0;
-  while ((line = get_next_line(fd)))
+  fleo[3] = -1;
+  fleo[1] = 0;
+  while ((line = get_next_line(fleo[0])))
     {
-      if (is_valid_line(line, &eyes))
-	parse_line(line, params, &lights, &objs);
-      else
+      if (fleo[3] == -1)
+	fleo[3] = parse_first(line, params);
+      else if (!is_valid_line(line, &(fleo[2])))
 	return (-1);
-      free(line);
+      else
+	parse_line(line, params, &(fleo[1]), &(fleo[3]));
+      if (fleo[3] == -1)
+	return (-1);
     }
-  close(fd);
+  close(fleo[0]);
   return (0);
 }

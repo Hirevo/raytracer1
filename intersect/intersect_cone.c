@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 23:30:22 2017 Nicolas Polomack
-** Last update Sat Feb 11 02:53:46 2017 Nicolas Polomack
+** Last update Sat Feb 11 12:35:08 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -40,9 +40,8 @@ void	calc_abcd(float *abcd, sfVector3f *eye_pos, sfVector3f *dir_vector,
 float	ret_value(float *abcd, float *root,
 		  float pos, float dir)
 {
-  if (root[2] == -1 ||
-      (roundf(pos + dir * root[2]) >= 0 &&
-       (root[3] == 'o' || root[3] == 'u')))
+  if (root[2] == -1 || ((root[3] == 'o' || root[3] == 'u') &&
+			(roundf(pos + dir * root[2]) > 0)))
     {
       if (abcd[3])
 	{

@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 14:08:22 2017 Nicolas Polomack
-** Last update Fri Feb 10 23:11:29 2017 Nicolas Polomack
+** Last update Sat Feb 11 13:07:07 2017 Nicolas Polomack
 */
 
 #include <SFML/Graphics.h>
@@ -19,12 +19,12 @@
 #include "raytracer.h"
 #include "bmp.h"
 
-int		create_window(sfRenderWindow **w, char *name)
+int		create_window(sfRenderWindow **w, char *name, sfVector2i screen_size)
 {
   sfVideoMode	mode;
 
-  mode.width = WIDTH;
-  mode.height = HEIGHT;
+  mode.width = screen_size.x;
+  mode.height = screen_size.y;
   mode.bitsPerPixel = 32;
   *w = sfRenderWindow_create(mode, name, sfClose, NULL);
   if (*w == NULL)
@@ -80,8 +80,6 @@ int	init(t_params *params)
   params->ray.dir.x = 0;
   params->ray.dir.y = 0;
   params->ray.dir.z = 0;
-  params->screen_size.x = WIDTH;
-  params->screen_size.y = HEIGHT;
   if ((params->dist = malloc(sizeof(float) * params->nb_obj)) == NULL)
     return (-1);
   return (0);
@@ -95,9 +93,11 @@ int			main(int ac, char **av)
 
   if (ac != 2)
     return (84);
-  if ((w.buffer = assemble_texture(&w.texture, &w.sprite, WIDTH, HEIGHT)) ==
-      NULL || create_window(&w.window, "Raytracer1") == -1 ||
-      parse_config_file(av[1], &params) == -1 || init(&params) == -1)
+  if (parse_config_file(av[1], &params) == -1 ||
+      (w.buffer = assemble_texture(&w.texture, &w.sprite,
+				   params.screen_size.x, params.screen_size.y)) ==
+      NULL || create_window(&w.window, "Raytracer1", params.screen_size) == -1 ||
+      init(&params) == -1)
     return (84);
   render_frame(&w, &params);
   sfRenderWindow_drawSprite(w.window, w.sprite, NULL);

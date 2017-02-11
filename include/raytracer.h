@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Sun Feb  5 14:37:35 2017 Nicolas Polomack
-** Last update Sat Feb 11 02:46:41 2017 Nicolas Polomack
+** Last update Sat Feb 11 12:37:21 2017 Nicolas Polomack
 */
 
 #ifndef RAYTRACER_H_
@@ -14,8 +14,8 @@
 # include <SFML/Graphics.h>
 # include "sfcaster.h"
 
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 1280
+# define HEIGHT 720
 
 typedef struct	s_ray
 {

@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Tue Feb  7 23:10:06 2017 Nicolas Polomack
-** Last update Sat Feb 11 02:47:30 2017 Nicolas Polomack
+** Last update Sat Feb 11 14:30:23 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
@@ -58,7 +58,6 @@ void		render_frame(t_window *w, t_params *params)
   int		i;
 
   y = -1;
-  rotation_eye(params, 0);
   while (++y < w->buffer->height)
     {
       x = -1;
@@ -66,10 +65,9 @@ void		render_frame(t_window *w, t_params *params)
 	{
 	  params->screen_pos.x = x;
 	  params->screen_pos.y = y;
-	  anti_rotation_eye(params);
 	  params->ray.dir = calc_dir_vector(params->screen_size,
 					    params->screen_pos, params->fov);
-	  rotation_eye(params, 1);
+	  rotation_eye(params, 2);
 	  i = -1;
 	  while (++i < params->nb_obj)
 	    params->dist[i] = gather_distances(params, i);

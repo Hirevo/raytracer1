@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Thu Feb  9 13:15:36 2017 Nicolas Polomack
-** Last update Fri Feb 10 23:43:42 2017 Nicolas Polomack
+** Last update Sat Feb 11 14:31:25 2017 Nicolas Polomack
 */
 
 #include "sfcaster.h"
@@ -65,10 +65,13 @@ void	rotation(sfVector3f *imp, sfVector3f *dir, t_obj *obj)
 
 void	rotation_eye(t_params *params, int i)
 {
-  rx(&params->ray.orig, params->ray.rx);
-  ry(&params->ray.orig, params->ray.ry);
-  rz(&params->ray.orig, params->ray.rz);
-  if (i)
+  if (i < 2)
+    {
+      rx(&params->ray.orig, params->ray.rx);
+      ry(&params->ray.orig, params->ray.ry);
+      rz(&params->ray.orig, params->ray.rz);
+    }
+  if (i > 0)
     {
       rx(&params->ray.dir, params->ray.rx);
       ry(&params->ray.dir, params->ray.ry);
