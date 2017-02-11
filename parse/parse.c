@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Wed Feb  8 23:10:21 2017 Nicolas Polomack
-** Last update Sat Feb 11 13:09:43 2017 Nicolas Polomack
+** Last update Sat Feb 11 19:48:52 2017 Nicolas Polomack
 */
 
 #include <fcntl.h>
@@ -76,21 +76,6 @@ void	parse_line(char *line, t_params *params, int *lights, int *objs)
   free(line);
 }
 
-int	parse_first(char *line, t_params *params)
-{
-  int	idxs[3];
-
-  idxs[0] = -1;
-  while (line[++(idxs[0])])
-    if ((line[idxs[0]] < '0' || line[idxs[0]] > '9') && line[idxs[0]] != ':')
-      return (-1);
-  gather_idxs(line, idxs);
-  params->screen_size.x = get_number(line);
-  params->screen_size.y = get_number(line + idxs[1]);
-  free(line);
-  return (0);
-}
-
 int	parse_config_file(char *file, t_params *params)
 {
   char	*line;
@@ -104,7 +89,7 @@ int	parse_config_file(char *file, t_params *params)
     return (-1);
   fleo[3] = -1;
   fleo[1] = 0;
-  while ((line = get_next_line(fleo[0])))
+  while ((line = get_next_line(fleo[0])) != NULL)
     {
       if (fleo[3] == -1)
 	fleo[3] = parse_first(line, params);

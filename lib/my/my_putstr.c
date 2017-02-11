@@ -2,10 +2,10 @@
 ** my_putstr_printf.c for my_putstr_printf in /home/nicolas.polomack/CPool_Day04
 **
 ** Made by Nicolas POLOMACK
-** Login   <nicolas.polomack@epitech.eu>
+** Login   <nicolas.polomack@epitech.net>
 **
 ** Started on  Thu Oct  6 09:53:18 2016 Nicolas POLOMACK
-** Last update Sat Jan 14 14:11:50 2017 Nicolas Polomack
+** Last update Tue Nov 22 18:05:51 2016 Nicolas Polomack
 */
 
 #include <stdlib.h>
@@ -27,9 +27,7 @@ void	my_putstr_printf(char *in, int *c, t_flags *flags, int isnbr)
   int	count;
   char	*str;
 
-  if ((str = malloc(my_strlen(in) + 2)) == NULL)
-    return ;
-  count = -1;
+  str = malloc(my_strlen(in) + 2) + (count = -1) * 0;
   str[0] = 0;
   str[1] = 0;
   str[2] = 0;
@@ -82,14 +80,13 @@ void	display_pointer(t_flags *flags, va_list ap, int *count)
 
   str = convert_base(my_int_to_char(va_arg(ap, int)), "0123456789",
 		     "0123456789abcdef");
-  if ((final = malloc(sizeof(str) + 4)) == NULL)
-    return ;
+  final = malloc(sizeof(str) + 4);
   final[0] = 0;
   final[1] = '0';
   final[2] = 'x';
   final[3] = 0;
   if (flags->hold == '+' || flags->hold == 32)
-    final[0] = flags->hold;
+    final[0] == flags->hold;
   flags->precision = -1;
   my_putstr_printf(my_strcat((final[0] == 0) ? final + 1 : final, str),
 	    count, flags, 1);

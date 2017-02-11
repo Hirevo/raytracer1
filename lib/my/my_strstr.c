@@ -2,7 +2,7 @@
 ** my_strstr.c for my_strstr in /home/nicolas.polomack/CPool_Day06
 ** 
 ** Made by Nicolas POLOMACK
-** Login   <nicolas.polomack@epitech.eu>
+** Login   <nicolas.polomack@epitech.net>
 ** 
 ** Started on  Mon Oct 10 09:38:55 2016 Nicolas POLOMACK
 ** Last update Tue Oct 11 09:00:57 2016 Nicolas POLOMACK

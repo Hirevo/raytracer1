@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb  9 02:34:59 2017 Nicolas Polomack
-** Last update Sat Feb 11 12:49:21 2017 Nicolas Polomack
+** Last update Sat Feb 11 20:23:53 2017 Nicolas Polomack
 */
 
 #include <unistd.h>
@@ -95,11 +95,28 @@ int	get_nbr_objs(char *file, int *l)
         e += 1;
       else if (line[0] == 'l')
         *l += 1;
-      objs += 1;
+      if (line[0] < '0' || line[0] > '9')
+	objs += 1;
       free(line);
     }
   close(fd);
   if (!*l || e != 1)
     return (-1);
   return (objs);
+}
+
+int	disp_guide()
+{
+  int	fd;
+  char	*line;
+
+  if ((fd = open("help.txt", O_RDONLY)) == -1)
+    return (84);
+  while ((line = get_next_line(fd)))
+    {
+      my_printf("%s\n", line);
+      free(line);
+    }
+  close(fd);
+  return (0);
 }

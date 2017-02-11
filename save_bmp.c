@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Fri Jan  6 19:15:36 2017 Nicolas Polomack
-** Last update Thu Feb  9 02:40:38 2017 Nicolas Polomack
+** Last update Sat Feb 11 20:54:10 2017 Nicolas Polomack
 */
 
 #include <unistd.h>
@@ -17,6 +17,7 @@
 #include <fcntl.h>
 
 #include "raytracer.h"
+#include "my.h"
 #include "bmp.h"
 #include "sfcaster.h"
 
@@ -26,6 +27,7 @@ void			save_bmp(t_my_framebuffer *buffer, char *name)
   bmp_header		head;
   bmp_info_header	info;
 
+  my_printf("Saving buffer into %s...", name);
   if ((fd = open(name, O_WRONLY | O_CREAT | O_TRUNC,
                  S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) == -1)
     return ;
@@ -35,6 +37,7 @@ void			save_bmp(t_my_framebuffer *buffer, char *name)
   write(fd, &info, 40);
   write_pixel_buffer(buffer, fd);
   close(fd);
+  my_printf(" Finished !\n");
 }
 
 bmp_header	set_header(bmp_header head,

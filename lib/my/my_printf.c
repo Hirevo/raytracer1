@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Wed Nov  9 09:21:53 2016 Nicolas Polomack
-** Last update Sat Jan 14 14:32:30 2017 Nicolas Polomack
+** Last update Thu Feb  2 00:28:39 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
@@ -72,36 +72,36 @@ void	print_flag(t_flags *flags, va_list ap, int *count)
     my_putchar_printf('%', count);
 }
 
-t_flags	*initialize_flags(t_flags **flags, int *count)
+void	initialize_flags(t_flags *flags, int *count)
 {
   *count = 0;
-  if (((*flags) = malloc(sizeof(t_flags))) == NULL)
-    return (NULL);
-  (*flags)->width = 0;
-  (*flags)->precision = 0;
-  return (*flags);
+  flags->width = 0;
+  flags->precision = 0;
+  flags->length = 0;
+  flags->format = 0;
+  flags->hold = 0;
 }
 
 int		my_printf(char *str, ...)
 {
   int		count;
   va_list	ap;
-  t_flags	*flags;
+  t_flags	flags;
 
-  flags = initialize_flags(&flags, &count);
+  initialize_flags(&flags, &count);
   va_start(ap, str);
   while (*str != 0)
   {
     if (*str == '%')
     {
-      flags->backup = str;
-      str = get_flags(str + 1, flags, ap, &count);
-      if (flags->format == 'd' || flags->format == 'i' ||
-	  flags->format == 'p' || flags->format == 'X' || flags->format == 'x' ||
-	  flags->format == 'o' || flags->format == 'u' || flags->format == 'b')
-	print_nbr(flags, ap, &count);
+      flags.backup = str;
+      str = get_flags(str + 1, &flags, ap, &count);
+      if (flags.format == 'd' || flags.format == 'i' ||
+	  flags.format == 'p' || flags.format == 'X' || flags.format == 'x' ||
+	  flags.format == 'o' || flags.format == 'u' || flags.format == 'b')
+	print_nbr(&flags, ap, &count);
       else
-	print_flag(flags, ap, &count);
+	print_flag(&flags, ap, &count);
     }
     else
       my_putchar_printf(*str, &count);

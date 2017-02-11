@@ -2,10 +2,10 @@
 ** my_getnbr.c for my_getnbr in /home/nicolas.polomack/CPool_Day04
 **
 ** Made by Nicolas POLOMACK
-** Login   <nicolas.polomack@epitech.eu>
+** Login   <nicolas.polomack@epitech.net>
 **
 ** Started on  Thu Oct  6 17:52:30 2016 Nicolas POLOMACK
-** Last update Sat Jan  7 04:12:20 2017 Nicolas Polomack
+** Last update Fri Jan  6 00:18:02 2017 Nicolas Polomack
 */
 
 #include "my.h"
@@ -13,9 +13,11 @@
 int	get_nbr_len(char *arr, int count)
 {
   int	nbr_len;
+  int	test_count;
   int	total;
 
   total = 0;
+  test_count = 0;
   nbr_len = 1;
   while (*(arr + count) >= 48 && *(arr + count) <= 57)
     {
@@ -28,28 +30,31 @@ int	get_nbr_len(char *arr, int count)
   return (nbr_len);
 }
 
-int	my_getnbr(char *arr)
+int	my_getnbr(char *file)
 {
-  int	resp;
-  int	count;
+  int	result;
+  int	i;
+  int	factor;
+  int	c;
   int	isNegative;
-  int	nbr_len;
 
-  resp = 0;
-  count = 0;
-  while (!(*(arr + count) >= 48 && *(arr + count) <= 57))
-    count = count + 1;
-  if (*(arr + count - 1) == '-')
-    isNegative = (-1);
-  else
-    isNegative = 1;
-  nbr_len = get_nbr_len(arr, count);
-  nbr_len = nbr_len / 10;
-  while (*(arr + count) >=  48 && *(arr + count) <= 57)
+  isNegative = 1;
+  i = 0;
+  if (file[i] == '-')
+    isNegative *= ((file[i] == '-') ? -1 : 1) + (i += 1) * 0;
+  c = i + (factor = 1) * 0;
+  result = 0;
+  while (file[c] >= '0' && file[c] <= '9')
     {
-      resp += (*(arr + count) - 48) * (nbr_len);
-      count = count + 1;
-      nbr_len = nbr_len / 10;
+      factor *= 10;
+      c += 1;
     }
-  return (resp * isNegative);
+  factor /= 10;
+  while (file[i] >= '0' && file[i] <= '9')
+    {
+      result += (file[i] - '0') * factor;
+      factor /= 10;
+      i += 1;
+    }
+  return (result * isNegative);
 }

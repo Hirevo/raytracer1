@@ -5,13 +5,14 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Tue Feb  7 23:10:06 2017 Nicolas Polomack
-** Last update Sat Feb 11 14:30:23 2017 Nicolas Polomack
+** Last update Sat Feb 11 20:45:41 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
 #include <float.h>
 #include "sfcaster.h"
 #include "raytracer.h"
+#include "my.h"
 
 void	sub_coords(t_params *params, t_obj *obj)
 {
@@ -57,11 +58,11 @@ void		render_frame(t_window *w, t_params *params)
   int		y;
   int		i;
 
-  y = -1;
-  while (++y < w->buffer->height)
+  x = -1;
+  while (++x < w->buffer->width)
     {
-      x = -1;
-      while (++x < w->buffer->width)
+      y = -1;
+      while (++y < w->buffer->height)
 	{
 	  params->screen_pos.x = x;
 	  params->screen_pos.y = y;
@@ -73,7 +74,8 @@ void		render_frame(t_window *w, t_params *params)
 	    params->dist[i] = gather_distances(params, i);
 	  put_pixel(w->buffer, x, y, color_stuff(params->dist, params));
 	}
+      i = (x + 1) * 100 / w->buffer->width;
+      if (i != params->progress)
+	my_printf("Progress: %d%%\n", params->progress = i);
     }
-  sfTexture_updateFromPixels(w->texture, w->buffer->pixels,
-			     w->buffer->width, w->buffer->height, 0, 0);
 }

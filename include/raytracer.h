@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Sun Feb  5 14:37:35 2017 Nicolas Polomack
-** Last update Sat Feb 11 12:37:21 2017 Nicolas Polomack
+** Last update Sat Feb 11 20:24:23 2017 Nicolas Polomack
 */
 
 #ifndef RAYTRACER_H_
@@ -46,17 +46,13 @@ typedef struct	s_obj
   float		height;
 }		t_obj;
 
-typedef struct	s_imp
-{
-  float		dist;
-  int		face;
-}		t_imp;
-
 typedef struct	s_params
 {
   sfVector2i	screen_size;
   sfVector2i	screen_pos;
   t_light	*light;
+  int		bmp;
+  int		progress;
   int		nb_lights;
   int		nb_obj;
   t_ray		ray;
@@ -68,8 +64,11 @@ typedef struct	s_params
 typedef struct		s_window
 {
   sfRenderWindow	*window;
+  sfTexture		*save_t;
   sfTexture		*texture;
+  sfSprite		*save_s;
   sfSprite		*sprite;
+  t_my_framebuffer	*save;
   t_my_framebuffer	*buffer;
 }			t_window;
 
@@ -107,9 +106,16 @@ sfColor	seek_lights(float *, t_params *, int);
 /*
 ** window.c
 */
+int		create_window(sfRenderWindow **, char *, sfVector2i);
+int		init(t_params *);
 sfColor		evaluate_luminosity(float *, t_params *,
 				    sfColor, sfVector2i);
 sfColor		color_stuff(float *, t_params *);
+
+/*
+** load.c
+*/
+int	load_assets(t_window *, t_params *, char *);
 
 /*
 ** parse/parse.c
@@ -122,6 +128,7 @@ int	parse_config_file(char *, t_params *);
 int	is_valid_line(char *, int *);
 void	gather_idxs(char *, int[10]);
 int	get_nbr_objs(char *, int *);
+int	disp_guide();
 
 /*
 ** parse/util.c
@@ -129,6 +136,7 @@ int	get_nbr_objs(char *, int *);
 int	alloc_all(t_params *, int, int);
 int	is_a_number(char *);
 int	get_number(char *);
+int	parse_first(char *, t_params *);
 
 /*
 ** normals.c
@@ -188,7 +196,7 @@ float		intersect_plane(sfVector3f *, sfVector3f *);
 /*
 ** events.c
 */
-void		handle_events(sfRenderWindow *, sfEvent *,
+void		handle_events(t_window *, sfEvent *,
 			      t_params *);
 
 #endif /* !RAYTRACER_H_ */

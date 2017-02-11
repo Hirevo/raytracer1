@@ -2,10 +2,10 @@
 ** my_strcat.c for my_strcat in /home/nicolas.polomack/CPool_Day07
 **
 ** Made by Nicolas POLOMACK
-** Login   <nicolas.polomack@epitech.eu>
+** Login   <nicolas.polomack@epitech.net>
 **
 ** Started on  Tue Oct 11 10:30:59 2016 Nicolas POLOMACK
-** Last update Thu Dec  8 18:30:59 2016 Nicolas Polomack
+** Last update Wed Jan  4 12:04:48 2017 Nicolas Polomack
 */
 
 char	*my_strcat(char *dest, char *src)

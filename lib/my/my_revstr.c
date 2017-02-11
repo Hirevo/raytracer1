@@ -2,7 +2,7 @@
 ** my_revstr.c for my_revstr in /home/nicolas.polomack/CPool_Day06
 ** 
 ** Made by Nicolas POLOMACK
-** Login   <nicolas.polomack@epitech.eu>
+** Login   <nicolas.polomack@epitech.net>
 ** 
 ** Started on  Mon Oct 10 09:30:02 2016 Nicolas POLOMACK
 ** Last update Tue Oct 11 20:48:27 2016 Nicolas POLOMACK

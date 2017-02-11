@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb  9 02:33:42 2017 Nicolas Polomack
-** Last update Thu Feb  9 21:55:15 2017 Nicolas Polomack
+** Last update Sat Feb 11 15:30:00 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
@@ -62,5 +62,20 @@ int	alloc_all(t_params *params, int objs, int lights)
     return (-1);
   params->nb_lights = lights;
   params->nb_obj = objs - 1 - lights;
+  return (0);
+}
+
+int	parse_first(char *line, t_params *params)
+{
+  int	idxs[3];
+
+  idxs[0] = -1;
+  while (line[++(idxs[0])])
+    if ((line[idxs[0]] < '0' || line[idxs[0]] > '9') && line[idxs[0]] != ':')
+      return (-1);
+  gather_idxs(line, idxs);
+  params->screen_size.x = get_number(line);
+  params->screen_size.y = get_number(line + idxs[1]);
+  free(line);
   return (0);
 }

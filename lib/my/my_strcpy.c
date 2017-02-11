@@ -2,22 +2,19 @@
 ** my_strcpy.c for my_strcpy in /home/nicolas.polomack/CPool_Day06
 ** 
 ** Made by Nicolas POLOMACK
-** Login   <nicolas.polomack@epitech.eu>
+** Login   <nicolas.polomack@epitech.net>
 ** 
 ** Started on  Mon Oct 10 09:09:04 2016 Nicolas POLOMACK
-** Last update Mon Oct 10 19:01:53 2016 Nicolas POLOMACK
+** Last update Wed Feb  1 23:49:04 2017 Nicolas Polomack
 */
 
 char	*my_strcpy(char *dest, char *src)
 {
   int	count;
 
-  count = 0;
-  while (*src != '\0')
-    {
-      *(dest + count) = *src;
-      count = count + 1;
-      src = src + 1;
-    }
+  count = -1;
+  while (src[++count])
+    dest[count] = src[count];
+  dest[count] = 0;
   return (dest);
 }

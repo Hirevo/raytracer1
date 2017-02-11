@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Wed Dec 21 19:31:11 2016 Nicolas Polomack
-** Last update Thu Feb  9 02:40:54 2017 Nicolas Polomack
+** Last update Sat Feb 11 20:53:06 2017 Nicolas Polomack
 */
 
 #include <unistd.h>
@@ -17,6 +17,7 @@
 #include <fcntl.h>
 
 #include "raytracer.h"
+#include "my.h"
 #include "bmp.h"
 #include "sfcaster.h"
 
@@ -28,6 +29,7 @@ t_my_framebuffer	*load_bmp(char *filename, sfSprite **spr,
   bmp_info_header	info;
   t_my_framebuffer	*buffer;
 
+  my_printf("Loading: %s...", filename);
   if ((fd = open(filename, O_RDONLY)) == -1)
     return (NULL);
   read(fd, &head, sizeof(bmp_header));
@@ -44,6 +46,7 @@ t_my_framebuffer	*load_bmp(char *filename, sfSprite **spr,
   if (spr != NULL && tex != NULL)
     sfTexture_updateFromPixels(*tex, buffer->pixels,
 			       buffer->width, buffer->height, 0, 0);
+  my_printf(" Finished !\n");
   return (buffer);
 }
 

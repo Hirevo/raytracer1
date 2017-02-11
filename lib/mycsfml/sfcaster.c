@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Fri Nov 18 18:50:32 2016 Nicolas Polomack
-** Last update Sat Jan 14 17:12:20 2017 Nicolas Polomack
+** Last update Sat Feb 11 14:58:19 2017 Nicolas Polomack
 */
 
 #include <SFML/Graphics.h>
@@ -20,6 +20,8 @@ t_my_framebuffer	*assemble_texture(sfTexture **tex, sfSprite **spr,
 
   *tex = sfTexture_create(width, height);
   *spr = sfSprite_create();
+  if (!*tex || !*spr)
+    return (NULL);
   sfSprite_setTexture(*spr, *tex, sfTrue);
   buffer = my_framebuffer_create(width, height);
   return (buffer);

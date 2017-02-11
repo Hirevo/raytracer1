@@ -2,7 +2,7 @@
 ** my_sort_int_table.c for my_sort_int_tab in /home/nicolas.polomack/recovery
 **
 ** Made by Nicolas POLOMACK
-** Login   <nicolas.polomack@epitech.eu>
+** Login   <nicolas.polomack@epitech.net>
 **
 ** Started on  Fri Oct 14 10:17:09 2016 Nicolas POLOMACK
 ** Last update Tue Nov 22 18:14:53 2016 Nicolas Polomack

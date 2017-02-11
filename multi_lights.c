@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb  9 21:56:13 2017 Nicolas Polomack
-** Last update Thu Feb  9 21:59:47 2017 Nicolas Polomack
+** Last update Sat Feb 11 19:08:48 2017 Nicolas Polomack
 */
 
 #include "raytracer.h"

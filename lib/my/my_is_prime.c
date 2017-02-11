@@ -2,7 +2,7 @@
 ** my_is_prime.c for my_is_prime in /home/nicolas.polomack/CPool_Day05
 **
 ** Made by Nicolas POLOMACK
-** Login   <nicolas.polomack@epitech.eu>
+** Login   <nicolas.polomack@epitech.net>
 **
 ** Started on  Fri Oct  7 13:11:44 2016 Nicolas POLOMACK
 ** Last update Sun Nov  6 21:49:05 2016 Nicolas Polomack

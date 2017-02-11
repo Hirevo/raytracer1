@@ -2,7 +2,7 @@
 ** my_strupcase.c for my_strupcase in /home/nicolas.polomack/CPool_Day06
 ** 
 ** Made by Nicolas POLOMACK
-** Login   <nicolas.polomack@epitech.eu>
+** Login   <nicolas.polomack@epitech.net>
 ** 
 ** Started on  Mon Oct 10 12:10:37 2016 Nicolas POLOMACK
 ** Last update Tue Oct 11 12:14:52 2016 Nicolas POLOMACK

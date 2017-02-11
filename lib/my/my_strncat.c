@@ -2,7 +2,7 @@
 ** my_strcat.c for my_strcat in /home/nicolas.polomack/CPool_Day07
 ** 
 ** Made by Nicolas POLOMACK
-** Login   <nicolas.polomack@epitech.eu>
+** Login   <nicolas.polomack@epitech.net>
 ** 
 ** Started on  Tue Oct 11 10:30:59 2016 Nicolas POLOMACK
 ** Last update Wed Nov 30 17:53:07 2016 Nicolas Polomack

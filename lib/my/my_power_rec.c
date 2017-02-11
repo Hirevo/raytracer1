@@ -2,7 +2,7 @@
 ** my_power_rec.c for my_power_rec in /home/nicolas.polomack/temp_CPool_Day05
 ** 
 ** Made by Nicolas POLOMACK
-** Login   <nicolas.polomack@epitech.eu>
+** Login   <nicolas.polomack@epitech.net>
 ** 
 ** Started on  Fri Oct  7 11:01:28 2016 Nicolas POLOMACK
 ** Last update Mon Oct 10 10:22:32 2016 Nicolas POLOMACK

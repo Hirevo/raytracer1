@@ -5,7 +5,7 @@
 ## Login   <nicolas.polomack@epitech.eu>
 ##
 ## Started on  Tue Nov 15 09:05:43 2016 Nicolas Polomack
-## Last update Sat Feb 11 12:27:38 2017 Nicolas Polomack
+## Last update Sat Feb 11 21:00:58 2017 Nicolas Polomack
 ##
 
 MAKE2	=	make --no-print-directory -C lib/my
@@ -18,6 +18,7 @@ SRC	=	window.c			\
 		angles.c			\
 		lights.c			\
 		multi_lights.c			\
+		load.c				\
 		parse/parse.c			\
 		parse/check.c			\
 		parse/util.c			\

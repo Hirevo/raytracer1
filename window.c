@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 14:08:22 2017 Nicolas Polomack
-** Last update Sat Feb 11 13:07:07 2017 Nicolas Polomack
+** Last update Sat Feb 11 21:00:47 2017 Nicolas Polomack
 */
 
 #include <SFML/Graphics.h>
@@ -18,6 +18,7 @@
 #include "sfcaster.h"
 #include "raytracer.h"
 #include "bmp.h"
+#include "my.h"
 
 int		create_window(sfRenderWindow **w, char *name, sfVector2i screen_size)
 {
@@ -80,6 +81,7 @@ int	init(t_params *params)
   params->ray.dir.x = 0;
   params->ray.dir.y = 0;
   params->ray.dir.z = 0;
+  params->progress = 0;
   if ((params->dist = malloc(sizeof(float) * params->nb_obj)) == NULL)
     return (-1);
   return (0);
@@ -93,17 +95,21 @@ int			main(int ac, char **av)
 
   if (ac != 2)
     return (84);
-  if (parse_config_file(av[1], &params) == -1 ||
-      (w.buffer = assemble_texture(&w.texture, &w.sprite,
-				   params.screen_size.x, params.screen_size.y)) ==
-      NULL || create_window(&w.window, "Raytracer1", params.screen_size) == -1 ||
-      init(&params) == -1)
+  if (!my_strcmp(av[1], "-h") || !my_strcmp(av[1], "--help"))
+    return (disp_guide());
+  if (load_assets(&w, &params, av[1]) == -1)
     return (84);
   render_frame(&w, &params);
+  if (params.bmp)
+    {
+      save_bmp(w.buffer, "capture.bmp");
+      return (0);
+    }
+  sfTexture_updateFromPixels(w.texture, w.buffer->pixels,
+                             w.buffer->width, w.buffer->height, 0, 0);
   sfRenderWindow_drawSprite(w.window, w.sprite, NULL);
   sfRenderWindow_display(w.window);
   while (sfRenderWindow_isOpen(w.window))
-    handle_events(w.window, &event, &params);
-  save_bmp(w.buffer, "capture.bmp");
+    handle_events(&w, &event, &params);
   return (0);
 }

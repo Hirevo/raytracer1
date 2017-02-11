@@ -2,10 +2,10 @@
 ** my_strupcase.c for my_strupcase in /home/nicolas.polomack/CPool_Day06
 **
 ** Made by Nicolas POLOMACK
-** Login   <nicolas.polomack@epitech.eu>
+** Login   <nicolas.polomack@epitech.net>
 **
 ** Started on  Mon Oct 10 12:10:37 2016 Nicolas POLOMACK
-** Last update Sat Jan 14 14:04:14 2017 Nicolas Polomack
+** Last update Wed Nov 23 13:51:57 2016 Nicolas Polomack
 */
 
 int	my_str_isnum(char *str)

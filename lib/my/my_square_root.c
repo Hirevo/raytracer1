@@ -2,7 +2,7 @@
 ** my_square_root.c for my_square_root in /home/nicolas.polomack/CPool_Day05
 **
 ** Made by Nicolas POLOMACK
-** Login   <nicolas.polomack@epitech.eu>
+** Login   <nicolas.polomack@epitech.net>
 **
 ** Started on  Fri Oct  7 11:50:43 2016 Nicolas POLOMACK
 ** Last update Fri Dec 23 23:39:07 2016 Nicolas Polomack
