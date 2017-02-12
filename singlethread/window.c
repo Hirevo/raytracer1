@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 14:08:22 2017 Nicolas Polomack
-** Last update Sat Feb 11 21:00:47 2017 Nicolas Polomack
+** Last update Sun Feb 12 18:38:30 2017 Nicolas Polomack
 */
 
 #include <SFML/Graphics.h>
@@ -103,7 +103,7 @@ int			main(int ac, char **av)
   if (params.bmp)
     {
       save_bmp(w.buffer, "capture.bmp");
-      return (0);
+      return (free_all(&params, &w));
     }
   sfTexture_updateFromPixels(w.texture, w.buffer->pixels,
                              w.buffer->width, w.buffer->height, 0, 0);
@@ -111,5 +111,5 @@ int			main(int ac, char **av)
   sfRenderWindow_display(w.window);
   while (sfRenderWindow_isOpen(w.window))
     handle_events(&w, &event, &params);
-  return (0);
+  return (free_all(&params, &w));
 }

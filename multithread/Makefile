@@ -5,7 +5,7 @@
 ## Login   <nicolas.polomack@epitech.eu>
 ##
 ## Started on  Tue Nov 15 09:05:43 2016 Nicolas Polomack
-## Last update Sun Feb 12 03:56:43 2017 Nicolas Polomack
+## Last update Sun Feb 12 18:15:58 2017 Nicolas Polomack
 ##
 
 MAKE2	=	make --no-print-directory -C ../lib/my
@@ -20,6 +20,7 @@ SRC	=	window.c			\
 		lights.c			\
 		multi_lights.c			\
 		load.c				\
+		free.c				\
 		parse/parse.c			\
 		parse/check.c			\
 		parse/util.c			\
@@ -40,7 +41,7 @@ OBJ	=	$(SRC:.c=.o)
 
 FLAGS	=	-lm -L../lib/my -lmy -L../lib/mycsfml -lmycsfml -lc_graph_prog $(CFLAGS) -ansi
 
-CFLAGS	=	-Iinclude -Ofast -march=native -W -Wall -Wextra -Werror -pedantic -pthread
+CFLAGS	=	-Iinclude -I../include -Ofast -march=native -W -Wall -Wextra -Werror -pedantic -pthread
 
 NAME	=	raytracer
 
@@ -55,12 +56,6 @@ clean:
 	rm -f $(OBJ)
 	@$(MAKE1) clean
 	@$(MAKE2) clean
-
-test:	$(OBJ)
-	cc $(CFLAGS)   -c -o print_raycast.o print_raycast.c
-	@$(MAKE1)
-	@$(MAKE2)
-	gcc -o $(NAME) $(OBJ) print_raycast.o $(FLAGS) $(CFLAGS)
 
 fclean:	clean
 	rm -f $(NAME)

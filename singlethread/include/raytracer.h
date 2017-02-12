@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Sun Feb  5 14:37:35 2017 Nicolas Polomack
-** Last update Sat Feb 11 20:24:23 2017 Nicolas Polomack
+** Last update Sun Feb 12 18:37:26 2017 Nicolas Polomack
 */
 
 #ifndef RAYTRACER_H_
@@ -13,9 +13,6 @@
 
 # include <SFML/Graphics.h>
 # include "sfcaster.h"
-
-# define WIDTH 1280
-# define HEIGHT 720
 
 typedef struct	s_ray
 {
@@ -116,6 +113,11 @@ sfColor		color_stuff(float *, t_params *);
 ** load.c
 */
 int	load_assets(t_window *, t_params *, char *);
+
+/*
+** free.c
+*/
+int	free_all(t_params *, t_window *);
 
 /*
 ** parse/parse.c

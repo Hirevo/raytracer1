@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.net>
 **
 ** Started on  Thu Oct  6 09:53:18 2016 Nicolas POLOMACK
-** Last update Tue Nov 22 18:05:51 2016 Nicolas Polomack
+** Last update Sun Feb 12 18:33:30 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
@@ -27,10 +27,10 @@ void	my_putstr_printf(char *in, int *c, t_flags *flags, int isnbr)
   int	count;
   char	*str;
 
-  str = malloc(my_strlen(in) + 2) + (count = -1) * 0;
-  str[0] = 0;
-  str[1] = 0;
-  str[2] = 0;
+  if ((str = malloc(my_strlen(in) + 2)) == NULL)
+    return ;
+  str[0] = 0 * (count = -1) * 0;
+  str[1] = 0 * (str[2] = 0) * 0;
   if ((flags->format == 'x' || flags->format == 'X') && flags->hold == '#' &&
       isnbr)
     str[0] = '0' + (str[1] = flags->format) * 0;
@@ -40,13 +40,14 @@ void	my_putstr_printf(char *in, int *c, t_flags *flags, int isnbr)
     str[0] = flags->hold;
   str = complete_str(my_strcat(str, in), flags, c, 0);
   while (*(str + ++count) != '\0' && (flags->precision > 0 ||
-	   flags->precision == -1))
+				      flags->precision == -1))
     {
       my_putchar_printf(*(str + count), c);
       if (flags->precision > 0)
 	flags->precision -= 1;
     }
   str = complete_str(str, flags, c, 1);
+  free(str);
 }
 
 char	*complete_str(char *str, t_flags *flags, int *c, int i)
@@ -89,7 +90,7 @@ void	display_pointer(t_flags *flags, va_list ap, int *count)
     final[0] == flags->hold;
   flags->precision = -1;
   my_putstr_printf(my_strcat((final[0] == 0) ? final + 1 : final, str),
-	    count, flags, 1);
+		   count, flags, 1);
   free(str);
   free(final);
 }
@@ -98,10 +99,11 @@ void	display_number(t_flags *flags, va_list ap, char *base, int *count)
 {
   char	*str;
 
+  if ((str = my_int_to_char(va_arg(ap, int))) == NULL)
+    return ;
   if (my_strlen(base) != 10)
-    str = convert_base(my_int_to_char(va_arg(ap, int)), "0123456789", base);
-  else
-    str = my_int_to_char(va_arg(ap, int));
+    str = convert_base(str, "0123456789", base);
   flags->precision = -1;
   my_putstr_printf(str, count, flags, 1);
+  free(str);
 }

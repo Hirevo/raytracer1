@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Sun Feb 12 03:09:48 2017 Nicolas Polomack
-** Last update Sun Feb 12 03:51:26 2017 Nicolas Polomack
+** Last update Sun Feb 12 18:06:13 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
@@ -53,6 +53,7 @@ void		*thread_handler(void *arg)
 	    t->offs.y + (t->w->buffer->height / 2));
   pthread_mutex_unlock(&t->w->mutex);
   render_rect(t);
+  free(t->dist);
   return (NULL);
 }
 

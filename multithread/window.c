@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 14:08:22 2017 Nicolas Polomack
-** Last update Sun Feb 12 04:01:29 2017 Nicolas Polomack
+** Last update Sun Feb 12 18:13:18 2017 Nicolas Polomack
 */
 
 #include <SFML/Graphics.h>
@@ -85,8 +85,6 @@ int	init(t_params *params)
   params->ray.dir.z = 0;
   params->progress = 0;
   params->proc_count = sysconf(_SC_NPROCESSORS_ONLN);
-  if ((params->dist = malloc(sizeof(float) * params->nb_obj)) == NULL)
-    return (-1);
   return (0);
 }
 
@@ -106,7 +104,7 @@ int			main(int ac, char **av)
   if (params.bmp)
     {
       save_bmp(w.buffer, "capture.bmp");
-      return (0);
+      return (free_all(&params, &w));
     }
   sfTexture_updateFromPixels(w.texture, w.buffer->pixels,
 			     w.buffer->width, w.buffer->height, 0, 0);
@@ -114,5 +112,5 @@ int			main(int ac, char **av)
   sfRenderWindow_display(w.window);
   while (sfRenderWindow_isOpen(w.window))
     handle_events(&w, &event, &params);
-  return (0);
+  return (free_all(&params, &w));
 }

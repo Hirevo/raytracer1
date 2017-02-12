@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Sun Feb  5 14:37:35 2017 Nicolas Polomack
-** Last update Sun Feb 12 03:52:02 2017 Nicolas Polomack
+** Last update Sun Feb 12 18:15:21 2017 Nicolas Polomack
 */
 
 #ifndef RAYTRACER_H_
@@ -14,9 +14,6 @@
 # include <SFML/Graphics.h>
 # include <pthread.h>
 # include "sfcaster.h"
-
-# define WIDTH 1280
-# define HEIGHT 720
 
 typedef struct s_window t_window;
 typedef struct s_params t_params;
@@ -75,7 +72,6 @@ typedef struct	s_params
   int		nb_obj;
   t_ray		ray;
   t_obj		*objs;
-  float		*dist;
   int		fov;
 }		t_params;
 
@@ -148,6 +144,11 @@ int	load_assets(t_window *, t_params *, char *);
 ** parse/parse.c
 */
 int	parse_config_file(char *, t_params *);
+
+/*
+** free.c
+*/
+int	free_all(t_params *, t_window *);
 
 /*
 ** parse/check.c
