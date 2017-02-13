@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Sun Feb  5 14:37:35 2017 Nicolas Polomack
-** Last update Mon Feb 13 01:49:55 2017 Nicolas Polomack
+** Last update Mon Feb 13 09:37:44 2017 Nicolas Polomack
 */
 
 #ifndef RAYTRACER_H_
@@ -202,6 +202,11 @@ int	alloc_all(t_params *, int, int);
 int	is_a_number(char *);
 int	get_number(char *);
 int	parse_first(char *, t_params *);
+
+/*
+** parse/proc.c
+*/
+int	get_core_count();
 
 /*
 ** normals.c

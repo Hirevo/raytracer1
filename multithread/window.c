@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 14:08:22 2017 Nicolas Polomack
-** Last update Mon Feb 13 03:00:43 2017 Nicolas Polomack
+** Last update Mon Feb 13 09:36:52 2017 Nicolas Polomack
 */
 
 #include <SFML/Graphics.h>
@@ -84,7 +84,7 @@ int	init(t_params *params)
   params->ray.dir.y = 0;
   params->ray.dir.z = 0;
   params->progress = 0;
-  params->proc_count = sysconf(_SC_NPROCESSORS_ONLN);
+  params->proc_count = get_core_count();//sysconf(_SC_NPROCESSORS_ONLN);
   return (0);
 }
 

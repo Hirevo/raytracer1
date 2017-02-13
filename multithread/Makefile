@@ -5,7 +5,7 @@
 ## Login   <nicolas.polomack@epitech.eu>
 ##
 ## Started on  Tue Nov 15 09:05:43 2016 Nicolas Polomack
-## Last update Mon Feb 13 02:54:39 2017 Nicolas Polomack
+## Last update Mon Feb 13 09:38:02 2017 Nicolas Polomack
 ##
 
 MAKE2	=	make --no-print-directory -C ../lib/my
@@ -24,6 +24,7 @@ SRC	=	window.c			\
 		parse/parse.c			\
 		parse/check.c			\
 		parse/util.c			\
+		parse/proc.c			\
 		normals.c			\
 		rotation.c			\
 		anti_rotation.c			\
