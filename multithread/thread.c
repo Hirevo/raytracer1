@@ -5,12 +5,22 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Sun Feb 12 03:09:48 2017 Nicolas Polomack
-** Last update Sun Feb 12 18:06:13 2017 Nicolas Polomack
+** Last update Mon Feb 13 00:36:23 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
 #include "raytracer.h"
 #include "my.h"
+
+static void		update_color(t_thread *t)
+{
+  pthread_mutex_lock(&t->w->mutex);
+  sfTexture_updateFromPixels(t->w->texture, t->w->buffer->pixels,
+			     t->w->buffer->width, t->w->buffer->height, 0, 0);
+  sfRenderWindow_drawSprite(t->w->window, t->w->sprite, NULL);
+  sfRenderWindow_display(t->w->window);
+  pthread_mutex_unlock(&t->w->mutex);
+}
 
 void		render_rect(t_thread *t)
 {
@@ -25,19 +35,19 @@ void		render_rect(t_thread *t)
       y = t->offs.y - 1;
       while (++y < (t->offs.y + (t->w->buffer->height / 2)))
         {
-          t->screen_pos.x = x;
-          t->screen_pos.y = y;
           t->ray.dir = calc_dir_vector(t->params->screen_size,
-                                       t->screen_pos, t->params->fov);
+                                       x, y, t->params->fov);
           rotation_t_eye(t);
           i = -1;
           while (++i < t->params->nb_obj)
             t->dist[i] = gather_distances(t, i);
           col = color_stuff(t->dist, t);
           pthread_mutex_lock(&t->w->mutex);
-          put_pixel(t->w->buffer, x, y, col);
-          pthread_mutex_unlock(&t->w->mutex);
+	  put_pixel(t->w->buffer, x, y, col);
+	  pthread_mutex_unlock(&t->w->mutex);
         }
+      if (t->params->live)
+	update_color(t);
     }
 }
 
@@ -54,6 +64,9 @@ void		*thread_handler(void *arg)
   pthread_mutex_unlock(&t->w->mutex);
   render_rect(t);
   free(t->dist);
+  pthread_mutex_lock(&t->w->mutex);
+  my_printf("Thread %d finished, waiting to be joined !\n", t->id);
+  pthread_mutex_unlock(&t->w->mutex);
   return (NULL);
 }
 

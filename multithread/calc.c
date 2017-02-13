@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Tue Feb  7 23:10:06 2017 Nicolas Polomack
-** Last update Sun Feb 12 03:50:28 2017 Nicolas Polomack
+** Last update Mon Feb 13 00:40:02 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
@@ -57,6 +57,7 @@ void		render_frame(t_window *w, t_params *params)
   int	i;
 
   i = -1;
+  clear_pixels(w->buffer);
   pthread_mutex_init(&w->mutex, NULL);
   while (++i < (params->proc_count * 2))
     {
@@ -68,6 +69,6 @@ void		render_frame(t_window *w, t_params *params)
   while (++i < (params->proc_count * 2))
     {
       pthread_join(params->tid[i], NULL);
-      my_printf("Thread %d joined and finished\n", i);
+      my_printf("Thread %d joined !\n", i);
     }
 }

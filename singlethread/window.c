@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 14:08:22 2017 Nicolas Polomack
-** Last update Sun Feb 12 18:38:30 2017 Nicolas Polomack
+** Last update Mon Feb 13 03:11:58 2017 Nicolas Polomack
 */
 
 #include <SFML/Graphics.h>
@@ -36,18 +36,20 @@ int		create_window(sfRenderWindow **w, char *name, sfVector2i screen_size)
 sfColor		evaluate_luminosity(float *dist, t_params *params,
 				    sfColor col, sfVector2i idxs)
 {
-  col = set_luminosity((params->objs[idxs.x].type == 's') ?
-		       get_cos_angle_s(dist[idxs.x], params, idxs) :
-		       (params->objs[idxs.x].type == 'p') ?
-		       get_cos_angle_p(dist[idxs.x], params, idxs) :
-		       (params->objs[idxs.x].type == 'c' ||
-			params->objs[idxs.x].type == 'h') ?
-		       get_cos_angle_c(dist[idxs.x], params, idxs) :
-		       (params->objs[idxs.x].type == 'u' ||
-			params->objs[idxs.x].type == 'o' ||
-			params->objs[idxs.x].type == 'x') ?
-		       get_cos_angle_o(dist[idxs.x], params, idxs) : 1,
-		       col, params->light[idxs.y].ambient);
+  float	coeff;
+
+  coeff = (params->objs[idxs.x].type == 's') ?
+    get_cos_angle_s(dist[idxs.x], params, idxs) :
+    (params->objs[idxs.x].type == 'p') ?
+    get_cos_angle_p(dist[idxs.x], params, idxs) :
+    (params->objs[idxs.x].type == 'c' ||
+     params->objs[idxs.x].type == 'h') ?
+    get_cos_angle_c(dist[idxs.x], params, idxs) :
+    (params->objs[idxs.x].type == 'u' ||
+     params->objs[idxs.x].type == 'o' ||
+     params->objs[idxs.x].type == 'x') ?
+    get_cos_angle_o(dist[idxs.x], params, idxs) : 1;
+  col = set_luminosity(coeff, col, params->light[idxs.y].ambient);
   return (col);
 }
 
@@ -99,6 +101,7 @@ int			main(int ac, char **av)
     return (disp_guide());
   if (load_assets(&w, &params, av[1]) == -1)
     return (84);
+  clear_pixels(w.buffer);
   render_frame(&w, &params);
   if (params.bmp)
     {

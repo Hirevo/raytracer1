@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Tue Feb  7 00:16:08 2017 Nicolas Polomack
-** Last update Fri Feb 10 22:54:03 2017 Nicolas Polomack
+** Last update Mon Feb 13 02:24:17 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -77,7 +77,7 @@ float		intersect_light(float dist, t_params *params, sfVector2i idxs)
 sfColor		set_luminosity(float coef, sfColor col, float ambient)
 {
   if (coef < 0)
-    coef = 0;
+    coef = ambient;
   else
     coef = ambient + coef;
   if (coef > 1.0F)

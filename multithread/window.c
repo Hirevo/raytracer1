@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 14:08:22 2017 Nicolas Polomack
-** Last update Sun Feb 12 18:13:18 2017 Nicolas Polomack
+** Last update Mon Feb 13 03:00:43 2017 Nicolas Polomack
 */
 
 #include <SFML/Graphics.h>
@@ -98,6 +98,7 @@ int			main(int ac, char **av)
     return (84);
   if (!my_strcmp(av[1], "-h") || !my_strcmp(av[1], "--help"))
     return (disp_guide());
+  init(&params);
   if (load_assets(&w, &params, av[1]) == -1)
     return (84);
   render_frame(&w, &params);

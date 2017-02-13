@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Fri Nov 18 18:50:32 2016 Nicolas Polomack
-** Last update Sat Feb 11 14:58:19 2017 Nicolas Polomack
+** Last update Mon Feb 13 00:46:25 2017 Nicolas Polomack
 */
 
 #include <SFML/Graphics.h>
@@ -41,7 +41,7 @@ t_my_framebuffer	*my_framebuffer_create(int width, int height)
   framebuffer->width = width;
   framebuffer->height = height;
   i = 0;
-  while (i < width * height * 4)
+  while (i < (width * height * 4))
     {
       pixels[i] = 0;
       i = i + 1;
@@ -54,9 +54,9 @@ void	clear_pixels(t_my_framebuffer *buffer)
   int	i;
 
   i = 0;
-  while (i < buffer->width * buffer->height * 4)
+  while (i < (buffer->width * buffer->height * 4))
     {
-      buffer->pixels[i] = 0;
+      buffer->pixels[i] = (!((i + 1) % 4)) ? 255 : 0;
       i = i + 1;
     }
 }

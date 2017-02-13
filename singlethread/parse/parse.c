@@ -5,13 +5,14 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Wed Feb  8 23:10:21 2017 Nicolas Polomack
-** Last update Sat Feb 11 19:48:52 2017 Nicolas Polomack
+** Last update Mon Feb 13 02:11:30 2017 Nicolas Polomack
 */
 
 #include <fcntl.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <math.h>
 #include "raytracer.h"
 #include "get_next_line.h"
 #include "my.h"
@@ -58,7 +59,7 @@ void	parse_object(char *line, t_params *params, int obj, int *idxs)
 
 void	parse_line(char *line, t_params *params, int *lights, int *objs)
 {
-  int	idxs[11];
+  int	idxs[12];
 
   gather_idxs(line, idxs);
   if (line[0] == 'e')

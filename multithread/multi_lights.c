@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb  9 21:56:13 2017 Nicolas Polomack
-** Last update Sun Feb 12 02:47:01 2017 Nicolas Polomack
+** Last update Mon Feb 13 02:16:06 2017 Nicolas Polomack
 */
 
 #include "raytracer.h"
@@ -45,8 +45,8 @@ sfColor		seek_lights(float *dist, t_thread *t, int i)
     {
       idxs.y = l;
       col[l] = intersect_light(dist[i], t, idxs) ?
-	t->params->objs[i].col : sfBlack;
-      if (col[l].r || col[l].g || col[l].b)
+	t->params->objs[i].col : sfTransparent;
+      if (col[l].a != sfTransparent.a)
         col[l] = evaluate_luminosity(dist, t, col[l], idxs);
     }
   return (average_colors(col, t->params->nb_lights));

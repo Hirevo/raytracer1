@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Sun Feb  5 14:37:35 2017 Nicolas Polomack
-** Last update Sun Feb 12 18:15:21 2017 Nicolas Polomack
+** Last update Mon Feb 13 01:49:55 2017 Nicolas Polomack
 */
 
 #ifndef RAYTRACER_H_
@@ -14,6 +14,8 @@
 # include <SFML/Graphics.h>
 # include <pthread.h>
 # include "sfcaster.h"
+
+# define GREY get_sfcolor(150, 150, 150, 255)
 
 typedef struct s_window t_window;
 typedef struct s_params t_params;
@@ -67,6 +69,7 @@ typedef struct	s_params
   t_thread	t[8];
   t_light	*light;
   int		bmp;
+  int		live;
   int		progress;
   int		nb_lights;
   int		nb_obj;
@@ -86,6 +89,21 @@ typedef struct		s_window
   t_my_framebuffer	*save;
   t_my_framebuffer	*buffer;
 }			t_window;
+
+typedef struct		s_menu
+{
+  sfRenderWindow	*window;
+  sfSprite		*backg_s;
+  sfTexture		*backg_t;
+  sfSprite		*menu_s;
+  sfTexture		*menu_t;
+  sfSprite		*option_s;
+  sfTexture		*option_t;
+  t_my_framebuffer	*backg;
+  t_my_framebuffer	*menu;
+  t_my_framebuffer	*option;
+  int			menu_id;
+}			t_menu;
 
 /*
 ** calc.c
@@ -127,6 +145,7 @@ int		init(t_params *);
 sfColor		evaluate_luminosity(float *, t_thread *,
 				    sfColor, sfVector2i);
 sfColor		color_stuff(float *, t_thread *);
+int		raytracer(t_params *, char *);
 
 /*
 ** thread.c
@@ -149,6 +168,24 @@ int	parse_config_file(char *, t_params *);
 ** free.c
 */
 int	free_all(t_params *, t_window *);
+
+/*
+** menu.c
+*/
+int	handle_menu(t_menu *, t_params *);
+int	handle_options(t_menu *, t_params *,
+		      sfVector2i, sfEvent *);
+int	handle_main_menu(t_menu *, sfVector2i, sfEvent *);
+int	load_menu(t_menu *);
+
+/*
+** draw_menu.c
+*/
+int	show_menu(t_menu *, t_params *);
+void	draw_options(t_menu *, t_params *);
+void	draw_main_menu(t_menu *);
+int	exit_menu(t_menu *, int);
+void	init_menu(t_menu *);
 
 /*
 ** parse/check.c
@@ -190,7 +227,7 @@ void	anti_rotation_eye(t_params *);
 /*
 ** calc_dir_vector.c
 */
-sfVector3f	calc_dir_vector(sfVector2i, sfVector2i, int);
+sfVector3f	calc_dir_vector(sfVector2i, int, int, int);
 
 /*
 ** intersect/intersect_sphere.c

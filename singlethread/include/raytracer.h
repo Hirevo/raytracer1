@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Sun Feb  5 14:37:35 2017 Nicolas Polomack
-** Last update Sun Feb 12 18:37:26 2017 Nicolas Polomack
+** Last update Mon Feb 13 01:55:58 2017 Nicolas Polomack
 */
 
 #ifndef RAYTRACER_H_
@@ -13,6 +13,8 @@
 
 # include <SFML/Graphics.h>
 # include "sfcaster.h"
+
+# define GREY get_sfcolor(150, 150, 150, 255)
 
 typedef struct	s_ray
 {
@@ -34,6 +36,7 @@ typedef struct	s_obj
 {
   char		type;
   sfVector3f	pos;
+  float		shine;
   float		rx;
   float		ry;
   float		rz;
@@ -49,6 +52,7 @@ typedef struct	s_params
   sfVector2i	screen_pos;
   t_light	*light;
   int		bmp;
+  int		live;
   int		progress;
   int		nb_lights;
   int		nb_obj;
@@ -68,6 +72,21 @@ typedef struct		s_window
   t_my_framebuffer	*save;
   t_my_framebuffer	*buffer;
 }			t_window;
+
+typedef struct		s_menu
+{
+  sfRenderWindow	*window;
+  sfSprite		*backg_s;
+  sfTexture		*backg_t;
+  sfSprite		*menu_s;
+  sfTexture		*menu_t;
+  sfSprite		*option_s;
+  sfTexture		*option_t;
+  t_my_framebuffer	*backg;
+  t_my_framebuffer	*menu;
+  t_my_framebuffer	*option;
+  int			menu_id;
+}			t_menu;
 
 /*
 ** calc.c
@@ -108,6 +127,7 @@ int		init(t_params *);
 sfColor		evaluate_luminosity(float *, t_params *,
 				    sfColor, sfVector2i);
 sfColor		color_stuff(float *, t_params *);
+int		raytracer(t_params *, char *);
 
 /*
 ** load.c
@@ -118,6 +138,24 @@ int	load_assets(t_window *, t_params *, char *);
 ** free.c
 */
 int	free_all(t_params *, t_window *);
+
+/*
+** menu.c
+*/
+int	handle_menu(t_menu *, t_params *);
+int	handle_options(t_menu *, t_params *,
+		       sfVector2i, sfEvent *);
+int	handle_main_menu(t_menu *, sfVector2i, sfEvent *);
+int	load_menu(t_menu *);
+
+/*
+** draw_menu.c
+*/
+int	show_menu(t_menu *, t_params *);
+void	draw_options(t_menu *, t_params *);
+void	draw_main_menu(t_menu *);
+int	exit_menu(t_menu *, int);
+void	init_menu(t_menu *);
 
 /*
 ** parse/parse.c

@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Tue Feb  7 23:10:06 2017 Nicolas Polomack
-** Last update Sat Feb 11 20:45:41 2017 Nicolas Polomack
+** Last update Mon Feb 13 01:59:10 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
@@ -52,6 +52,22 @@ float	gather_distances(t_params *params, int i)
   return (f);
 }
 
+static void	update_render(t_window *w, t_params *params, int x)
+{
+  int	i;
+
+  i = (x + 1) * 100 / w->buffer->width;
+  if (i != params->progress)
+    my_printf("Progress: %d%%\n", params->progress = i);
+  if (params->live)
+    {
+      sfTexture_updateFromPixels(w->texture, w->buffer->pixels,
+				 w->buffer->width, w->buffer->height, 0, 0);
+      sfRenderWindow_drawSprite(w->window, w->sprite, NULL);
+      sfRenderWindow_display(w->window);
+    }
+}
+
 void		render_frame(t_window *w, t_params *params)
 {
   int		x;
@@ -74,8 +90,6 @@ void		render_frame(t_window *w, t_params *params)
 	    params->dist[i] = gather_distances(params, i);
 	  put_pixel(w->buffer, x, y, color_stuff(params->dist, params));
 	}
-      i = (x + 1) * 100 / w->buffer->width;
-      if (i != params->progress)
-	my_printf("Progress: %d%%\n", params->progress = i);
+      update_render(w, params, x);
     }
 }

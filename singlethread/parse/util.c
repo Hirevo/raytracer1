@@ -5,10 +5,11 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb  9 02:33:42 2017 Nicolas Polomack
-** Last update Sat Feb 11 15:30:00 2017 Nicolas Polomack
+** Last update Mon Feb 13 03:03:15 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
+#include "my.h"
 #include "raytracer.h"
 
 int	is_a_number(char *str)
@@ -70,12 +71,20 @@ int	parse_first(char *line, t_params *params)
   int	idxs[3];
 
   idxs[0] = -1;
+  idxs[1] = 0;
   while (line[++(idxs[0])])
-    if ((line[idxs[0]] < '0' || line[idxs[0]] > '9') && line[idxs[0]] != ':')
-      return (-1);
+    {
+      if (line[idxs[0]] == ':')
+	idxs[1] += 1;
+      if ((line[idxs[0]] < '0' || line[idxs[0]] > '9') && line[idxs[0]] != ':')
+	return (-1);
+    }
+  if (idxs[1] != 2)
+    return (-1);
   gather_idxs(line, idxs);
   params->screen_size.x = get_number(line);
   params->screen_size.y = get_number(line + idxs[1]);
+  params->live = get_number(line + idxs[2]) % 2;
   free(line);
   return (0);
 }
