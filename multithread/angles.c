@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Tue Feb  7 23:16:29 2017 Nicolas Polomack
-** Last update Sun Feb 12 02:46:42 2017 Nicolas Polomack
+** Last update Mon Feb 13 18:26:41 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -17,7 +17,7 @@ float		get_cos_angle_s(float dist, t_thread *t, sfVector2i idxs)
 {
   sfVector3f	imp;
   sfVector3f	dir;
-  sfVector3f  light;
+  sfVector3f	light;
 
   light = t->params->light[idxs.y].pos;
   sub_coords_vect(&t->ray.orig, &t->ray.dir,
@@ -41,7 +41,7 @@ float		get_cos_angle_p(float dist, t_thread *t, sfVector2i idxs)
 {
   sfVector3f	imp;
   sfVector3f	dir;
-  sfVector3f  light;
+  sfVector3f	light;
 
   light = t->params->light[idxs.y].pos;
   sub_coords_vect(&t->ray.orig, &t->ray.dir,
@@ -67,7 +67,7 @@ float		get_cos_angle_c(float dist, t_thread *t, sfVector2i idxs)
 {
   sfVector3f	imp;
   sfVector3f	dir;
-  sfVector3f  light;
+  sfVector3f	light;
 
   light = t->params->light[idxs.y].pos;
   sub_coords_vect(&t->ray.orig, &t->ray.dir,
@@ -92,7 +92,7 @@ float		get_cos_angle_o(float dist, t_thread *t, sfVector2i idxs)
 {
   sfVector3f	imp;
   sfVector3f	dir;
-  sfVector3f  light;
+  sfVector3f	light;
 
   light = t->params->light[idxs.y].pos;
   sub_coords_vect(&t->ray.orig, &t->ray.dir,

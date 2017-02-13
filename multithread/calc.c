@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Tue Feb  7 23:10:06 2017 Nicolas Polomack
-** Last update Mon Feb 13 00:40:02 2017 Nicolas Polomack
+** Last update Mon Feb 13 10:41:45 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
@@ -58,6 +58,8 @@ void		render_frame(t_window *w, t_params *params)
 
   i = -1;
   clear_pixels(w->buffer);
+  sfTexture_updateFromPixels(w->texture, w->buffer->pixels,
+                             w->buffer->width, w->buffer->height, 0, 0);
   pthread_mutex_init(&w->mutex, NULL);
   while (++i < (params->proc_count * 2))
     {
