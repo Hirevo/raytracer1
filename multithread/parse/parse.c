@@ -1,11 +1,11 @@
 /*
-** parse.c for raytracer in /home/nicolaspolomack/graphical/raytracer1
+1;4601;0c** parse.c for raytracer in /home/nicolaspolomack/graphical/raytracer1
 ** 
 ** Made by Nicolas Polomack
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Wed Feb  8 23:10:21 2017 Nicolas Polomack
-** Last update Mon Feb 13 02:28:22 2017 Nicolas Polomack
+** Last update Wed Feb 15 02:36:56 2017 Nicolas Polomack
 */
 
 #include <fcntl.h>

@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Sat Feb 11 15:15:00 2017 Nicolas Polomack
-** Last update Sun Feb 12 16:30:51 2017 Nicolas Polomack
+** Last update Wed Feb 15 01:42:04 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
@@ -32,8 +32,7 @@ int	load_window(t_window *w, t_params *params)
                           &(w->save_s), &(w->save_t))) == NULL ||
       (w->buffer = assemble_texture(&w->texture, &w->sprite,
 				    params->screen_size.x,
-				    params->screen_size.y)) == NULL ||
-      init(params) == -1)
+				    params->screen_size.y)) == NULL)
     return (-1);
   return (0);
 }
@@ -49,8 +48,7 @@ int	load_assets(t_window *w, t_params *params, char *file)
       my_printf("Resolution too high for a window to be created\n%s\n",
                 "Directly saving the rendered frame in capture.bmp");
       if ((w->buffer = my_framebuffer_create(params->screen_size.x,
-                                             params->screen_size.y)) == NULL ||
-          init(params) == -1)
+                                             params->screen_size.y)) == NULL)
         return (-1);
       return (0);
     }

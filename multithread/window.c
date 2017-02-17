@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 14:08:22 2017 Nicolas Polomack
-** Last update Mon Feb 13 09:36:52 2017 Nicolas Polomack
+** Last update Wed Feb 15 19:43:42 2017 Nicolas Polomack
 */
 
 #include <SFML/Graphics.h>
@@ -50,6 +50,7 @@ sfColor		evaluate_luminosity(float *dist, t_thread *t,
 			t->params->objs[idxs.x].type == 'x') ?
 		       get_cos_angle_o(dist[idxs.x], t, idxs) : 1,
 		       col, t->params->light[idxs.y].ambient);
+  t->idx = idxs.x;
   return (col);
 }
 
@@ -65,10 +66,14 @@ sfColor		color_stuff(float *dist, t_thread *t)
     if (dist[i] < record && dist[i] > 0)
       record = dist[i];
   i = -1;
+  t->can_reflect = 0;
+  t->idx = -1;
   while (++i < t->params->nb_obj)
     if (dist[i] == record)
       {
 	col = seek_lights(dist, t, i);
+	t->can_reflect = 1;
+	t->idx = i;
         break;
       }
   if ((!col.r && !col.g && !col.b))
@@ -78,13 +83,21 @@ sfColor		color_stuff(float *dist, t_thread *t)
   return (col);
 }
 
-int	init(t_params *params)
+int	init(t_params *params, t_window *w)
 {
   params->ray.dir.x = 0;
   params->ray.dir.y = 0;
   params->ray.dir.z = 0;
   params->progress = 0;
-  params->proc_count = get_core_count();//sysconf(_SC_NPROCESSORS_ONLN);
+  if (params->t_count == 'x')
+    params->t_count = get_core_count() * 2;
+  pthread_mutex_init(&w->mutex, NULL);
+  pthread_cond_init(&params->cond, NULL);
+  pthread_cond_init(&params->start, NULL);
+  clear_pixels(w->buffer);
+  if (!params->bmp)
+    sfTexture_updateFromPixels(w->texture, w->buffer->pixels,
+			       w->buffer->width, w->buffer->height, 0, 0);
   return (0);
 }
 
@@ -98,9 +111,9 @@ int			main(int ac, char **av)
     return (84);
   if (!my_strcmp(av[1], "-h") || !my_strcmp(av[1], "--help"))
     return (disp_guide());
-  init(&params);
   if (load_assets(&w, &params, av[1]) == -1)
     return (84);
+  init(&params, &w);
   render_frame(&w, &params);
   if (params.bmp)
     {

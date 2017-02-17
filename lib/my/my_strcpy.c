@@ -5,8 +5,18 @@
 ** Login   <nicolas.polomack@epitech.net>
 ** 
 ** Started on  Mon Oct 10 09:09:04 2016 Nicolas POLOMACK
-** Last update Wed Feb  1 23:49:04 2017 Nicolas Polomack
+** Last update Thu Feb 16 20:13:23 2017 Nicolas Polomack
 */
+
+char	*my_memset(char *buffer, int size)
+{
+  int	i;
+
+  i = -1;
+  while (++i < size)
+    buffer[i] = 0;
+  return (buffer);
+}
 
 char	*my_strcpy(char *dest, char *src)
 {

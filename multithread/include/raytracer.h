@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Sun Feb  5 14:37:35 2017 Nicolas Polomack
-** Last update Mon Feb 13 09:37:44 2017 Nicolas Polomack
+** Last update Wed Feb 15 15:15:36 2017 Nicolas Polomack
 */
 
 #ifndef RAYTRACER_H_
@@ -52,31 +52,37 @@ typedef struct	s_obj
 typedef struct s_thread
 {
   int		id;
+  int		idx;
+  int		can_reflect;
   t_ray         ray;
   sfVector2i    offs;
+  sfVector2i	end;
   float         *dist;
+  sfVector3f	normal;
   sfVector2i    screen_pos;
   t_window	*w;
   t_params      *params;
 }               t_thread;
 
-typedef struct	s_params
+typedef struct		s_params
 {
-  sfVector2i	screen_size;
-  sfVector2i	screen_pos;
-  long		proc_count;
-  pthread_t	tid[8];
-  t_thread	t[8];
-  t_light	*light;
-  int		bmp;
-  int		live;
-  int		progress;
-  int		nb_lights;
-  int		nb_obj;
-  t_ray		ray;
-  t_obj		*objs;
-  int		fov;
-}		t_params;
+  sfVector2i		screen_size;
+  sfVector2i		screen_pos;
+  long			t_count;
+  pthread_cond_t	cond;
+  pthread_cond_t	start;
+  pthread_t		tid[50];
+  t_thread		t[50];
+  t_light		*light;
+  int			bmp;
+  int			live;
+  int			progress;
+  int			nb_lights;
+  int			nb_obj;
+  t_ray			ray;
+  t_obj			*objs;
+  int			fov;
+}			t_params;
 
 typedef struct		s_window
 {
@@ -110,7 +116,7 @@ typedef struct		s_menu
 */
 void		sub_coords(t_thread *, t_obj *);
 void		add_coords(t_thread *, t_obj *);
-float		gather_distances(t_thread *, int);
+float		gather_distances(t_obj *, t_ray, int);
 void		render_frame(t_window *, t_params *);
 
 /*
@@ -141,7 +147,7 @@ sfColor	seek_lights(float *, t_thread *, int);
 ** window.c
 */
 int		create_window(sfRenderWindow **, char *, sfVector2i);
-int		init(t_params *);
+int		init(t_params *, t_window *);
 sfColor		evaluate_luminosity(float *, t_thread *,
 				    sfColor, sfVector2i);
 sfColor		color_stuff(float *, t_thread *);
@@ -227,7 +233,7 @@ void	rotation_t_eye(t_thread *);
 ** anti_rotation.c
 */
 void	anti_rotation(sfVector3f *, sfVector3f *, t_obj *);
-void	anti_rotation_eye(t_params *);
+void	anti_rotation_eye(t_thread *);
 
 /*
 ** calc_dir_vector.c
