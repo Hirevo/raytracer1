@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 23:30:22 2017 Nicolas Polomack
-** Last update Sat Feb 11 12:35:08 2017 Nicolas Polomack
+** Last update Sat Feb 18 22:42:37 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -82,10 +82,10 @@ float		intersect_cone(sfVector3f *eye_pos, sfVector3f *dir_vector,
 float		intersect_closed_cone(sfVector3f *eye_pos, sfVector3f *dir_vector,
 				      t_obj *obj, float dist)
 {
-  sfVector3f	imp;
+  float		impz;
 
-  imp.z = eye_pos->z + dir_vector->z * dist;
-  if (imp.z > -obj->height)
+  impz = eye_pos->z + dir_vector->z * dist;
+  if (roundf(impz) >= -obj->height)
     return (dist);
   eye_pos->z += (obj->height);
   dist = intersect_disk(eye_pos, dir_vector, tanr(obj->aper) * obj->height);

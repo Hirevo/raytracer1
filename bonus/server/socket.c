@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb 16 13:52:48 2017 Nicolas Polomack
-** Last update Fri Feb 17 12:49:46 2017 Nicolas Polomack
+** Last update Sat Feb 18 21:16:24 2017 Nicolas Polomack
 */
 
 #include <sys/types.h>
@@ -19,8 +19,6 @@
 #include <errno.h>
 #include "my.h"
 #include "raytracer.h"
-
-typedef int SOCKET;
 
 void	handle_error(char *msg)
 {
@@ -41,7 +39,7 @@ void	prepare_connection(t_socket *s, char *file)
   s->addr.sin_family = AF_INET;
   if (bind(s->fd,(struct sockaddr *) &s->addr, sizeof(struct sockaddr)) == -1)
     handle_error("bind");
-  if (listen(s->fd, 4) == -1)
+  if (listen(s->fd, s->nb_clients) == -1)
     handle_error("listen");
 }
 
@@ -79,7 +77,7 @@ void		listen_connections(t_socket *s)
   int		i;
 
   i = -1;
-  while (++i < 4)
+  while (++i < s->nb_clients)
     {
       addrsize = sizeof(s->caddr[i]);
       s->cfd[i] = accept(s->fd, (struct sockaddr *)&(s->cfd[i]), &addrsize);
@@ -90,7 +88,11 @@ void		listen_connections(t_socket *s)
       send(s->cfd[i], &(s->end[i]), sizeof(sfVector2i), 0);
       recv(s->cfd[i], confirm, 3, 0);
       if (my_strcmp(confirm, "OK"))
-	exit(84);
+	{
+	  my_printf("Connection detected, but communication has failed.\n");
+	  close(s->cfd[i--]);
+	  continue;
+	}
       my_printf("Client %d connected !\n", i);
     }
 }
@@ -100,7 +102,7 @@ void		gather_results(t_params *params, t_window *w)
   int		i;
 
   i = -1;
-  while (++i < 4)
+  while (++i < params->s.nb_clients)
     {
       my_printf("Client %d: ...", i);
       send(params->s.cfd[i], "RESULT", 7, 0);

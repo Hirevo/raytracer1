@@ -5,7 +5,7 @@
 ## Login   <nicolas@epitech.eu>
 ##
 ## Started on  Tue Nov  1 12:04:24 2016 Nicolas POLOMACK
-## Last update Tue Feb  7 00:13:20 2017 Nicolas Polomack
+## Last update Fri Feb 17 17:35:59 2017 Nicolas Polomack
 ##
 
 SRC	=	sfcaster.c	\
@@ -15,16 +15,23 @@ SRC	=	sfcaster.c	\
 		sfraytracer.c	\
 		sftrig.c
 
+SRC2	=	sfassemble.c
+
 OBJ	=	$(SRC:.c=.o)
+
+OBJ2	=	$(SRC2:.c=.o)
 
 NAME	=	libmycsfml.a
 
-CFLAGS	=	-I../../include -W -Wall -Werror -Wextra -pedantic -Ofast -march=native
+NAME2    =       libmycsfml-sa.a
+
+CFLAGS	=	-I../../include -W -Wall -Werror -Wextra -pedantic
 
 all:	$(NAME)
 
-$(NAME):$(OBJ)
-	@ar rc $(NAME) $(OBJ)
+$(NAME):$(OBJ) $(OBJ2)
+	@ar rc $(NAME) $(OBJ) $(OBJ2)
+	@ar rc $(NAME2) $(OBJ)
 
 clean:
 	@rm -f $(OBJ)

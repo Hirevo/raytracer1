@@ -5,71 +5,13 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Sun Feb 12 03:09:48 2017 Nicolas Polomack
-** Last update Fri Feb 17 10:23:53 2017 Nicolas Polomack
+** Last update Sat Feb 18 23:30:37 2017 Nicolas Polomack
 */
 
 #include <float.h>
 #include <stdlib.h>
 #include "raytracer.h"
 #include "my.h"
-
-int printf(char *, ...);
-
-static void		update_color(t_thread *t)
-{
-  pthread_mutex_lock(&t->w->mutex);
-  sfTexture_updateFromPixels(t->w->texture, t->w->buffer->pixels,
-			     t->w->buffer->width, t->w->buffer->height, 0, 0);
-  sfRenderWindow_drawSprite(t->w->window, t->w->sprite, NULL);
-  sfRenderWindow_display(t->w->window);
-  pthread_mutex_unlock(&t->w->mutex);
-}
-
-void		prepare_reflect(t_thread *t)
-{
-  float		norme;
-
-  t->ray.orig.x = t->ray.orig.x + t->ray.dir.x * t->dist[t->idx];
-  t->ray.orig.y	= t->ray.orig.y + t->ray.dir.y * t->dist[t->idx];
-  t->ray.orig.z	= t->ray.orig.z + t->ray.dir.z * t->dist[t->idx];
-  norme = norm(t->ray.dir);
-  t->ray.dir.x /= norme;
-  t->ray.dir.y /= norme;
-  t->ray.dir.z /= norme;
-  t->normal.x = t->ray.orig.x - t->params->objs[t->idx].pos.x;
-  t->normal.y =	t->ray.orig.y -	t->params->objs[t->idx].pos.y;
-  t->normal.z =	t->ray.orig.z -	t->params->objs[t->idx].pos.z;
-  norme = norm(t->normal);
-  printf("norme 2: %f\n", norme);
-  t->normal.x = norme;
-  t->normal.y = norme;
-  t->normal.z = norme;
-  norme = dot(t->normal, t->ray.dir);
-  t->ray.dir.x = -2 * t->normal.x * norme + t->ray.dir.x;
-  t->ray.dir.y = -2 * t->normal.y * norme + t->ray.dir.y;
-  t->ray.dir.z = -2 * t->normal.z * norme + t->ray.dir.z;
-}
-
-sfColor		apply_reflect(t_thread *t, sfColor col)
-{
-  sfColor	reflect;
-  int		i;
-
-  i = -1;
-  prepare_reflect(t);
-  //printf("(%f,%f,%f)\n", t->ray.dir.x, t->ray.dir.y, t->ray.dir.z);
-  t->dist[t->idx] = FLT_MAX;
-  while (++i < t->params->nb_obj)
-    {
-      if (i != t->idx)
-	t->dist[i] = gather_distances(t->params->objs, t->ray, i);
-    }
-  reflect = color_stuff(t->dist, t);
-  reflect.r = reflect.r * 0.25F/*t->params->objs[t->idx].reflect*/ + col.r * (1 - 0.25F/*t->params->objs[t->idx]reflect*/);
-  reflect.g = reflect.g * 0.25F/*t->params->objs[t->idx].reflect*/ + col.g * (1 - 0.25F/*t->params->objs[t->idx]reflect*/);
-  reflect.b = reflect.b * 0.25F/*t->params->objs[t->idx].reflect*/ + col.b * (1 - 0.25F/*t->params->objs[t->idx]reflect*/);
-  return (reflect);
-}
 
 void		render_rect(t_thread *t)
 {
@@ -98,8 +40,6 @@ void		render_rect(t_thread *t)
 	  put_pixel(t->w->buffer, x, y, col);
 	  //pthread_mutex_unlock(&t->w->mutex);
         }
-      if (t->params->live && !t->params->bmp)
-	update_color(t);
     }
 }
 
@@ -143,8 +83,8 @@ void	init_thread(int i, t_params *params, t_window *w)
   params->t[i].end.x = (params->t[i].offs.x + ((params->s.end.x - params->s.offs.x) /
 					       (params->t_count / 2)));
   params->t[i].end.y = (params->t[i].offs.y + ((params->s.end.y - params->s.offs.y) / 2));
-  params->t[i].end.x += (i >= (params->t_count - 2)) ?
-    (params->s.end.x - params->s.offs.x) % params->t_count : 0;
+  if (i >= (params->t_count - 2) && params->t[i].end.x < params->s.end.x)
+    params->t[i].end.x += (params->s.end.x - params->s.offs.x) % (params->t_count / 2);
   params->t[i].w = w;
   params->t[i].params = params;
 }

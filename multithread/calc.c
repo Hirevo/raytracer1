@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Tue Feb  7 23:10:06 2017 Nicolas Polomack
-** Last update Wed Feb 15 03:36:21 2017 Nicolas Polomack
+** Last update Sat Feb 18 23:11:56 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
@@ -13,8 +13,6 @@
 #include "sfcaster.h"
 #include "raytracer.h"
 #include "my.h"
-
-int printf(char *, ...);
 
 void	sub_coords(t_thread *t, t_obj *obj)
 {
@@ -68,7 +66,7 @@ void		render_frame(t_window *w, t_params *params)
       pthread_mutex_unlock(&w->mutex);
     }
   pthread_mutex_lock(&w->mutex);
-  my_printf("Broadcasting start signal every thread !\n");
+  my_printf("Broadcasting start signal to every thread !\n");
   pthread_mutex_unlock(&w->mutex);
   pthread_cond_broadcast(&params->start);
   i = -1;

@@ -5,15 +5,13 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Sun Feb 12 03:09:48 2017 Nicolas Polomack
-** Last update Fri Feb 17 12:34:10 2017 Nicolas Polomack
+** Last update Sat Feb 18 23:24:36 2017 Nicolas Polomack
 */
 
 #include <float.h>
 #include <stdlib.h>
 #include "raytracer.h"
 #include "my.h"
-
-int printf(char *, ...);
 
 static void		update_color(t_thread *t)
 {
@@ -40,7 +38,6 @@ void		prepare_reflect(t_thread *t)
   t->normal.y =	t->ray.orig.y -	t->params->objs[t->idx].pos.y;
   t->normal.z =	t->ray.orig.z -	t->params->objs[t->idx].pos.z;
   norme = norm(t->normal);
-  printf("norme 2: %f\n", norme);
   t->normal.x = norme;
   t->normal.y = norme;
   t->normal.z = norme;
@@ -57,7 +54,6 @@ sfColor		apply_reflect(t_thread *t, sfColor col)
 
   i = -1;
   prepare_reflect(t);
-  //printf("(%f,%f,%f)\n", t->ray.dir.x, t->ray.dir.y, t->ray.dir.z);
   t->dist[t->idx] = FLT_MAX;
   while (++i < t->params->nb_obj)
     {

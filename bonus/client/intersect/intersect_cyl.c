@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 23:30:22 2017 Nicolas Polomack
-** Last update Sat Feb 11 02:50:29 2017 Nicolas Polomack
+** Last update Sat Feb 18 22:56:38 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -61,7 +61,7 @@ float		intersect_closed_cyl(sfVector3f *eye_pos, sfVector3f *dir_vector,
   imp.x = eye_pos->x + dir_vector->x * dist;
   imp.y = eye_pos->y + dir_vector->y * dist;
   imp.z = eye_pos->z + dir_vector->z * dist;
-  if (imp.z < (obj->height / 2) && imp.z > -(obj->height / 2))
+  if (imp.z <= (obj->height / 2) && imp.z >= -(obj->height / 2))
     return (dist);
   eye_pos->z -= (obj->height / 2);
   if ((dist = intersect_disk(eye_pos, dir_vector, obj->rad)) != -1)

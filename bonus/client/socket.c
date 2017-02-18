@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb 16 13:52:48 2017 Nicolas Polomack
-** Last update Fri Feb 17 12:20:33 2017 Nicolas Polomack
+** Last update Fri Feb 17 17:16:10 2017 Nicolas Polomack
 */
 
 #include <sys/types.h>
@@ -56,5 +56,8 @@ void			connect_socket(t_socket *s, char *ip)
   send(s->fd, "OK", 3, 0);
   recv(s->fd, confirm, 6, 0);
   if (my_strcmp(confirm, "START"))
-    exit(84);
+    {
+      handle_error(confirm);
+      exit(84);
+    }
 }

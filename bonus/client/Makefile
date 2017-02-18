@@ -5,7 +5,7 @@
 ## Login   <nicolas.polomack@epitech.eu>
 ##
 ## Started on  Tue Nov 15 09:05:43 2016 Nicolas Polomack
-## Last update Thu Feb 16 19:21:11 2017 Nicolas Polomack
+## Last update Sat Feb 18 23:31:49 2017 Nicolas Polomack
 ##
 
 MAKE2	=	make --no-print-directory -C ../../lib/my
@@ -14,7 +14,6 @@ MAKE1	=	make --no-print-directory -C ../../lib/mycsfml
 
 SRC	=	window.c			\
 		calc.c				\
-		events.c			\
 		angles.c			\
 		thread.c			\
 		socket.c			\
@@ -37,14 +36,13 @@ SRC	=	window.c			\
 		intersect/intersect_plane.c	\
 		calc_dir_vector.c		\
 		get_next_line.c			\
-		load_bmp.c			\
 		save_bmp.c
 
 OBJ	=	$(SRC:.c=.o)
 
-FLAGS	=	-lm -L../../lib/my -lmy -L../../lib/mycsfml -lmycsfml -lc_graph_prog $(CFLAGS) -ansi
+FLAGS	=	-lm -L../../lib/my -lmy -L../../lib/mycsfml -lmycsfml-sa $(CFLAGS) -ansi
 
-CFLAGS	=	-Iinclude -I../../include -W -Wall -Wextra -Werror -pedantic -pthread -Ofast -march=native
+CFLAGS	=	-Iinclude -I../../include -W -Wall -Wextra -Werror -pedantic -pthread
 
 NAME	=	raytracer
 

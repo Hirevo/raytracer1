@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Wed Feb  8 23:10:21 2017 Nicolas Polomack
-** Last update Fri Feb 17 04:05:25 2017 Nicolas Polomack
+** Last update Sat Feb 18 14:45:05 2017 Nicolas Polomack
 */
 
 #include <fcntl.h>
@@ -95,7 +95,6 @@ int	parse_config_file(int fd, t_params *params)
   fleo[1] = 0;
   while ((line = get_next_line(fleo[0])) != NULL)
     {
-      my_printf("line: %s\n", line);
       if (fleo[3] == -1)
 	fleo[3] = parse_first(line, params);
       else if (!is_valid_line(line, &(fleo[2])))

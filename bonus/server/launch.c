@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb 16 16:22:58 2017 Nicolas Polomack
-** Last update Fri Feb 17 12:51:59 2017 Nicolas Polomack
+** Last update Sat Feb 18 20:29:25 2017 Nicolas Polomack
 */
 
 #include <errno.h>
@@ -22,14 +22,14 @@ void	divide_frame(t_params *params, t_window *w)
   int	i;
 
   i = -1;
-  while (++i < 4)
+  while (++i < params->s.nb_clients)
     {
       params->s.offs[i].x = 0;
-      params->s.offs[i].y = (w->buffer->height / 4) * i;
+      params->s.offs[i].y = (w->buffer->height / params->s.nb_clients) * i;
       params->s.end[i].x = w->buffer->width;
-      params->s.end[i].y = (w->buffer->height / 4) * (i + 1);
+      params->s.end[i].y = (w->buffer->height / params->s.nb_clients) * (i + 1);
       params->s.end[i].y += (i == 3) ?
-        w->buffer->height % 4 : 0;
+        w->buffer->height % params->s.nb_clients : 0;
     }
 }
 
@@ -54,12 +54,13 @@ int		main(int ac, char **av)
   t_params	params;
   sfEvent	event;
 
-  if (ac != 2)
+  if (ac != 3 || !my_str_isnum(av[2]))
     return (84);
   if (!my_strcmp(av[1], "-h") || !my_strcmp(av[1], "--help"))
     return (disp_guide());
   if (load_assets(&w, &params, av[1]) == -1)
-    return (-1);
+    return (84);
+  params.s.nb_clients = my_getnbr(av[2]);
   render_frame(&w, &params, av[1]);
   if (params.bmp)
     {

@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Sun Feb  5 14:37:35 2017 Nicolas Polomack
-** Last update Fri Feb 17 04:10:22 2017 Nicolas Polomack
+** Last update Sat Feb 18 23:34:00 2017 Nicolas Polomack
 */
 
 #ifndef RAYTRACER_H_
@@ -18,12 +18,12 @@
 # include <pthread.h>
 # include "sfcaster.h"
 
-# define GREY get_sfcolor(150, 150, 150, 255)
+# define BLACK get_sfcolor(0, 0, 0, 255)
+# define TRANSPARENT get_sfcolor(0, 0, 0, 0)
 
 typedef struct s_window t_window;
 typedef struct s_params t_params;
 typedef struct s_socket t_socket;
-typedef struct sockaddr_in t_sockaddr_in;
 
 typedef struct	s_ray
 {
@@ -72,7 +72,7 @@ typedef struct s_thread
 typedef struct          s_socket
 {
   int                   fd;
-  t_sockaddr_in		addr;
+  struct sockaddr_in	addr;
   sfVector2i            offs;
   sfVector2i            end;
   char			scene[4096];

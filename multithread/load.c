@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Sat Feb 11 15:15:00 2017 Nicolas Polomack
-** Last update Wed Feb 15 01:42:04 2017 Nicolas Polomack
+** Last update Sat Feb 18 16:00:40 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
@@ -41,8 +41,8 @@ int	load_assets(t_window *w, t_params *params, char *file)
 {
   if (parse_config_file(file, params) == -1)
     return (-1);
-  if (params->screen_size.x > 8192 ||
-      params->screen_size.y > 8192)
+  if (params->screen_size.x >= 8192 ||
+      params->screen_size.y >= 8192)
     {
       params->bmp = 1;
       my_printf("Resolution too high for a window to be created\n%s\n",
