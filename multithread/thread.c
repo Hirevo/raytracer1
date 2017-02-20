@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Sun Feb 12 03:09:48 2017 Nicolas Polomack
-** Last update Sat Feb 18 23:24:36 2017 Nicolas Polomack
+** Last update Mon Feb 20 12:34:55 2017 Nicolas Polomack
 */
 
 #include <float.h>
@@ -140,7 +140,7 @@ void	init_thread(int i, t_params *params, t_window *w)
 					       (params->t_count / 2)));
   params->t[i].end.y = (params->t[i].offs.y + (w->buffer->height / 2));
   params->t[i].end.x += (i >= (params->t_count - 2)) ?
-    params->screen_size.x % params->t_count : 0;
+    params->screen_size.x % (params->t_count / 2) : 0;
   params->t[i].w = w;
   params->t[i].params = params;
 }
