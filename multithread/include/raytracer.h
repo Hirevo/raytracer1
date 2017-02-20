@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Sun Feb  5 14:37:35 2017 Nicolas Polomack
-** Last update Wed Feb 15 15:15:36 2017 Nicolas Polomack
+** Last update Mon Feb 20 11:07:54 2017 Nicolas Polomack
 */
 
 #ifndef RAYTRACER_H_
@@ -132,8 +132,8 @@ float           get_cos_angle_oo(float, t_thread *, sfVector2i);
 /*
 ** lights.c
 */
-void		sub_coords_vect(sfVector3f *, sfVector3f *, t_obj *);
-void		add_coords_vect(sfVector3f *, sfVector3f *, t_obj *);
+void		sub_coords_vect(sfVector3f *restrict, sfVector3f *restrict, t_obj *);
+void		add_coords_vect(sfVector3f *restrict, sfVector3f *restrict, t_obj *);
 float		intersect_light(float, t_thread *, sfVector2i);
 sfColor		set_luminosity(float, sfColor, float);
 
@@ -223,16 +223,16 @@ void	get_cylinder_normal(t_thread *, sfVector2i, sfVector3f *, float);
 /*
 ** rotation.c
 */
-void	rx(sfVector3f *, float);
-void	ry(sfVector3f *, float);
-void	rz(sfVector3f *, float);
-void	rotation(sfVector3f *, sfVector3f *, t_obj *);
+void	rx(sfVector3f *restrict, float);
+void	ry(sfVector3f *restrict, float);
+void	rz(sfVector3f *restrict, float);
+void	rotation(sfVector3f *restrict, sfVector3f *restrict, t_obj *);
 void	rotation_t_eye(t_thread *);
 
 /*
 ** anti_rotation.c
 */
-void	anti_rotation(sfVector3f *, sfVector3f *, t_obj *);
+void	anti_rotation(sfVector3f *restrict, sfVector3f *restrict, t_obj *);
 void	anti_rotation_eye(t_thread *);
 
 /*
@@ -243,31 +243,31 @@ sfVector3f	calc_dir_vector(sfVector2i, int, int, int);
 /*
 ** intersect/intersect_sphere.c
 */
-float		intersect_sphere(sfVector3f *, sfVector3f *, float);
+float		intersect_sphere(sfVector3f *restrict, sfVector3f *restrict, float);
 
 /*
 ** intersect/intersect_cyl.c
 */
-float		intersect_cyl(sfVector3f *, sfVector3f *, t_obj *);
-float		intersect_closed_cyl(sfVector3f *, sfVector3f *,
+float		intersect_cyl(sfVector3f *restrict, sfVector3f *restrict, t_obj *);
+float		intersect_closed_cyl(sfVector3f *restrict, sfVector3f *restrict,
 				     t_obj *, float);
 
 /*
 ** intersect/intersect_cone.c
 */
-float		intersect_cone(sfVector3f *, sfVector3f *, t_obj *);
-float           intersect_closed_cone(sfVector3f *, sfVector3f *,
+float		intersect_cone(sfVector3f *restrict, sfVector3f *restrict, t_obj *);
+float           intersect_closed_cone(sfVector3f *restrict, sfVector3f *restrict,
 				      t_obj *, float);
 
 /*
 ** intersect/intersect_disk.c
 */
-float	intersect_disk(sfVector3f *, sfVector3f *, float);
+float	intersect_disk(sfVector3f *restrict, sfVector3f *restrict, float);
 
 /*
 ** intersect/intersect_plane.c
 */
-float		intersect_plane(sfVector3f *, sfVector3f *);
+float		intersect_plane(sfVector3f *restrict, sfVector3f *restrict);
 
 /*
 ** events.c

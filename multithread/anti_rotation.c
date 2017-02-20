@@ -5,13 +5,13 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb  9 13:15:36 2017 Nicolas Polomack
-** Last update Wed Feb 15 15:16:14 2017 Nicolas Polomack
+** Last update Mon Feb 20 10:59:51 2017 Nicolas Polomack
 */
 
 #include "sfcaster.h"
 #include "raytracer.h"
 
-void	anti_rotation(sfVector3f *imp, sfVector3f *dir, t_obj *obj)
+void	anti_rotation(sfVector3f *restrict imp, sfVector3f *restrict dir, t_obj *obj)
 {
   rz(imp, -obj->rz);
   ry(imp, -obj->ry);

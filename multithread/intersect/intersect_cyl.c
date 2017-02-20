@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 23:30:22 2017 Nicolas Polomack
-** Last update Sat Feb 18 22:56:38 2017 Nicolas Polomack
+** Last update Mon Feb 20 11:04:06 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -24,7 +24,7 @@ static float	get_value(float root[2])
   return (root[1]);
 }
 
-float		intersect_cyl(sfVector3f *eye_pos, sfVector3f *dir_vector,
+float		intersect_cyl(sfVector3f *restrict eye_pos, sfVector3f *restrict dir_vector,
 			      t_obj *obj)
 {
   float		a;
@@ -53,7 +53,7 @@ float		intersect_cyl(sfVector3f *eye_pos, sfVector3f *dir_vector,
   return (root[1]);
 }
 
-float		intersect_closed_cyl(sfVector3f *eye_pos, sfVector3f *dir_vector,
+float		intersect_closed_cyl(sfVector3f *restrict eye_pos, sfVector3f *restrict dir_vector,
 				     t_obj *obj, float dist)
 {
   sfVector3f	imp;

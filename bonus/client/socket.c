@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb 16 13:52:48 2017 Nicolas Polomack
-** Last update Fri Feb 17 17:16:10 2017 Nicolas Polomack
+** Last update Sun Feb 19 19:44:46 2017 Nicolas Polomack
 */
 
 #include <sys/types.h>
@@ -54,10 +54,7 @@ void			connect_socket(t_socket *s, char *ip)
   recv(s->fd, &s->end, sizeof(sfVector2i), 0);
   my_printf(" OK !\nWaiting for start signal...");
   send(s->fd, "OK", 3, 0);
-  recv(s->fd, confirm, 6, 0);
-  if (my_strcmp(confirm, "START"))
-    {
-      handle_error(confirm);
-      exit(84);
-    }
+  do
+    recv(s->fd, confirm, 6, 0);
+  while (my_strcmp(confirm, "START"));
 }

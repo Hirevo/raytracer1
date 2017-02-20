@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 23:30:22 2017 Nicolas Polomack
-** Last update Thu Feb  9 14:06:20 2017 Nicolas Polomack
+** Last update Mon Feb 20 11:01:23 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -22,7 +22,7 @@ static float	get_value(float root[2])
     return ((root[1] > 0) ? root[1] : -1);
 }
 
-float	intersect_sphere(sfVector3f *eye_pos, sfVector3f *dir_vector,
+float	intersect_sphere(sfVector3f *restrict eye_pos, sfVector3f *restrict dir_vector,
 			 float radius)
 {
   float	a;
