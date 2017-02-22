@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Sun Feb  5 14:37:35 2017 Nicolas Polomack
-** Last update Mon Feb 20 11:07:54 2017 Nicolas Polomack
+** Last update Wed Feb 22 00:00:38 2017 Nicolas Polomack
 */
 
 #ifndef RAYTRACER_H_
@@ -47,6 +47,7 @@ typedef struct	s_obj
   float		aper;
   sfColor	col;
   float		height;
+  float		reflect;
 }		t_obj;
 
 typedef struct s_thread
@@ -57,6 +58,7 @@ typedef struct s_thread
   t_ray         ray;
   sfVector2i    offs;
   sfVector2i	end;
+  sfVector3f	imp;
   float         *dist;
   sfVector3f	normal;
   sfVector2i    screen_pos;
@@ -77,10 +79,12 @@ typedef struct		s_params
   int			bmp;
   int			live;
   int			progress;
+  int			reflect_depth;
   int			nb_lights;
   int			nb_obj;
   t_ray			ray;
   t_obj			*objs;
+  float			ambient;
   int			fov;
 }			t_params;
 
@@ -148,7 +152,7 @@ sfColor	seek_lights(float *, t_thread *, int);
 */
 int		create_window(sfRenderWindow **, char *, sfVector2i);
 int		init(t_params *, t_window *);
-sfColor		evaluate_luminosity(float *, t_thread *,
+sfColor		evaluate_luminosity(t_thread *, float,
 				    sfColor, sfVector2i);
 sfColor		color_stuff(float *, t_thread *);
 int		raytracer(t_params *, char *);

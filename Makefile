@@ -5,7 +5,7 @@
 ## Login   <nicolas.polomack@epitech.eu>
 ##
 ## Started on  Tue Nov 15 09:05:43 2016 Nicolas Polomack
-## Last update Mon Feb 20 14:15:47 2017 Nicolas Polomack
+## Last update Tue Feb 21 16:32:12 2017 Nicolas Polomack
 ##
 
 MAKE1	=	make --no-print-directory -C lib/my
@@ -27,6 +27,9 @@ all:
 	@$(MAKE_MT)
 	@$(MAKE_C)
 	@$(MAKE_S)
+
+mt:
+	@$(MAKE_MT)
 
 clean:
 	@$(MAKE1) clean

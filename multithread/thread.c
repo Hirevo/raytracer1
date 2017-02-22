@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Sun Feb 12 03:09:48 2017 Nicolas Polomack
-** Last update Mon Feb 20 12:34:55 2017 Nicolas Polomack
+** Last update Wed Feb 22 00:11:13 2017 Nicolas Polomack
 */
 
 #include <float.h>
@@ -27,51 +27,64 @@ void		prepare_reflect(t_thread *t)
 {
   float		norme;
 
+  add_coords_vect(&t->normal, NULL, &(t->params->objs[t->idx]));
   t->ray.orig.x = t->ray.orig.x + t->ray.dir.x * t->dist[t->idx];
   t->ray.orig.y	= t->ray.orig.y + t->ray.dir.y * t->dist[t->idx];
   t->ray.orig.z	= t->ray.orig.z + t->ray.dir.z * t->dist[t->idx];
-  norme = norm(t->ray.dir);
-  t->ray.dir.x /= norme;
-  t->ray.dir.y /= norme;
-  t->ray.dir.z /= norme;
-  t->normal.x = t->ray.orig.x - t->params->objs[t->idx].pos.x;
-  t->normal.y =	t->ray.orig.y -	t->params->objs[t->idx].pos.y;
-  t->normal.z =	t->ray.orig.z -	t->params->objs[t->idx].pos.z;
   norme = norm(t->normal);
-  t->normal.x = norme;
-  t->normal.y = norme;
-  t->normal.z = norme;
-  norme = dot(t->normal, t->ray.dir);
-  t->ray.dir.x = -2 * t->normal.x * norme + t->ray.dir.x;
-  t->ray.dir.y = -2 * t->normal.y * norme + t->ray.dir.y;
-  t->ray.dir.z = -2 * t->normal.z * norme + t->ray.dir.z;
+  t->normal.x /= norme;
+  t->normal.y /= norme;
+  t->normal.z /= norme;
+  norme = -dot(t->normal, t->ray.dir);
+  t->ray.dir.x = t->ray.dir.x + (2.0F * t->normal.x * norme);
+  t->ray.dir.y = t->ray.dir.y + (2.0F * t->normal.y * norme);
+  t->ray.dir.z = t->ray.dir.z + (2.0F * t->normal.z * norme);
 }
 
 sfColor		apply_reflect(t_thread *t, sfColor col)
 {
   sfColor	reflect;
   int		i;
+  int		idx;
 
   i = -1;
   prepare_reflect(t);
+  idx = t->idx;
   t->dist[t->idx] = FLT_MAX;
   while (++i < t->params->nb_obj)
-    {
-      if (i != t->idx)
-	t->dist[i] = gather_distances(t->params->objs, t->ray, i);
-    }
+    if (i != t->idx)
+      t->dist[i] = gather_distances(t->params->objs, t->ray, i);
   reflect = color_stuff(t->dist, t);
-  reflect.r = reflect.r * 0.25F/*t->params->objs[t->idx].reflect*/ + col.r * (1 - 0.25F/*t->params->objs[t->idx]reflect*/);
-  reflect.g = reflect.g * 0.25F/*t->params->objs[t->idx].reflect*/ + col.g * (1 - 0.25F/*t->params->objs[t->idx]reflect*/);
-  reflect.b = reflect.b * 0.25F/*t->params->objs[t->idx].reflect*/ + col.b * (1 - 0.25F/*t->params->objs[t->idx]reflect*/);
-  return (reflect);
+  col.r = ((float)reflect.r) * t->params->objs[idx].reflect +
+    ((float)col.r) * (1.0F - t->params->objs[idx].reflect);
+  col.g = ((float)reflect.g) * t->params->objs[idx].reflect +
+    ((float)col.g) * (1.0F - t->params->objs[idx].reflect);
+  col.b = ((float)reflect.b) * t->params->objs[idx].reflect +
+    ((float)col.b) * (1.0F - t->params->objs[idx].reflect);
+  col.a = 255;
+  return (col);
+}
+
+sfColor		gather_color(t_thread *t)
+{
+  sfColor	col;
+  int		i;
+
+  i = -1;
+  while (++i < t->params->nb_obj)
+    t->dist[i] = gather_distances(t->params->objs, t->ray, i);
+  col = color_stuff(t->dist, t);
+  i = t->params->reflect_depth;
+  while (i--)
+    if (t->can_reflect && t->params->objs[t->idx].reflect)
+      col = apply_reflect(t, col);
+  return (col);
 }
 
 void		render_rect(t_thread *t)
 {
   int		x;
   int		y;
-  int		i;
   sfColor	col;
 
   x = t->offs.x - 1;
@@ -80,19 +93,13 @@ void		render_rect(t_thread *t)
       y = t->offs.y - 1;
       while (++y < t->end.y)
         {
+	  t->ray = t->params->ray;
           t->ray.dir = calc_dir_vector(t->params->screen_size,
                                        x, y, t->params->fov);
           rotation_t_eye(t);
 	  t->can_reflect = 0;
-	  i = -1;
-	  while (++i < t->params->nb_obj)
-	    t->dist[i] = gather_distances(t->params->objs, t->ray, i);
-          col = color_stuff(t->dist, t);
-	  //if (t->can_reflect && t->params->objs[t->idx].type == 's')
-	  //col = apply_reflect(t, col);
-	  //pthread_mutex_lock(&t->w->mutex);
+	  col = gather_color(t);
 	  put_pixel(t->w->buffer, x, y, col);
-	  //pthread_mutex_unlock(&t->w->mutex);
         }
       if (t->params->live && !t->params->bmp)
 	update_color(t);

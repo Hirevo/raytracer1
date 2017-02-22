@@ -1,11 +1,11 @@
 /*
-1;4601;0c** parse.c for raytracer in /home/nicolaspolomack/graphical/raytracer1
+** parse.c for raytracer in /home/nicolaspolomack/graphical/raytracer1
 ** 
 ** Made by Nicolas Polomack
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Wed Feb  8 23:10:21 2017 Nicolas Polomack
-** Last update Wed Feb 15 02:36:56 2017 Nicolas Polomack
+** Last update Tue Feb 21 15:42:14 2017 Nicolas Polomack
 */
 
 #include <fcntl.h>
@@ -48,17 +48,18 @@ void	parse_object(char *line, t_params *params, int obj, int *idxs)
   params->objs[obj].col.g = get_number(line + idxs[7]) % 256;
   params->objs[obj].col.b = get_number(line + idxs[8]) % 256;
   params->objs[obj].col.a = 255;
+  params->objs[obj].reflect = get_number(line + idxs[9]) / 1000.0F;
   if (line[0] == 'o' || line[0] == 'x' || line[0] == 'u')
-    params->objs[obj].aper = get_number(line + idxs[9]);
+    params->objs[obj].aper = get_number(line + idxs[10]);
   else
-    params->objs[obj].rad = get_number(line + idxs[9]);
+    params->objs[obj].rad = get_number(line + idxs[10]);
   if (line[0] == 'h' || line[0] == 'u')
-    params->objs[obj].height = get_number(line + idxs[10]);
+    params->objs[obj].height = get_number(line + idxs[11]);
 }
 
 void	parse_line(char *line, t_params *params, int *lights, int *objs)
 {
-  int	idxs[11];
+  int	idxs[12];
 
   gather_idxs(line, idxs);
   if (line[0] == 'e')

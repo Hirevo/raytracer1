@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 14:08:22 2017 Nicolas Polomack
-** Last update Wed Feb 15 19:43:42 2017 Nicolas Polomack
+** Last update Wed Feb 22 01:25:15 2017 Nicolas Polomack
 */
 
 #include <SFML/Graphics.h>
@@ -35,23 +35,51 @@ int		create_window(sfRenderWindow **w, char *name, sfVector2i screen_size)
   return (0);
 }
 
-sfColor		evaluate_luminosity(float *dist, t_thread *t,
+sfColor		evaluate_luminosity(t_thread *t, float dist,
 				    sfColor col, sfVector2i idxs)
 {
   col = set_luminosity((t->params->objs[idxs.x].type == 's') ?
-		       get_cos_angle_s(dist[idxs.x], t, idxs) :
+		       get_cos_angle_s(dist, t, idxs) :
 		       (t->params->objs[idxs.x].type == 'p') ?
-		       get_cos_angle_p(dist[idxs.x], t, idxs) :
+		       get_cos_angle_p(dist, t, idxs) :
 		       (t->params->objs[idxs.x].type == 'c' ||
 			t->params->objs[idxs.x].type == 'h') ?
-		       get_cos_angle_c(dist[idxs.x], t, idxs) :
+		       get_cos_angle_c(dist, t, idxs) :
 		       (t->params->objs[idxs.x].type == 'u' ||
 			t->params->objs[idxs.x].type == 'o' ||
 			t->params->objs[idxs.x].type == 'x') ?
-		       get_cos_angle_o(dist[idxs.x], t, idxs) : 1,
-		       col, t->params->light[idxs.y].ambient);
-  t->idx = idxs.x;
+		       get_cos_angle_o(dist, t, idxs) : 1,
+		       col, t->params->ambient);
   return (col);
+}
+
+void	get_normal(t_thread *t)
+{
+  char	type;
+
+  type = t->params->objs[t->idx].type;
+  if (type == 'p')
+    {
+      t->normal.x = 0;
+      t->normal.y = 0;
+      t->normal.z = 1;
+    }
+  t->normal = t->imp;
+  if (type == 'c' || type == 'h')
+    get_normal_cylinder(t);
+  else if (type == 'x' || type == 'o' || type == 'h')
+    
+}
+
+void	get_impact(t_thread *t, float dist)
+{
+  sub_coords_vect(&t->ray.orig, &t->ray.dir,
+		  &(t->params->objs[t->idx]));
+  t->imp.x = t->ray.orig.x + t->ray.dir.x * dist;
+  t->imp.y = t->ray.orig.y + t->ray.dir.y * dist;
+  t->imp.z = t->ray.orig.z + t->ray.dir.z * dist;
+  add_coords_vect(&t->ray.orig, &t->ray.dir,
+                  &(t->params->objs[t->idx]));
 }
 
 sfColor		color_stuff(float *dist, t_thread *t)
@@ -67,17 +95,16 @@ sfColor		color_stuff(float *dist, t_thread *t)
       record = dist[i];
   i = -1;
   t->can_reflect = 0;
-  t->idx = -1;
   while (++i < t->params->nb_obj)
     if (dist[i] == record)
       {
-	col = seek_lights(dist, t, i);
 	t->can_reflect = 1;
 	t->idx = i;
+	get_impact(t, dist[i]);
+	get_normal(t);
+	col = seek_lights(dist, t, i);
         break;
       }
-  if ((!col.r && !col.g && !col.b))
-    col = sfBlack;
   if (i == t->params->nb_obj)
     col = sfBlack;
   return (col);

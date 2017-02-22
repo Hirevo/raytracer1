@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 14:08:22 2017 Nicolas Polomack
-** Last update Sat Feb 18 23:34:53 2017 Nicolas Polomack
+** Last update Tue Feb 21 11:59:13 2017 Nicolas Polomack
 */
 
 #include <SFML/Graphics.h>
@@ -37,15 +37,14 @@ sfColor		evaluate_luminosity(float *dist, t_thread *t,
 			t->params->objs[idxs.x].type == 'x') ?
 		       get_cos_angle_o(dist[idxs.x], t, idxs) : 1,
 		       col, t->params->light[idxs.y].ambient);
-  t->idx = idxs.x;
   return (col);
 }
 
 sfColor		color_stuff(float *dist, t_thread *t)
 {
-  sfColor	col;
-  float		record;
-  int		i;
+  sfColor       col;
+  float         record;
+  int           i;
 
   record = FLT_MAX;
   i = -1;
@@ -54,19 +53,19 @@ sfColor		color_stuff(float *dist, t_thread *t)
       record = dist[i];
   i = -1;
   t->can_reflect = 0;
-  t->idx = -1;
   while (++i < t->params->nb_obj)
     if (dist[i] == record)
       {
-	col = seek_lights(dist, t, i);
-	t->can_reflect = 1;
-	t->idx = i;
+        col = seek_lights(dist, t, i);
         break;
       }
-  if ((!col.r && !col.g && !col.b))
-    col = BLACK;
   if (i == t->params->nb_obj)
     col = BLACK;
+  if ((col.r || col.g || col.b))
+    {
+      t->idx = i;
+      t->can_reflect = 1;
+    }
   return (col);
 }
 

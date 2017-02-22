@@ -5,7 +5,7 @@
 ## Login   <nicolas.polomack@epitech.eu>
 ##
 ## Started on  Tue Nov 15 09:05:43 2016 Nicolas Polomack
-## Last update Mon Feb 20 12:32:39 2017 Nicolas Polomack
+## Last update Tue Feb 21 16:30:30 2017 Nicolas Polomack
 ##
 
 MAKE2	=	make --no-print-directory -C ../lib/my
@@ -42,7 +42,7 @@ OBJ	=	$(SRC:.c=.o)
 
 FLAGS	=	-lm -L../lib/my -lmy -L../lib/mycsfml -lmycsfml -lc_graph_prog $(CFLAGS) -ansi
 
-CFLAGS	=	-Iinclude -I../include -W -Wall -Wextra -Werror -pedantic -pthread -Ofast -march=native
+CFLAGS	=	-Iinclude -I../include -W -Wall -Wextra -Werror -pedantic -pthread
 
 NAME	=	raytracer
 

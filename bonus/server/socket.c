@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb 16 13:52:48 2017 Nicolas Polomack
-** Last update Sat Feb 18 21:16:24 2017 Nicolas Polomack
+** Last update Mon Feb 20 20:32:46 2017 Nicolas Polomack
 */
 
 #include <sys/types.h>
@@ -48,6 +48,7 @@ void	broadcast_start(t_socket *s)
   int	i;
 
   i = -1;
+  usleep(15000);
   while (++i < 4)
     send(s->cfd[i], "START", 6, 0);
 }

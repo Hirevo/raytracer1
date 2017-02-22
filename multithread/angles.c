@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Tue Feb  7 23:16:29 2017 Nicolas Polomack
-** Last update Mon Feb 13 23:29:01 2017 Nicolas Polomack
+** Last update Tue Feb 21 11:57:44 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -101,7 +101,7 @@ float		get_cos_angle_o(float dist, t_thread *t, sfVector2i idxs)
   dir.x = light.x - t->normal.x;
   dir.y = light.y - t->normal.y;
   dir.z = light.z - t->normal.z;
-  get_cone_normal(t, idxs, &t->normal, dist);
+  get_cone_normal(t, idxs, &(t->normal), dist);
   add_coords_vect(&t->ray.orig, &t->ray.dir,
 		  &(t->params->objs[idxs.x]));
   add_coords_vect(&light, NULL,
