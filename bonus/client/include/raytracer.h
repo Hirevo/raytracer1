@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Sun Feb  5 14:37:35 2017 Nicolas Polomack
-** Last update Sat Feb 18 23:34:00 2017 Nicolas Polomack
+** Last update Wed Feb 22 03:00:28 2017 Nicolas Polomack
 */
 
 #ifndef RAYTRACER_H_
@@ -52,6 +52,7 @@ typedef struct	s_obj
   float		aper;
   sfColor	col;
   float		height;
+  float		reflect;
 }		t_obj;
 
 typedef struct s_thread
@@ -63,6 +64,7 @@ typedef struct s_thread
   sfVector2i    offs;
   sfVector2i	end;
   float         *dist;
+  sfVector3f	imp;
   sfVector3f	normal;
   sfVector2i    screen_pos;
   t_window	*w;
@@ -94,6 +96,8 @@ typedef struct		s_params
   int			progress;
   int			nb_lights;
   int			nb_obj;
+  int			reflect_depth;
+  float			ambient;
   t_ray			ray;
   t_obj			*objs;
   int			fov;
@@ -140,18 +144,16 @@ void		render_frame(t_window *, t_params *);
 /*
 ** angles.c
 */
-float		get_cos_angle_s(float, t_thread *, sfVector2i);
-float		get_cos_angle_p(float, t_thread *, sfVector2i);
-float           get_cos_angle_c(float, t_thread *, sfVector2i);
-float           get_cos_angle_cc(float, t_thread *, sfVector2i);
-float           get_cos_angle_o(float, t_thread *, sfVector2i);
-float           get_cos_angle_oo(float, t_thread *, sfVector2i);
+float		get_cos_angle_s(t_thread *, sfVector2i);
+float		get_cos_angle_p(t_thread *, sfVector2i);
+float           get_cos_angle_c(t_thread *, sfVector2i);
+float           get_cos_angle_o(t_thread *, sfVector2i);
 
 /*
 ** lights.c
 */
-void		sub_coords_vect(sfVector3f *, sfVector3f *, t_obj *);
-void		add_coords_vect(sfVector3f *, sfVector3f *, t_obj *);
+void		sub_coords_vect(sfVector3f *restrict, sfVector3f *restrict, t_obj *);
+void		add_coords_vect(sfVector3f *restrict, sfVector3f *restrict, t_obj *);
 float		intersect_light(float, t_thread *, sfVector2i);
 sfColor		set_luminosity(float, sfColor, float);
 
@@ -166,7 +168,7 @@ sfColor	seek_lights(float *, t_thread *, int);
 */
 int		create_window(sfRenderWindow **, char *, sfVector2i);
 int		init(t_params *, t_window *);
-sfColor		evaluate_luminosity(float *, t_thread *,
+sfColor		evaluate_luminosity(t_thread *,
 				    sfColor, sfVector2i);
 sfColor		color_stuff(float *, t_thread *);
 int		raytracer(t_params *, char *);
@@ -177,6 +179,13 @@ int		raytracer(t_params *, char *);
 void	render_rect(t_thread *);
 void	*thread_handler(void *);
 void	init_thread(int, t_params *, t_window *);
+
+/*
+** reflect.c
+*/
+sfColor	apply_reflect(t_thread *, sfColor);
+void	get_normal(t_thread *);
+void	get_impact(t_thread *, float);
 
 /*
 ** load.c
@@ -235,8 +244,8 @@ int	get_core_count();
 /*
 ** normals.c
 */
-void	get_cone_normal(t_thread *, sfVector2i, sfVector3f *, float);
-void	get_cylinder_normal(t_thread *, sfVector2i, sfVector3f *, float);
+void	get_cone_normal(t_thread *);
+void	get_cylinder_normal(t_thread *);
 
 /*
 ** rotation.c

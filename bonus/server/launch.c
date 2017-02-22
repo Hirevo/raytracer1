@@ -5,17 +5,24 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb 16 16:22:58 2017 Nicolas Polomack
-** Last update Sat Feb 18 20:29:25 2017 Nicolas Polomack
+** Last update Wed Feb 22 03:12:10 2017 Nicolas Polomack
 */
 
 #include <errno.h>
 #include <SFML/Graphics.h>
 #include <SFML/Window.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include "my.h"
 #include "bmp.h"
 #include "raytracer.h"
+
+void	handle_error(char *msg)
+{
+  perror(msg);
+  exit(errno);
+}
 
 void	divide_frame(t_params *params, t_window *w)
 {

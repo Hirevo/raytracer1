@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb 13 21:07:05 2017 Nicolas Polomack
-** Last update Mon Feb 13 21:40:57 2017 Nicolas Polomack
+** Last update Wed Feb 22 02:45:07 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -43,12 +43,16 @@ sfVector3f	rz(sfVector3f imp, float r)
 
 sfVector3f	rotation_xyz(sfVector3f imp, sfVector3f r)
 {
-  return (rz(ry(rx(imp, r.x * M_PI / 180.0F), r.y * M_PI / 180.0F),
-	     r.z * M_PI / 180.0F));
+  rx(imp, r.x * M_PI / 180.0F);
+  ry(imp, r.y * M_PI / 180.0F);
+  rz(imp, r.z * M_PI / 180.0F);
+  return (imp);
 }
 
-sfVector3f      rotation_zyx(sfVector3f imp, sfVector3f r)
+sfVector3f	rotation_zyx(sfVector3f imp, sfVector3f r)
 {
-  return (rx(ry(rz(imp, r.z * M_PI / 180.0F), r.y * M_PI / 180.0F),
-             r.x * M_PI / 180.0F));
+  rz(imp, r.z * M_PI / 180.0F);
+  ry(imp, r.y * M_PI / 180.0F);
+  rx(imp, r.x * M_PI / 180.0F);
+  return (imp);
 }

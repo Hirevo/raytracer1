@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb  9 02:33:42 2017 Nicolas Polomack
-** Last update Wed Feb 15 02:37:46 2017 Nicolas Polomack
+** Last update Wed Feb 22 02:41:59 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
@@ -68,25 +68,26 @@ int	alloc_all(t_params *params, int objs, int lights)
 
 int	parse_first(char *line, t_params *params)
 {
-  int	idxs[5];
+  int	idxs[7];
 
-  idxs[0] = -1;
-  idxs[4] = 0;
+  idxs[0] = -1 + (idxs[6] = 0) * 0;
   while (line[++(idxs[0])])
     {
       if (line[idxs[0]] == ':')
-	idxs[4] += 1;
+	idxs[6] += 1;
       if ((line[idxs[0]] < '0' || line[idxs[0]] > '9') &&
 	  line[idxs[0]] != ':')
 	return (-1);
     }
-  if (idxs[4] != 3 && idxs[4] != 2)
+  if (idxs[6] != 5 && idxs[6] != 4)
     return (-1);
   gather_idxs(line, idxs);
   params->screen_size.x = get_number(line);
   params->screen_size.y = get_number(line + idxs[1]);
   params->live = get_number(line + idxs[2]) % 2;
-  params->t_count = (idxs[4] == 3) ? get_number(line + idxs[3]) : 'x';
+  params->reflect_depth = get_number(line + idxs[3]);
+  params->ambient = get_number(line + idxs[4]) / 1000.0F;
+  params->t_count = (idxs[6] == 5) ? get_number(line + idxs[5]) : 'x';
   if (params->t_count != 'x' &&
       (params->t_count == 0 || params->t_count > 50 || params->t_count % 2))
     return (-1);

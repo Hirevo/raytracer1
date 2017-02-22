@@ -5,12 +5,13 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 23:31:08 2017 Nicolas Polomack
-** Last update Fri Feb 10 17:32:59 2017 Nicolas Polomack
+** Last update Wed Feb 22 02:37:57 2017 Nicolas Polomack
 */
 
 #include <SFML/Graphics.h>
 
-float	intersect_plane(sfVector3f *eye_pos, sfVector3f *dir_vector)
+float	intersect_plane(sfVector3f *restrict eye_pos,
+			sfVector3f *restrict dir_vector)
 {
   float	k;
 

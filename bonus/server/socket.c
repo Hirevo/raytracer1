@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb 16 13:52:48 2017 Nicolas Polomack
-** Last update Mon Feb 20 20:32:46 2017 Nicolas Polomack
+** Last update Wed Feb 22 03:12:00 2017 Nicolas Polomack
 */
 
 #include <sys/types.h>
@@ -15,16 +15,8 @@
 #include <stdlib.h>
 #include <netdb.h>
 #include <unistd.h>
-#include <stdio.h>
-#include <errno.h>
 #include "my.h"
 #include "raytracer.h"
-
-void	handle_error(char *msg)
-{
-  perror(msg);
-  exit(errno);
-}
 
 void	prepare_connection(t_socket *s, char *file)
 {

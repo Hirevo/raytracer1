@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Wed Feb  8 23:10:21 2017 Nicolas Polomack
-** Last update Sat Feb 18 14:45:05 2017 Nicolas Polomack
+** Last update Wed Feb 22 03:09:37 2017 Nicolas Polomack
 */
 
 #include <fcntl.h>
@@ -48,17 +48,18 @@ void	parse_object(char *line, t_params *params, int obj, int *idxs)
   params->objs[obj].col.g = get_number(line + idxs[7]) % 256;
   params->objs[obj].col.b = get_number(line + idxs[8]) % 256;
   params->objs[obj].col.a = 255;
+  params->objs[obj].reflect = get_number(line + idxs[9]) / 1000.0F;
   if (line[0] == 'o' || line[0] == 'x' || line[0] == 'u')
-    params->objs[obj].aper = get_number(line + idxs[9]);
+    params->objs[obj].aper = get_number(line + idxs[10]);
   else
-    params->objs[obj].rad = get_number(line + idxs[9]);
+    params->objs[obj].rad = get_number(line + idxs[10]);
   if (line[0] == 'h' || line[0] == 'u')
-    params->objs[obj].height = get_number(line + idxs[10]);
+    params->objs[obj].height = get_number(line + idxs[11]);
 }
 
 void	parse_line(char *line, t_params *params, int *lights, int *objs)
 {
-  int	idxs[11];
+  int	idxs[12];
 
   gather_idxs(line, idxs);
   if (line[0] == 'e')
@@ -81,9 +82,7 @@ int	parse_config_file(int fd, t_params *params)
   char	*line;
   int	fleo[4];
 
-  fleo[2] = 0;
-  fleo[1] = 0;
-  fleo[0] = fd;
+  fleo[2] = 0 + (fleo[1] = 0) * 0 + (fleo[0] = fd) * 0;
   if ((fleo[3] = get_nbr_objs(fd, &(fleo[1]))) == -1 || fleo[3] < 2 ||
       alloc_all(params, fleo[3], fleo[1]) == -1)
     return (-1);
@@ -91,18 +90,17 @@ int	parse_config_file(int fd, t_params *params)
   pipe(fleo);
   write(fleo[1], params->s.scene, my_strlen(params->s.scene));
   close(fleo[1]);
-  fleo[3] = -1;
-  fleo[1] = 0;
+  fleo[3] = -1 + (fleo[1] = 0) * 0;
   while ((line = get_next_line(fleo[0])) != NULL)
     {
       if (fleo[3] == -1)
-	fleo[3] = parse_first(line, params);
+        fleo[3] = parse_first(line, params);
       else if (!is_valid_line(line, &(fleo[2])))
-	return (-1);
+        return (-1);
       else
-	parse_line(line, params, &(fleo[1]), &(fleo[3]));
+        parse_line(line, params, &(fleo[1]), &(fleo[3]));
       if (fleo[3] == -1)
-	return (-1);
+        return (-1);
     }
   close(fleo[0]);
   return (0);

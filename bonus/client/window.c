@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 14:08:22 2017 Nicolas Polomack
-** Last update Tue Feb 21 11:59:13 2017 Nicolas Polomack
+** Last update Wed Feb 22 03:08:24 2017 Nicolas Polomack
 */
 
 #include <SFML/Graphics.h>
@@ -22,21 +22,21 @@
 #include "bmp.h"
 #include "my.h"
 
-sfColor		evaluate_luminosity(float *dist, t_thread *t,
-				    sfColor col, sfVector2i idxs)
+sfColor		evaluate_luminosity(t_thread *t,
+                                    sfColor col, sfVector2i idxs)
 {
   col = set_luminosity((t->params->objs[idxs.x].type == 's') ?
-		       get_cos_angle_s(dist[idxs.x], t, idxs) :
+		       get_cos_angle_s(t, idxs) :
 		       (t->params->objs[idxs.x].type == 'p') ?
-		       get_cos_angle_p(dist[idxs.x], t, idxs) :
+		       get_cos_angle_p(t, idxs) :
 		       (t->params->objs[idxs.x].type == 'c' ||
 			t->params->objs[idxs.x].type == 'h') ?
-		       get_cos_angle_c(dist[idxs.x], t, idxs) :
+		       get_cos_angle_c(t, idxs) :
 		       (t->params->objs[idxs.x].type == 'u' ||
 			t->params->objs[idxs.x].type == 'o' ||
 			t->params->objs[idxs.x].type == 'x') ?
-		       get_cos_angle_o(dist[idxs.x], t, idxs) : 1,
-		       col, t->params->light[idxs.y].ambient);
+		       get_cos_angle_o(t, idxs) : 1,
+		       col, t->params->ambient);
   return (col);
 }
 
@@ -56,16 +56,15 @@ sfColor		color_stuff(float *dist, t_thread *t)
   while (++i < t->params->nb_obj)
     if (dist[i] == record)
       {
+	t->can_reflect = 1;
+        t->idx = i;
+        get_impact(t, dist[i]);
+        get_normal(t);
         col = seek_lights(dist, t, i);
         break;
       }
   if (i == t->params->nb_obj)
     col = BLACK;
-  if ((col.r || col.g || col.b))
-    {
-      t->idx = i;
-      t->can_reflect = 1;
-    }
   return (col);
 }
 

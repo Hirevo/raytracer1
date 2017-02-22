@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb  9 02:34:59 2017 Nicolas Polomack
-** Last update Fri Feb 17 03:55:15 2017 Nicolas Polomack
+** Last update Wed Feb 22 03:02:35 2017 Nicolas Polomack
 */
 
 #include <unistd.h>
@@ -20,9 +20,9 @@ int	check_sections(char type, int sec, int *eyes)
 {
   if (type == 's' || type == 'p' || type == 'x' ||
       type == 'c' || type == 'o')
-    return (sec == 11);
-  if (type == 'h' || type == 'u')
     return (sec == 12);
+  if (type == 'h' || type == 'u')
+    return (sec == 13);
   else if (type == 'e' && !*eyes)
     {
       *eyes = 1;
@@ -79,9 +79,9 @@ void	gather_idxs(char *line, int idxs[10])
 
 int	get_nbr_objs(int fd, int *l)
 {
-  int	objs;
-  char	*line;
-  int	e;
+  int   objs;
+  char  *line;
+  int   e;
 
   objs = 0;
   e = 0;
@@ -93,7 +93,7 @@ int	get_nbr_objs(int fd, int *l)
       else if (line[0] == 'l')
         *l += 1;
       if (line[0] < '0' || line[0] > '9')
-	objs += 1;
+        objs += 1;
       free(line);
     }
   if (!*l || e != 1)

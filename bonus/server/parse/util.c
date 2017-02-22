@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb  9 02:33:42 2017 Nicolas Polomack
-** Last update Fri Feb 17 12:29:46 2017 Nicolas Polomack
+** Last update Wed Feb 22 03:04:43 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
@@ -69,7 +69,7 @@ int	parse_first(char *line, t_params *params)
 	  line[idxs[0]] != ':')
 	return (-1);
     }
-  if (idxs[4] != 3 && idxs[4] != 2)
+  if (idxs[4] != 5 && idxs[4] != 4)
     return (-1);
   gather_idxs(line, idxs);
   params->screen_size.x = get_number(line);

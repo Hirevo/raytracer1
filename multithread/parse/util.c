@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb  9 02:33:42 2017 Nicolas Polomack
-** Last update Tue Feb 21 16:16:05 2017 Nicolas Polomack
+** Last update Wed Feb 22 02:41:59 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
@@ -70,8 +70,7 @@ int	parse_first(char *line, t_params *params)
 {
   int	idxs[7];
 
-  idxs[0] = -1;
-  idxs[6] = 0;
+  idxs[0] = -1 + (idxs[6] = 0) * 0;
   while (line[++(idxs[0])])
     {
       if (line[idxs[0]] == ':')

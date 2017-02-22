@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 23:30:22 2017 Nicolas Polomack
-** Last update Mon Feb 13 21:43:29 2017 Nicolas Polomack
+** Last update Wed Feb 22 02:43:23 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -32,7 +32,8 @@ float		intersect_cone(sfVector3f eye_pos, sfVector3f dir_vector,
   abcd[0] = powf(dir_vector.x, 2) + powf(dir_vector.y, 2) -
     powf(dir_vector.z, 2) * pow(tan(semiangle * M_PI / 180.0F), 2);
   abcd[1] = (2 * eye_pos.x * dir_vector.x + 2 * eye_pos.y * dir_vector.y -
-             2 * eye_pos.z * dir_vector.z * pow(tan(semiangle * M_PI / 180.0F), 2));
+             2 * eye_pos.z * dir_vector.z *
+	     pow(tan(semiangle * M_PI / 180.0F), 2));
   abcd[2] = (powf(eye_pos.x, 2) + powf(eye_pos.y, 2) -
              powf(eye_pos.z, 2) * pow(tan(semiangle * M_PI / 180.0F), 2));
   abcd[3] = abcd[1] * abcd[1] - 4 * abcd[0] * abcd[2];

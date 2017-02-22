@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb 16 13:52:48 2017 Nicolas Polomack
-** Last update Sun Feb 19 19:44:46 2017 Nicolas Polomack
+** Last update Wed Feb 22 03:08:06 2017 Nicolas Polomack
 */
 
 #include <sys/types.h>
@@ -47,7 +47,8 @@ void			connect_socket(t_socket *s, char *ip)
   s->addr.sin_addr = *(struct in_addr *) hostinfo->h_addr;
   s->addr.sin_port = htons(4242);
   s->addr.sin_family = AF_INET;
-  if (connect(s->fd, (struct sockaddr *) &s->addr, sizeof(struct sockaddr)) == -1)
+  if (connect(s->fd, (struct sockaddr *)&s->addr,
+	      sizeof(struct sockaddr)) == -1)
     handle_error("connect");
   recv(s->fd, s->scene, 4096, 0);
   recv(s->fd, &s->offs, sizeof(sfVector2i), 0);

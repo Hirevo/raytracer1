@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Tue Feb  7 00:16:08 2017 Nicolas Polomack
-** Last update Wed Feb 22 00:05:27 2017 Nicolas Polomack
+** Last update Wed Feb 22 02:36:14 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -14,7 +14,8 @@
 #include "raytracer.h"
 #include "sfcaster.h"
 
-void	sub_coords_vect(sfVector3f *restrict imp, sfVector3f *restrict dir, t_obj *obj)
+void	sub_coords_vect(sfVector3f *restrict imp,
+			sfVector3f *restrict dir, t_obj *obj)
 {
   imp->x -= obj->pos.x;
   imp->y -= obj->pos.y;
@@ -22,7 +23,8 @@ void	sub_coords_vect(sfVector3f *restrict imp, sfVector3f *restrict dir, t_obj *
   anti_rotation(imp, dir, obj);
 }
 
-void	add_coords_vect(sfVector3f *restrict imp, sfVector3f *restrict dir, t_obj *obj)
+void	add_coords_vect(sfVector3f *restrict imp,
+			sfVector3f *restrict dir, t_obj *obj)
 {
   rotation(imp, dir, obj);
   imp->x += obj->pos.x;

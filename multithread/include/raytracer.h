@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Sun Feb  5 14:37:35 2017 Nicolas Polomack
-** Last update Wed Feb 22 00:00:38 2017 Nicolas Polomack
+** Last update Wed Feb 22 02:42:58 2017 Nicolas Polomack
 */
 
 #ifndef RAYTRACER_H_
@@ -126,12 +126,10 @@ void		render_frame(t_window *, t_params *);
 /*
 ** angles.c
 */
-float		get_cos_angle_s(float, t_thread *, sfVector2i);
-float		get_cos_angle_p(float, t_thread *, sfVector2i);
-float           get_cos_angle_c(float, t_thread *, sfVector2i);
-float           get_cos_angle_cc(float, t_thread *, sfVector2i);
-float           get_cos_angle_o(float, t_thread *, sfVector2i);
-float           get_cos_angle_oo(float, t_thread *, sfVector2i);
+float		get_cos_angle_s(t_thread *, sfVector2i);
+float		get_cos_angle_p(t_thread *, sfVector2i);
+float           get_cos_angle_c(t_thread *, sfVector2i);
+float           get_cos_angle_o(t_thread *, sfVector2i);
 
 /*
 ** lights.c
@@ -152,7 +150,7 @@ sfColor	seek_lights(float *, t_thread *, int);
 */
 int		create_window(sfRenderWindow **, char *, sfVector2i);
 int		init(t_params *, t_window *);
-sfColor		evaluate_luminosity(t_thread *, float,
+sfColor		evaluate_luminosity(t_thread *,
 				    sfColor, sfVector2i);
 sfColor		color_stuff(float *, t_thread *);
 int		raytracer(t_params *, char *);
@@ -168,6 +166,13 @@ void	init_thread(int, t_params *, t_window *);
 ** load.c
 */
 int	load_assets(t_window *, t_params *, char *);
+
+/*
+** reflect.c
+*/
+sfColor	apply_reflect(t_thread *, sfColor);
+void	get_normal(t_thread *);
+void	get_impact(t_thread *, float);
 
 /*
 ** parse/parse.c
@@ -221,8 +226,8 @@ int	get_core_count();
 /*
 ** normals.c
 */
-void	get_cone_normal(t_thread *, sfVector2i, sfVector3f *, float);
-void	get_cylinder_normal(t_thread *, sfVector2i, sfVector3f *, float);
+void	get_cone_normal(t_thread *);
+void	get_cylinder_normal(t_thread *);
 
 /*
 ** rotation.c
@@ -230,13 +235,15 @@ void	get_cylinder_normal(t_thread *, sfVector2i, sfVector3f *, float);
 void	rx(sfVector3f *restrict, float);
 void	ry(sfVector3f *restrict, float);
 void	rz(sfVector3f *restrict, float);
-void	rotation(sfVector3f *restrict, sfVector3f *restrict, t_obj *);
+void	rotation(sfVector3f *restrict,
+		 sfVector3f *restrict, t_obj *);
 void	rotation_t_eye(t_thread *);
 
 /*
 ** anti_rotation.c
 */
-void	anti_rotation(sfVector3f *restrict, sfVector3f *restrict, t_obj *);
+void	anti_rotation(sfVector3f *restrict,
+		      sfVector3f *restrict, t_obj *);
 void	anti_rotation_eye(t_thread *);
 
 /*
@@ -247,31 +254,38 @@ sfVector3f	calc_dir_vector(sfVector2i, int, int, int);
 /*
 ** intersect/intersect_sphere.c
 */
-float		intersect_sphere(sfVector3f *restrict, sfVector3f *restrict, float);
+float		intersect_sphere(sfVector3f *restrict,
+				 sfVector3f *restrict, float);
 
 /*
 ** intersect/intersect_cyl.c
 */
-float		intersect_cyl(sfVector3f *restrict, sfVector3f *restrict, t_obj *);
-float		intersect_closed_cyl(sfVector3f *restrict, sfVector3f *restrict,
+float		intersect_cyl(sfVector3f *restrict,
+			      sfVector3f *restrict, t_obj *);
+float		intersect_closed_cyl(sfVector3f *restrict,
+				     sfVector3f *restrict,
 				     t_obj *, float);
 
 /*
 ** intersect/intersect_cone.c
 */
-float		intersect_cone(sfVector3f *restrict, sfVector3f *restrict, t_obj *);
-float           intersect_closed_cone(sfVector3f *restrict, sfVector3f *restrict,
+float		intersect_cone(sfVector3f *restrict,
+			       sfVector3f *restrict, t_obj *);
+float           intersect_closed_cone(sfVector3f *restrict,
+				      sfVector3f *restrict,
 				      t_obj *, float);
 
 /*
 ** intersect/intersect_disk.c
 */
-float	intersect_disk(sfVector3f *restrict, sfVector3f *restrict, float);
+float	intersect_disk(sfVector3f *restrict,
+		       sfVector3f *restrict, float);
 
 /*
 ** intersect/intersect_plane.c
 */
-float		intersect_plane(sfVector3f *restrict, sfVector3f *restrict);
+float		intersect_plane(sfVector3f *restrict,
+				sfVector3f *restrict);
 
 /*
 ** events.c

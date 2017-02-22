@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Sun Feb 12 03:09:48 2017 Nicolas Polomack
-** Last update Wed Feb 22 00:11:13 2017 Nicolas Polomack
+** Last update Wed Feb 22 02:30:27 2017 Nicolas Polomack
 */
 
 #include <float.h>
@@ -21,48 +21,6 @@ static void		update_color(t_thread *t)
   sfRenderWindow_drawSprite(t->w->window, t->w->sprite, NULL);
   sfRenderWindow_display(t->w->window);
   pthread_mutex_unlock(&t->w->mutex);
-}
-
-void		prepare_reflect(t_thread *t)
-{
-  float		norme;
-
-  add_coords_vect(&t->normal, NULL, &(t->params->objs[t->idx]));
-  t->ray.orig.x = t->ray.orig.x + t->ray.dir.x * t->dist[t->idx];
-  t->ray.orig.y	= t->ray.orig.y + t->ray.dir.y * t->dist[t->idx];
-  t->ray.orig.z	= t->ray.orig.z + t->ray.dir.z * t->dist[t->idx];
-  norme = norm(t->normal);
-  t->normal.x /= norme;
-  t->normal.y /= norme;
-  t->normal.z /= norme;
-  norme = -dot(t->normal, t->ray.dir);
-  t->ray.dir.x = t->ray.dir.x + (2.0F * t->normal.x * norme);
-  t->ray.dir.y = t->ray.dir.y + (2.0F * t->normal.y * norme);
-  t->ray.dir.z = t->ray.dir.z + (2.0F * t->normal.z * norme);
-}
-
-sfColor		apply_reflect(t_thread *t, sfColor col)
-{
-  sfColor	reflect;
-  int		i;
-  int		idx;
-
-  i = -1;
-  prepare_reflect(t);
-  idx = t->idx;
-  t->dist[t->idx] = FLT_MAX;
-  while (++i < t->params->nb_obj)
-    if (i != t->idx)
-      t->dist[i] = gather_distances(t->params->objs, t->ray, i);
-  reflect = color_stuff(t->dist, t);
-  col.r = ((float)reflect.r) * t->params->objs[idx].reflect +
-    ((float)col.r) * (1.0F - t->params->objs[idx].reflect);
-  col.g = ((float)reflect.g) * t->params->objs[idx].reflect +
-    ((float)col.g) * (1.0F - t->params->objs[idx].reflect);
-  col.b = ((float)reflect.b) * t->params->objs[idx].reflect +
-    ((float)col.b) * (1.0F - t->params->objs[idx].reflect);
-  col.a = 255;
-  return (col);
 }
 
 sfColor		gather_color(t_thread *t)

@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Sun Feb  5 14:37:35 2017 Nicolas Polomack
-** Last update Sat Feb 18 23:37:12 2017 Nicolas Polomack
+** Last update Wed Feb 22 03:11:05 2017 Nicolas Polomack
 */
 
 #ifndef RAYTRACER_H_
@@ -55,6 +55,11 @@ typedef struct		s_window
   t_my_framebuffer	*save;
   t_my_framebuffer	*buffer;
 }			t_window;
+
+/*
+** launch.c
+*/
+void	handle_error(char *);
 
 /*
 ** socket.c

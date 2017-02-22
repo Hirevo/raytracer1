@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 23:30:22 2017 Nicolas Polomack
-** Last update Sat Feb 18 22:42:37 2017 Nicolas Polomack
+** Last update Wed Feb 22 02:39:28 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -25,7 +25,8 @@ static float	get_value(float root[2])
   return (root[1]);
 }
 
-void	calc_abcd(float *abcd, sfVector3f *eye_pos, sfVector3f *dir_vector,
+void	calc_abcd(float *abcd, sfVector3f *restrict eye_pos,
+		  sfVector3f *restrict dir_vector,
 		  t_obj *obj)
 {
   abcd[0] = powf(dir_vector->x, 2) + powf(dir_vector->y, 2) -
@@ -55,7 +56,8 @@ float	ret_value(float *abcd, float *root,
   return (root[2]);
 }
 
-float		intersect_cone(sfVector3f *eye_pos, sfVector3f *dir_vector,
+float		intersect_cone(sfVector3f *restrict eye_pos,
+			       sfVector3f *restrict dir_vector,
 			       t_obj *obj)
 {
   float		abcd[4];
@@ -79,7 +81,8 @@ float		intersect_cone(sfVector3f *eye_pos, sfVector3f *dir_vector,
   return (root[2]);
 }
 
-float		intersect_closed_cone(sfVector3f *eye_pos, sfVector3f *dir_vector,
+float		intersect_closed_cone(sfVector3f *restrict eye_pos,
+				      sfVector3f *restrict dir_vector,
 				      t_obj *obj, float dist)
 {
   float		impz;

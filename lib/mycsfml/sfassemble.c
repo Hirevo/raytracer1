@@ -5,16 +5,16 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Fri Feb 17 17:31:45 2017 Nicolas Polomack
-** Last update Fri Feb 17 17:34:18 2017 Nicolas Polomack
+** Last update Wed Feb 22 02:39:56 2017 Nicolas Polomack
 */
 
 #include "sfcaster.h"
 #include <SFML/Graphics.h>
 
-t_my_framebuffer        *assemble_texture(sfTexture **tex, sfSprite **spr,
+t_my_framebuffer	*assemble_texture(sfTexture **tex, sfSprite **spr,
                                           int width, int height)
 {
-  t_my_framebuffer      *buffer;
+  t_my_framebuffer	*buffer;
 
   *tex = sfTexture_create(width, height);
   *spr = sfSprite_create();

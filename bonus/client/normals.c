@@ -5,57 +5,46 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Fri Feb 10 22:55:04 2017 Nicolas Polomack
-** Last update Sat Feb 18 23:06:26 2017 Nicolas Polomack
+** Last update Wed Feb 22 01:41:09 2017 Nicolas Polomack
 */
 
 #include <math.h>
 #include "raytracer.h"
 #include "sfcaster.h"
 
-void	get_cone_normal(t_thread *t, sfVector2i idxs,
-			sfVector3f *imp, float dist)
+void	get_cone_normal(t_thread *t)
 {
-  if (t->params->objs[idxs.x].type == 'u' &&
-      roundf(imp->z) == (-t->params->objs[idxs.x].height))
-      //powf(imp->x, 2) + powf(imp->y, 2) - powf(imp->z, 2) *
-      //powf(tanr(t->params->objs[idxs.x].aper), 2) < 0)
+  if (t->params->objs[t->idx].type == 'u' &&
+      roundf(t->normal.z) == (-t->params->objs[t->idx].height))
     {
-      imp->x = 0;
-      imp->y = 0;
-      imp->z = -100;
+      t->normal.x = 0;
+      t->normal.y = 0;
+      t->normal.z = -100;
       return ;
     }
-  imp->x = t->ray.orig.x + t->ray.dir.x * dist;
-  imp->y = t->ray.orig.y + t->ray.dir.y * dist;
-  imp->z = t->ray.orig.z + t->ray.dir.z * dist;
-  if (!roundf(imp->z))
-    imp->z = -1;
-  imp->z *= -tanr(t->params->objs[idxs.x].aper);
+  t->normal.z *= -tanr(t->params->objs[t->idx].aper);
 }
 
-void	get_cylinder_normal(t_thread *t, sfVector2i idxs,
-			    sfVector3f *imp, float dist)
+void	get_cylinder_normal(t_thread *t)
 {
-  if (t->params->objs[idxs.x].type == 'h' &&
-      roundf(powf(imp->x, 2) + powf(imp->y, 2) -
-	     powf(t->params->objs[idxs.x].rad, 2)) != 0)
+  if (t->params->objs[t->idx].type == 'h' &&
+      roundf(powf(t->normal.x, 2) + powf(t->normal.y, 2) -
+	     powf(t->params->objs[t->idx].rad, 2)) != 0)
     {
-      if (roundf(imp->z) == (t->params->objs[idxs.x].height / 2))
+      if (roundf(t->normal.z) == (t->params->objs[t->idx].height / 2))
 	{
-	  imp->x = 0;
-	  imp->y = 0;
-	  imp->z = 100;
+	  t->normal.x = 0;
+	  t->normal.y = 0;
+	  t->normal.z = 100;
 	  return ;
 	}
-      else if (roundf(imp->z) == -(t->params->objs[idxs.x].height / 2))
+      else if (roundf(t->normal.z) == -(t->params->objs[t->idx].height / 2))
 	{
-	  imp->x = 0;
-	  imp->y = 0;
-	  imp->z = -100;
+	  t->normal.x = 0;
+	  t->normal.y = 0;
+	  t->normal.z = -100;
 	  return ;
 	}
     }
-  imp->x = t->ray.orig.x + t->ray.dir.x * dist;
-  imp->y = t->ray.orig.y + t->ray.dir.y * dist;
-  imp->z = 0;
+  t->normal.z = 0;
 }

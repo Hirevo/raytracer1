@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb  9 02:34:59 2017 Nicolas Polomack
-** Last update Wed Feb 15 02:16:10 2017 Nicolas Polomack
+** Last update Wed Feb 22 03:05:53 2017 Nicolas Polomack
 */
 
 #include <unistd.h>
@@ -20,9 +20,9 @@ int	check_sections(char type, int sec, int *eyes)
 {
   if (type == 's' || type == 'p' || type == 'x' ||
       type == 'c' || type == 'o')
-    return (sec == 11);
-  if (type == 'h' || type == 'u')
     return (sec == 12);
+  if (type == 'h' || type == 'u')
+    return (sec == 13);
   else if (type == 'e' && !*eyes)
     {
       *eyes = 1;
