@@ -5,9 +5,10 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Wed Feb 22 02:28:54 2017 Nicolas Polomack
-** Last update Wed Feb 22 02:40:11 2017 Nicolas Polomack
+** Last update Thu Feb 23 01:53:30 2017 Nicolas Polomack
 */
 
+#include <math.h>
 #include <float.h>
 #include "raytracer.h"
 #include "sfcaster.h"
@@ -28,6 +29,55 @@ void		prepare_reflect(t_thread *t)
   t->ray.dir.x = t->ray.dir.x + (t->normal.x * norme);
   t->ray.dir.y = t->ray.dir.y + (t->normal.y * norme);
   t->ray.dir.z = t->ray.dir.z + (t->normal.z * norme);
+}
+
+float		get_specular_coef(t_thread *t, int l)
+{
+  float		norme;
+  sfVector3f	n;
+  sfVector3f	reflect;
+
+  n = t->normal;
+  norme = norm(n);
+  n.x /= norme;
+  n.y /= norme;
+  n.z /= norme;
+  norme = -2.0F * dot(n, t->params->light[l].pos);
+  reflect.x = t->params->light[l].pos.x + (n.x * norme);
+  reflect.y = t->params->light[l].pos.y + (n.y * norme);
+  reflect.z = t->params->light[l].pos.z + (n.z * norme);
+  n = t->ray.orig;
+  norme = norm(n);
+  n.x /= norme;
+  n.y /= norme;
+  n.z /= norme;
+  norme = norm(reflect);
+  reflect.x /= norme;
+  reflect.y /= norme;
+  reflect.z /= norme;
+  return (powf(dot(reflect, n), 50));
+}
+
+sfColor		set_specular_shade(sfColor col, t_thread *t, int l)
+{
+  float		coef;
+  int		i[3];
+
+  coef = get_specular_coef(t, l);
+  i[0] = (((float)col.r) + 255.0F * fmax(0, coef));
+  i[1] = (((float)col.g) + 255.0F * fmax(0, coef));
+  i[2] = (((float)col.b) + 255.0F * fmax(0, coef));
+  if (i[0] > 255)
+    i[0] = 255;
+  if (i[1] > 255)
+    i[1] = 255;
+  if (i[2] > 255)
+    i[2] = 255;
+  col.r = i[0];
+  col.g = i[1];
+  col.b = i[2];
+  col.a = 255;
+  return (col);
 }
 
 sfColor		apply_reflect(t_thread *t, sfColor col)
@@ -54,25 +104,6 @@ sfColor		apply_reflect(t_thread *t, sfColor col)
   return (col);
 }
 
-void	get_normal(t_thread *t)
-{
-  char	type;
-
-  type = t->params->objs[t->idx].type;
-  if (type == 'p')
-    {
-      t->normal.x = 0;
-      t->normal.y = 0;
-      t->normal.z = 1;
-      return ;
-    }
-  t->normal = t->imp;
-  if (type == 'c' || type == 'h')
-    get_cylinder_normal(t);
-  else if (type == 'x' || type == 'o' || type == 'u')
-    get_cone_normal(t);
-}
-
 void	get_impact(t_thread *t, float dist)
 {
   sub_coords_vect(&t->ray.orig, &t->ray.dir,
@@ -83,4 +114,3 @@ void	get_impact(t_thread *t, float dist)
   add_coords_vect(&t->ray.orig, &t->ray.dir,
                   &(t->params->objs[t->idx]));
 }
-

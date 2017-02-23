@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Fri Feb 10 22:55:04 2017 Nicolas Polomack
-** Last update Wed Feb 22 01:41:09 2017 Nicolas Polomack
+** Last update Thu Feb 23 01:54:40 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -47,4 +47,23 @@ void	get_cylinder_normal(t_thread *t)
 	}
     }
   t->normal.z = 0;
+}
+
+void	get_normal(t_thread *t)
+{
+  char	type;
+
+  type = t->params->objs[t->idx].type;
+  if (type == 'p')
+    {
+      t->normal.x = 0;
+      t->normal.y = 0;
+      t->normal.z = 1;
+      return ;
+    }
+  t->normal = t->imp;
+  if (type == 'c' || type == 'h')
+    get_cylinder_normal(t);
+  else if (type == 'x' || type == 'o' || type == 'u')
+    get_cone_normal(t);
 }

@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Sun Feb  5 14:37:35 2017 Nicolas Polomack
-** Last update Wed Feb 22 02:42:58 2017 Nicolas Polomack
+** Last update Thu Feb 23 01:51:43 2017 Nicolas Polomack
 */
 
 #ifndef RAYTRACER_H_
@@ -114,6 +114,9 @@ typedef struct		s_menu
   t_my_framebuffer	*option;
   int			menu_id;
 }			t_menu;
+
+sfColor	set_specular_shade(sfColor, t_thread *, int);
+float	get_specular_shade(t_thread *, int);
 
 /*
 ** calc.c

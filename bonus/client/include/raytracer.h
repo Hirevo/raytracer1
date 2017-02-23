@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Sun Feb  5 14:37:35 2017 Nicolas Polomack
-** Last update Wed Feb 22 03:00:28 2017 Nicolas Polomack
+** Last update Thu Feb 23 01:49:22 2017 Nicolas Polomack
 */
 
 #ifndef RAYTRACER_H_
@@ -183,6 +183,7 @@ void	init_thread(int, t_params *, t_window *);
 /*
 ** reflect.c
 */
+sfColor	set_specular_shade(sfColor, t_thread *, int);
 sfColor	apply_reflect(t_thread *, sfColor);
 void	get_normal(t_thread *);
 void	get_impact(t_thread *, float);
