@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb 16 13:52:48 2017 Nicolas Polomack
-** Last update Wed Feb 22 03:12:00 2017 Nicolas Polomack
+** Last update Fri Feb 24 14:08:21 2017 Nicolas Polomack
 */
 
 #include <sys/types.h>
@@ -40,7 +40,7 @@ void	broadcast_start(t_socket *s)
   int	i;
 
   i = -1;
-  usleep(15000);
+  usleep(50000);
   while (++i < 4)
     send(s->cfd[i], "START", 6, 0);
 }
@@ -98,12 +98,16 @@ void		gather_results(t_params *params, t_window *w)
   while (++i < params->s.nb_clients)
     {
       my_printf("Client %d: ...", i);
-      send(params->s.cfd[i], "RESULT", 7, 0);
-      recv(params->s.cfd[i],
-	   &(w->buffer->pixels[((params->s.offs[i].y * w->buffer->width) +
-				params->s.offs[i].x) * 4]),
-	   (params->s.end[i].x - params->s.offs[i].x) *
-	   (params->s.end[i].y - params->s.offs[i].y) * 4, MSG_WAITALL);
+      if (send(params->s.cfd[i], "RESULT", 7, 0) == -1 ||
+	  recv(params->s.cfd[i],
+	       &(w->buffer->pixels[((params->s.offs[i].y * w->buffer->width) +
+				    params->s.offs[i].x) * 4]),
+	       (params->s.end[i].x - params->s.offs[i].x) *
+	       (params->s.end[i].y - params->s.offs[i].y) * 4, MSG_WAITALL) == -1)
+	{
+	  my_printf(" KO !\n");
+	  exit(84);
+	}
       my_printf(" OK !\n");
     }
 }

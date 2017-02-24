@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb  9 02:34:59 2017 Nicolas Polomack
-** Last update Wed Feb 22 03:02:35 2017 Nicolas Polomack
+** Last update Fri Feb 24 14:27:24 2017 Nicolas Polomack
 */
 
 #include <unistd.h>
@@ -109,10 +109,7 @@ int	disp_guide()
   if ((fd = open("help.txt", O_RDONLY)) == -1)
     return (84);
   while ((line = get_next_line(fd)))
-    {
-      my_printf("%s\n", line);
-      free(line);
-    }
+    free(line);
   close(fd);
   return (0);
 }

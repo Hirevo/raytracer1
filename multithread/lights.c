@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Tue Feb  7 00:16:08 2017 Nicolas Polomack
-** Last update Wed Feb 22 02:36:14 2017 Nicolas Polomack
+** Last update Fri Feb 24 09:36:42 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -75,12 +75,12 @@ float		intersect_light(float dist, t_thread *t, sfVector2i idxs)
   return (1);
 }
 
-sfColor		set_luminosity(float coef, sfColor col, float ambient)
+sfColor		set_luminosity(float coef, sfColor col, t_thread *t, int l)
 {
   if (coef < 0)
-    coef = ambient;
+    coef = t->params->ambient;
   else
-    coef += ambient;
+    coef += t->params->ambient;
   if (coef > 1.0F)
     coef = 1.0F;
   if (coef < 0)
@@ -89,5 +89,7 @@ sfColor		set_luminosity(float coef, sfColor col, float ambient)
   col.g = roundf(((float)col.g) * coef);
   col.b = roundf(((float)col.b) * coef);
   col.a = 255;
+  if (coef > t->params->ambient)
+    col = set_specular_shade(col, t, l);
   return (col);
 }

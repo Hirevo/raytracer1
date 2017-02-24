@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 14:08:22 2017 Nicolas Polomack
-** Last update Wed Feb 22 12:01:08 2017 Nicolas Polomack
+** Last update Fri Feb 24 09:34:06 2017 Nicolas Polomack
 */
 
 #include <SFML/Graphics.h>
@@ -49,8 +49,7 @@ sfColor		evaluate_luminosity(t_thread *t,
 			t->params->objs[idxs.x].type == 'o' ||
 			t->params->objs[idxs.x].type == 'x') ?
 		       get_cos_angle_o(t, idxs) : 1,
-		       col, t->params->ambient);
-  col = set_specular_shade(col, t, idxs.y);
+		       col, t, idxs.y);
   return (col);
 }
 
