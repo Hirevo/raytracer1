@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 23:30:22 2017 Nicolas Polomack
-** Last update Wed Feb 22 02:43:23 2017 Nicolas Polomack
+** Last update Fri Feb 24 15:09:13 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -37,7 +37,7 @@ float		intersect_cone(sfVector3f eye_pos, sfVector3f dir_vector,
   abcd[2] = (powf(eye_pos.x, 2) + powf(eye_pos.y, 2) -
              powf(eye_pos.z, 2) * pow(tan(semiangle * M_PI / 180.0F), 2));
   abcd[3] = abcd[1] * abcd[1] - 4 * abcd[0] * abcd[2];
-  if (abcd[3] <= 0)
+  if (abcd[3] < 0)
     return (-1.0F);
   else if (abcd[3])
     {
@@ -45,11 +45,13 @@ float		intersect_cone(sfVector3f eye_pos, sfVector3f dir_vector,
       root[1] = (-abcd[1] + sqrtf(abcd[3])) / (2 * abcd[0]);
       return (get_value(root));
     }
+  else if (!delta)
+    return (-abcd[1] / (2 * abcd[0]));
   return (-1);
 }
 
 sfVector3f	get_normal_cone(sfVector3f imp, float semiangle)
 {
-  imp.z *= tan(semiangle * M_PI / 180.0F);
+  imp.z *= -tan(semiangle * M_PI / 180.0F);
   return (imp);
 }
