@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Wed Feb 22 02:28:54 2017 Nicolas Polomack
-** Last update Fri Feb 24 09:40:32 2017 Nicolas Polomack
+** Last update Sat Feb 25 16:19:36 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -43,13 +43,6 @@ float		get_specular_coef(t_thread *t, int l)
   n.y /= norme;
   n.z /= norme;
   reflect = t->params->light[l].pos;
-  reflect.x -= t->imp.x;
-  reflect.y -= t->imp.y;
-  reflect.z -= t->imp.z;
-  norme = norm(reflect);
-  reflect.x /= norme;
-  reflect.y /= norme;
-  reflect.z /= norme;
   norme = -2.0F * dot(n, reflect);
   reflect.x = reflect.x + (n.x * norme);
   reflect.y = reflect.y + (n.y * norme);
@@ -59,9 +52,6 @@ float		get_specular_coef(t_thread *t, int l)
   reflect.y /= norme;
   reflect.z /= norme;
   n = t->ray.orig;
-  n.x -= t->imp.x;
-  n.y -= t->imp.y;
-  n.z -= t->imp.z;
   norme = norm(n);
   n.x /= norme;
   n.y /= norme;

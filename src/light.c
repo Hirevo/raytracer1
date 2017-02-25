@@ -1,11 +1,11 @@
 /*
-1;4601;0c** get_light_coef.c for raytracer in /home/nicolaspolomack/graphical/raytracer1/src
+** get_light_coef.c for raytracer in /home/nicolaspolomack/graphical/raytracer1/src
 ** 
 ** Made by Nicolas Polomack
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb 13 20:54:49 2017 Nicolas Polomack
-** Last update Sat Feb 25 15:22:51 2017 Nicolas Polomack
+** Last update Sat Feb 25 16:18:33 2017 Nicolas Polomack
 */
 
 #include <math.h>
