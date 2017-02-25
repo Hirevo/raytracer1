@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 23:30:22 2017 Nicolas Polomack
-** Last update Fri Feb 24 15:16:31 2017 Nicolas Polomack
+** Last update Sat Feb 25 15:26:17 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -52,6 +52,6 @@ float		intersect_cone(sfVector3f eye_pos, sfVector3f dir_vector,
 
 sfVector3f	get_normal_cone(sfVector3f imp, float semiangle)
 {
-  imp.z *= -tan(semiangle * M_PI / 180.0F);
+  imp.z *= tan(semiangle * M_PI / 180.0F);
   return (imp);
 }
