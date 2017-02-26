@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb  9 02:33:42 2017 Nicolas Polomack
-** Last update Sun Feb 26 14:36:39 2017 Nicolas Polomack
+** Last update Sun Feb 26 16:22:58 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
@@ -88,7 +88,7 @@ int	parse_first(char *line, t_params *params)
   params->reflect_depth = get_number(line + idxs[3]);
   params->ambient = get_number(line + idxs[4]) / 1000.0F;
   params->ssaa = get_number(line + idxs[5]);
-  params->t_count = (idxs[7] == 6) ? get_number(line + idxs[5]) : 'x';
+  params->t_count = (idxs[7] == 6) ? get_number(line + idxs[6]) : 'x';
   free(line);
   return (0);
 }

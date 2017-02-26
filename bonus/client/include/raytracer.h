@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Sun Feb  5 14:37:35 2017 Nicolas Polomack
-** Last update Sun Feb 26 14:28:39 2017 Nicolas Polomack
+** Last update Sun Feb 26 16:30:05 2017 Nicolas Polomack
 */
 
 #ifndef RAYTRACER_H_
@@ -156,7 +156,7 @@ float           get_cos_angle_o(t_thread *, sfVector2i);
 void		sub_coords_vect(sfVector3f *restrict, sfVector3f *restrict, t_obj *);
 void		add_coords_vect(sfVector3f *restrict, sfVector3f *restrict, t_obj *);
 float		intersect_light(float, t_thread *, sfVector2i);
-sfColor		set_luminosity(float, sfColor, float);
+sfColor		set_luminosity(float, sfColor, t_thread *, int);
 
 /*
 ** multi_lights.c
