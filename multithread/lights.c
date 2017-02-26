@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Tue Feb  7 00:16:08 2017 Nicolas Polomack
-** Last update Fri Feb 24 09:36:42 2017 Nicolas Polomack
+** Last update Sun Feb 26 14:13:20 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -89,7 +89,8 @@ sfColor		set_luminosity(float coef, sfColor col, t_thread *t, int l)
   col.g = roundf(((float)col.g) * coef);
   col.b = roundf(((float)col.b) * coef);
   col.a = 255;
-  if (coef > t->params->ambient)
-    col = set_specular_shade(col, t, l);
+  if (coef > (t->params->ambient + 0.2F) &&
+      t->params->objs[t->idx].type == 's')
+      col = set_specular_shade(col, t, l);
   return (col);
 }

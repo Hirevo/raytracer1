@@ -5,10 +5,11 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Sat Feb 11 15:15:00 2017 Nicolas Polomack
-** Last update Sat Feb 18 16:00:40 2017 Nicolas Polomack
+** Last update Sun Feb 26 14:37:44 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
+#include <math.h>
 #include <SFML/Graphics.h>
 #include "sfcaster.h"
 #include "raytracer.h"
@@ -39,7 +40,11 @@ int	load_window(t_window *w, t_params *params)
 
 int	load_assets(t_window *w, t_params *params, char *file)
 {
-  if (parse_config_file(file, params) == -1)
+  if (parse_config_file(file, params) == -1 ||
+      fmodf(sqrtf((float)params->ssaa), 1))
+    return (-1);
+  if (params->t_count != 'x' &&
+      (params->t_count == 0 || params->t_count > 50 || params->t_count % 2))
     return (-1);
   if (params->screen_size.x >= 8192 ||
       params->screen_size.y >= 8192)

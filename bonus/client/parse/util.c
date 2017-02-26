@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb  9 02:33:42 2017 Nicolas Polomack
-** Last update Wed Feb 22 02:41:59 2017 Nicolas Polomack
+** Last update Sun Feb 26 14:36:39 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
@@ -68,18 +68,18 @@ int	alloc_all(t_params *params, int objs, int lights)
 
 int	parse_first(char *line, t_params *params)
 {
-  int	idxs[7];
+  int	idxs[8];
 
-  idxs[0] = -1 + (idxs[6] = 0) * 0;
+  idxs[0] = -1 + (idxs[7] = 0) * 0;
   while (line[++(idxs[0])])
     {
       if (line[idxs[0]] == ':')
-	idxs[6] += 1;
+	idxs[7] += 1;
       if ((line[idxs[0]] < '0' || line[idxs[0]] > '9') &&
 	  line[idxs[0]] != ':')
 	return (-1);
     }
-  if (idxs[6] != 5 && idxs[6] != 4)
+  if (idxs[7] != 6 && idxs[7] != 5)
     return (-1);
   gather_idxs(line, idxs);
   params->screen_size.x = get_number(line);
@@ -87,10 +87,8 @@ int	parse_first(char *line, t_params *params)
   params->live = get_number(line + idxs[2]) % 2;
   params->reflect_depth = get_number(line + idxs[3]);
   params->ambient = get_number(line + idxs[4]) / 1000.0F;
-  params->t_count = (idxs[6] == 5) ? get_number(line + idxs[5]) : 'x';
-  if (params->t_count != 'x' &&
-      (params->t_count == 0 || params->t_count > 50 || params->t_count % 2))
-    return (-1);
+  params->ssaa = get_number(line + idxs[5]);
+  params->t_count = (idxs[7] == 6) ? get_number(line + idxs[5]) : 'x';
   free(line);
   return (0);
 }

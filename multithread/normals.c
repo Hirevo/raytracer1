@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Fri Feb 10 22:55:04 2017 Nicolas Polomack
-** Last update Thu Feb 23 01:53:46 2017 Nicolas Polomack
+** Last update Sat Feb 25 23:26:48 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -65,8 +65,10 @@ void	get_normal(t_thread *t)
       return ;
     }
   t->normal = t->imp;
+  sub_coords_vect(&t->ray.orig, &t->ray.dir, &(t->params->objs[t->idx]));
   if (type == 'c' || type == 'h')
     get_cylinder_normal(t);
   else if (type == 'x' || type == 'o' || type == 'u')
     get_cone_normal(t);
+  add_coords_vect(&t->ray.orig, &t->ray.dir, &(t->params->objs[t->idx]));
 }

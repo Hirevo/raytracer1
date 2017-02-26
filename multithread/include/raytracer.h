@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Sun Feb  5 14:37:35 2017 Nicolas Polomack
-** Last update Fri Feb 24 09:35:58 2017 Nicolas Polomack
+** Last update Sun Feb 26 14:24:50 2017 Nicolas Polomack
 */
 
 #ifndef RAYTRACER_H_
@@ -76,6 +76,7 @@ typedef struct		s_params
   pthread_t		tid[50];
   t_thread		t[50];
   t_light		*light;
+  int			ssaa;
   int			bmp;
   int			live;
   int			progress;
@@ -114,9 +115,6 @@ typedef struct		s_menu
   t_my_framebuffer	*option;
   int			menu_id;
 }			t_menu;
-
-sfColor	set_specular_shade(sfColor, t_thread *, int);
-float	get_specular_shade(t_thread *, int);
 
 /*
 ** calc.c
@@ -161,6 +159,7 @@ int		raytracer(t_params *, char *);
 /*
 ** thread.c
 */
+sfColor	gather_color(t_thread *);
 void	render_rect(t_thread *);
 void	*thread_handler(void *);
 void	init_thread(int, t_params *, t_window *);
@@ -173,9 +172,16 @@ int	load_assets(t_window *, t_params *, char *);
 /*
 ** reflect.c
 */
+sfColor set_specular_shade(sfColor, t_thread *, int);
+float   get_specular_shade(t_thread *, int);
 sfColor	apply_reflect(t_thread *, sfColor);
 void	get_normal(t_thread *);
 void	get_impact(t_thread *, float);
+
+/*
+** ssaa.c
+*/
+sfColor	ssaa(t_thread *, float, float, sfColor *);
 
 /*
 ** parse/parse.c
@@ -252,7 +258,7 @@ void	anti_rotation_eye(t_thread *);
 /*
 ** calc_dir_vector.c
 */
-sfVector3f	calc_dir_vector(sfVector2i, int, int, int);
+sfVector3f	calc_dir_vector(sfVector2i, float, float, int);
 
 /*
 ** intersect/intersect_sphere.c

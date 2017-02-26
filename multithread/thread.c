@@ -5,11 +5,12 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Sun Feb 12 03:09:48 2017 Nicolas Polomack
-** Last update Thu Feb 23 00:28:05 2017 Nicolas Polomack
+** Last update Sun Feb 26 14:23:21 2017 Nicolas Polomack
 */
 
 #include <float.h>
 #include <stdlib.h>
+#include <math.h>
 #include "raytracer.h"
 #include "my.h"
 
@@ -34,31 +35,25 @@ sfColor		gather_color(t_thread *t)
   col = color_stuff(t->dist, t);
   i = t->params->reflect_depth;
   while (i--)
-    if (t->can_reflect && t->params->objs[t->idx].reflect)
+    if (t->can_reflect == 1 && t->params->objs[t->idx].reflect != 0)
       col = apply_reflect(t, col);
   return (col);
 }
 
 void		render_rect(t_thread *t)
 {
-  int		x;
-  int		y;
-  sfColor	col;
+  float		x;
+  float		y;
+  sfColor	*col;
 
+  if ((col = malloc(sizeof(sfColor) * t->params->ssaa)) == NULL)
+    return ;
   x = t->offs.x - 1;
   while (++x < t->end.x)
     {
       y = t->offs.y - 1;
       while (++y < t->end.y)
-        {
-	  t->ray = t->params->ray;
-          t->ray.dir = calc_dir_vector(t->params->screen_size,
-                                       x, y, t->params->fov);
-          rotation_t_eye(t);
-	  t->can_reflect = 0;
-	  col = gather_color(t);
-	  put_pixel(t->w->buffer, x, y, col);
-        }
+	put_pixel(t->w->buffer, (int)x, (int)y, ssaa(t, x, y, col));
       if (t->params->live && !t->params->bmp)
 	update_color(t);
     }

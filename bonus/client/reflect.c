@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Wed Feb 22 02:28:54 2017 Nicolas Polomack
-** Last update Thu Feb 23 01:54:18 2017 Nicolas Polomack
+** Last update Sun Feb 26 14:11:44 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -17,18 +17,16 @@ void		prepare_reflect(t_thread *t)
 {
   float		norme;
 
-  add_coords_vect(&t->normal, NULL, &(t->params->objs[t->idx]));
+  rotation(&t->normal, NULL, &(t->params->objs[t->idx]));
   t->ray.orig.x = t->ray.orig.x + t->ray.dir.x * t->dist[t->idx];
   t->ray.orig.y = t->ray.orig.y + t->ray.dir.y * t->dist[t->idx];
   t->ray.orig.z = t->ray.orig.z + t->ray.dir.z * t->dist[t->idx];
-  norme = norm(t->normal);
-  t->normal.x /= norme;
-  t->normal.y /= norme;
-  t->normal.z /= norme;
-  norme = -2.0F * dot(t->normal, t->ray.dir);
-  t->ray.dir.x = t->ray.dir.x + (t->normal.x * norme);
-  t->ray.dir.y = t->ray.dir.y + (t->normal.y * norme);
-  t->ray.dir.z = t->ray.dir.z + (t->normal.z * norme);
+  t->normal = normalize(t->normal);
+  t->ray.dir = normalize(t->ray.dir);
+  norme = -dot(t->normal, t->ray.dir);
+  t->ray.dir.x = t->ray.dir.x + (2.0F * t->normal.x * norme);
+  t->ray.dir.y = t->ray.dir.y + (2.0F * t->normal.y * norme);
+  t->ray.dir.z = t->ray.dir.z + (2.0F * t->normal.z * norme);
 }
 
 float		get_specular_coef(t_thread *t, int l)
@@ -38,23 +36,24 @@ float		get_specular_coef(t_thread *t, int l)
   sfVector3f	reflect;
 
   n = t->normal;
-  norme = norm(n);
-  n.x /= norme;
-  n.y /= norme;
-  n.z /= norme;
-  norme = -2.0F * dot(n, t->params->light[l].pos);
-  reflect.x = t->params->light[l].pos.x + (n.x * norme);
-  reflect.y = t->params->light[l].pos.y + (n.y * norme);
-  reflect.z = t->params->light[l].pos.z + (n.z * norme);
+  rotation(&n, NULL, &(t->params->objs[t->idx]));
+  add_coords_vect(&t->imp, NULL, &(t->params->objs[t->idx]));
+  n = normalize(n);
+  reflect = t->imp;
+  reflect.x -= t->params->light[l].pos.x;
+  reflect.y -= t->params->light[l].pos.y;
+  reflect.z -= t->params->light[l].pos.z;
+  norme = -dot(n, reflect);
+  reflect.x = reflect.x + (2.0F * n.x * norme);
+  reflect.y = reflect.y + (2.0F * n.y * norme);
+  reflect.z = reflect.z + (2.0F * n.z * norme);
   n = t->ray.orig;
-  norme = norm(n);
-  n.x /= norme;
-  n.y /= norme;
-  n.z /= norme;
-  norme = norm(reflect);
-  reflect.x /= norme;
-  reflect.y /= norme;
-  reflect.z /= norme;
+  n.x -= t->imp.x;
+  n.y -= t->imp.y;
+  n.z -= t->imp.z;
+  n = normalize(n);
+  reflect = normalize(reflect);
+  sub_coords_vect(&t->imp, NULL, &(t->params->objs[t->idx]));
   return (powf(dot(reflect, n), 50));
 }
 

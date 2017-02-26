@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Sun Feb  5 14:37:35 2017 Nicolas Polomack
-** Last update Thu Feb 23 01:49:22 2017 Nicolas Polomack
+** Last update Sun Feb 26 14:28:39 2017 Nicolas Polomack
 */
 
 #ifndef RAYTRACER_H_
@@ -91,6 +91,7 @@ typedef struct		s_params
   t_thread		t[50];
   t_socket		s;
   t_light		*light;
+  int			ssaa;
   int			bmp;
   int			live;
   int			progress;
@@ -176,6 +177,7 @@ int		raytracer(t_params *, char *);
 /*
 ** thread.c
 */
+sfColor	gather_color(t_thread *);
 void	render_rect(t_thread *);
 void	*thread_handler(void *);
 void	init_thread(int, t_params *, t_window *);
@@ -187,6 +189,11 @@ sfColor	set_specular_shade(sfColor, t_thread *, int);
 sfColor	apply_reflect(t_thread *, sfColor);
 void	get_normal(t_thread *);
 void	get_impact(t_thread *, float);
+
+/*
+** ssaa.c
+*/
+sfColor	ssaa(t_thread *, float, float, sfColor *);
 
 /*
 ** load.c

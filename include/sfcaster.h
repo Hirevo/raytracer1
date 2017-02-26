@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Wed Dec 21 13:52:00 2016 Nicolas Polomack
-** Last update Tue Feb  7 21:53:45 2017 Nicolas Polomack
+** Last update Sat Feb 25 22:58:54 2017 Nicolas Polomack
 */
 
 #ifndef SFCASTER_H_
@@ -58,5 +58,6 @@ float			sinr(float);
 float			tanr(float);
 float			dot(sfVector3f, sfVector3f);
 float			norm(sfVector3f);
+sfVector3f		normalize(sfVector3f);
 
 #endif /* !SFCASTER_H_ */
