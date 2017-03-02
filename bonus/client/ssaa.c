@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Sun Feb 26 14:19:17 2017 Nicolas Polomack
-** Last update Sun Feb 26 14:22:35 2017 Nicolas Polomack
+** Last update Thu Mar  2 08:18:53 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -56,7 +56,7 @@ sfColor		ssaa(t_thread *t, float x, float y, sfColor *col)
           t->ray.dir = calc_dir_vector(t->params->screen_size,
                                        x + fx, y + fx, t->params->fov);
           rotation_t_eye(t);
-          t->can_reflect = 0;
+          t->can_reflect = (t->is_primary = 1) * 0;
           col[i] = gather_color(t);
           i += 1;
           fy += ssaa_offs;
@@ -64,4 +64,15 @@ sfColor		ssaa(t_thread *t, float x, float y, sfColor *col)
       fx += ssaa_offs;
     }
   return (aver_col(col, t->params->ssaa));
+}
+
+sfColor	no_ssaa(t_thread *t, int x, int y)
+{
+  t->ray = t->params->ray;
+  t->ray.dir = calc_dir_vector(t->params->screen_size,
+			       x, y, t->params->fov);
+  rotation_t_eye(t);
+  t->is_primary = 1;
+  t->can_reflect = 0;
+  return (gather_color(t));
 }

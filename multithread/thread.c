@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Sun Feb 12 03:09:48 2017 Nicolas Polomack
-** Last update Sun Feb 26 14:23:21 2017 Nicolas Polomack
+** Last update Wed Mar  1 19:05:31 2017 Nicolas Polomack
 */
 
 #include <float.h>
@@ -33,6 +33,7 @@ sfColor		gather_color(t_thread *t)
   while (++i < t->params->nb_obj)
     t->dist[i] = gather_distances(t->params->objs, t->ray, i);
   col = color_stuff(t->dist, t);
+  t->is_primary = 0;
   i = t->params->reflect_depth;
   while (i--)
     if (t->can_reflect == 1 && t->params->objs[t->idx].reflect != 0)
@@ -53,7 +54,9 @@ void		render_rect(t_thread *t)
     {
       y = t->offs.y - 1;
       while (++y < t->end.y)
-	put_pixel(t->w->buffer, (int)x, (int)y, ssaa(t, x, y, col));
+	put_pixel(t->w->buffer, (int)x, (int)y,
+		  (t->params->ssaa > 1) ? ssaa(t, x, y, col) :
+		  no_ssaa(t, x, y));
       if (t->params->live && !t->params->bmp)
 	update_color(t);
     }

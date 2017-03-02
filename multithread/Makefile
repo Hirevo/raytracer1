@@ -5,7 +5,7 @@
 ## Login   <nicolas.polomack@epitech.eu>
 ##
 ## Started on  Tue Nov 15 09:05:43 2016 Nicolas Polomack
-## Last update Sun Feb 26 14:21:28 2017 Nicolas Polomack
+## Last update Tue Feb 28 15:34:19 2017 Nicolas Polomack
 ##
 
 MAKE2	=	make --no-print-directory -C ../lib/my
@@ -20,6 +20,7 @@ SRC	=	window.c			\
 		lights.c			\
 		multi_lights.c			\
 		load.c				\
+		rand.c				\
 		free.c				\
 		reflect.c			\
 		ssaa.c				\
@@ -44,7 +45,7 @@ OBJ	=	$(SRC:.c=.o)
 
 FLAGS	=	-lm -L../lib/my -lmy -L../lib/mycsfml -lmycsfml -lc_graph_prog $(CFLAGS) -ansi
 
-CFLAGS	=	-Iinclude -I../include -W -Wall -Wextra -Werror -pedantic -pthread
+CFLAGS	=	-Iinclude -I../include -W -Wall -Wextra -Werror -pthread
 
 NAME	=	raytracer
 

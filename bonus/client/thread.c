@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Sun Feb 12 03:09:48 2017 Nicolas Polomack
-** Last update Sun Feb 26 14:32:05 2017 Nicolas Polomack
+** Last update Thu Mar  2 08:21:11 2017 Nicolas Polomack
 */
 
 #include <float.h>
@@ -42,7 +42,8 @@ void		render_rect(t_thread *t)
     {
       y = t->offs.y - 1;
       while (++y < t->end.y)
-        put_pixel(t->w->buffer, (int)x, (int)y, ssaa(t, x, y, col));
+        put_pixel(t->w->buffer, (int)x, (int)y, (t->params->ssaa > 1) ?
+		  ssaa(t, x, y, col) : no_ssaa(t, x, y));
     }
 }
 

@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 14:08:22 2017 Nicolas Polomack
-** Last update Sun Feb 26 13:02:09 2017 Nicolas Polomack
+** Last update Tue Feb 28 15:33:48 2017 Nicolas Polomack
 */
 
 #include <SFML/Graphics.h>
@@ -96,10 +96,11 @@ int	init(t_params *params, t_window *w)
   if (!params->bmp)
     sfTexture_updateFromPixels(w->texture, w->buffer->pixels,
 			       w->buffer->width, w->buffer->height, 0, 0);
+  srand(getpid() * time(NULL));
   return (0);
 }
 
-int			main(int ac, char **av)
+int			main(int ac, char **av, char **ae)
 {
   t_window		w;
   sfEvent		event;
@@ -111,6 +112,7 @@ int			main(int ac, char **av)
     return (disp_guide());
   if (load_assets(&w, &params, av[1]) == -1)
     return (84);
+  params.seed = init_seed(ac, av, ae, (void *)&main);
   init(&params, &w);
   render_frame(&w, &params);
   if (params.bmp)

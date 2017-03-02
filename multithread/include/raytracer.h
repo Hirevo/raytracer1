@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Sun Feb  5 14:37:35 2017 Nicolas Polomack
-** Last update Sun Feb 26 14:24:50 2017 Nicolas Polomack
+** Last update Wed Mar  1 19:06:58 2017 Nicolas Polomack
 */
 
 #ifndef RAYTRACER_H_
@@ -55,6 +55,7 @@ typedef struct s_thread
   int		id;
   int		idx;
   int		can_reflect;
+  int		is_primary;
   t_ray         ray;
   sfVector2i    offs;
   sfVector2i	end;
@@ -79,6 +80,8 @@ typedef struct		s_params
   int			ssaa;
   int			bmp;
   int			live;
+  int			shadow_rays;
+  long int		seed;
   int			progress;
   int			reflect_depth;
   int			nb_lights;
@@ -116,6 +119,9 @@ typedef struct		s_menu
   int			menu_id;
 }			t_menu;
 
+long int	init_seed(int, char **, char **, void *);
+int		my_rand(long int);
+
 /*
 ** calc.c
 */
@@ -137,7 +143,7 @@ float           get_cos_angle_o(t_thread *, sfVector2i);
 */
 void		sub_coords_vect(sfVector3f *restrict, sfVector3f *restrict, t_obj *);
 void		add_coords_vect(sfVector3f *restrict, sfVector3f *restrict, t_obj *);
-float		intersect_light(float, t_thread *, sfVector2i);
+float		intersect_light(float, t_thread *, sfVector3f, sfVector3f);
 sfColor		set_luminosity(float, sfColor, t_thread *, int);
 
 /*
@@ -182,6 +188,7 @@ void	get_impact(t_thread *, float);
 ** ssaa.c
 */
 sfColor	ssaa(t_thread *, float, float, sfColor *);
+sfColor	no_ssaa(t_thread *, int, int);
 
 /*
 ** parse/parse.c

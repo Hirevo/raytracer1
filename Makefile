@@ -5,28 +5,41 @@
 ## Login   <nicolas.polomack@epitech.eu>
 ##
 ## Started on  Tue Nov 15 09:05:43 2016 Nicolas Polomack
-## Last update Tue Feb 21 16:32:12 2017 Nicolas Polomack
+## Last update Thu Mar  2 07:52:56 2017 Nicolas Polomack
 ##
 
-MAKE1	=	make --no-print-directory -C lib/my
+MAKE1	=	make --no-print-directory -sC lib/my
 
-MAKE2	=	make --no-print-directory -C lib/mycsfml
+MAKE2	=	make --no-print-directory -sC lib/mycsfml
 
-MAKE_S	=	make --no-print-directory -C bonus/server
+MAKE_S	=	make --no-print-directory -sC bonus/server
 
-MAKE_C	=	make --no-print-directory -C bonus/client
+MAKE_C	=	make --no-print-directory -sC bonus/client
 
-MAKE_ST	=	make --no-print-directory -C singlethread
+MAKE_ST	=	make --no-print-directory -sC singlethread
 
-MAKE_MT	=	make --no-print-directory -C multithread
+MAKE_MT	=	make --no-print-directory -sC multithread
 
 all:
+	@echo -n "Compilation libmy... "
 	@$(MAKE1)
+	@echo "OK"
+	@echo -n "Compilation libmycsfml... "
 	@$(MAKE2)
+	@echo "OK"
+	@echo -n "Compilation raytracer singlethread... "
 	@$(MAKE_ST)
+	@echo "OK"
+	@echo -n "Compilation raytracer multithread... "
 	@$(MAKE_MT)
+	@echo "OK"
+	@echo "Compilation raytracer clusterisé:"
+	@echo -n "Compilation client... "
 	@$(MAKE_C)
+	@echo "OK"
+	@echo -n "Compilation serveur... "
 	@$(MAKE_S)
+	@echo "OK"
 
 mt:
 	@$(MAKE_MT)
