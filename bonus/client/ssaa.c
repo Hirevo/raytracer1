@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Sun Feb 26 14:19:17 2017 Nicolas Polomack
-** Last update Thu Mar  2 08:18:53 2017 Nicolas Polomack
+** Last update Thu Mar  2 23:53:27 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -37,42 +37,62 @@ sfColor		aver_col(sfColor *col, int ssaa)
   return (fin);
 }
 
+void		render_pixel(t_thread *t, sfVector2f v, sfColor *col, int i, sfVector2f f)
+{
+  if (t->params->depth_rays > 1)
+    col[i] = dof(t, v.x, v.y);
+  else
+    {
+      t->ray = t->params->ray;
+      t->ray.dir = calc_dir_vector(t->params->screen_size,
+				   v.x + f.x, v.y + f.y, t->params->fov);
+      rotation_t_eye(t);
+      t->can_reflect = (t->is_primary = 1) * 0;
+      col[i] = gather_color(t);
+    }
+}
+
 sfColor		ssaa(t_thread *t, float x, float y, sfColor *col)
 {
-  float		fx;
-  float		fy;
   float		ssaa_offs;
   int		i;
+  sfVector2f	v;
+  sfVector2f	f;
 
   i = 0;
-  fx = -0.5F;
+  f.x = -0.5F;
   ssaa_offs = 1.0F / fmax((sqrtf((float)(t->params->ssaa)) - 1.0F), 1);
-  while (fx <= 0.5F)
+  while (f.x <= 0.5F)
     {
-      fy = -0.5F;
-      while (fy <= 0.5F)
+      f.y = -0.5F;
+      while (f.y <= 0.5F)
         {
-          t->ray = t->params->ray;
-          t->ray.dir = calc_dir_vector(t->params->screen_size,
-                                       x + fx, y + fx, t->params->fov);
-          rotation_t_eye(t);
-          t->can_reflect = (t->is_primary = 1) * 0;
-          col[i] = gather_color(t);
+	  v.x = x;
+	  v.y = y;
+	  render_pixel(t, v, col, i, f);
           i += 1;
-          fy += ssaa_offs;
+          f.y += ssaa_offs;
         }
-      fx += ssaa_offs;
+      f.x += ssaa_offs;
     }
   return (aver_col(col, t->params->ssaa));
 }
 
-sfColor	no_ssaa(t_thread *t, int x, int y)
+sfColor		no_ssaa(t_thread *t, int x, int y)
 {
-  t->ray = t->params->ray;
-  t->ray.dir = calc_dir_vector(t->params->screen_size,
-			       x, y, t->params->fov);
-  rotation_t_eye(t);
-  t->is_primary = 1;
-  t->can_reflect = 0;
-  return (gather_color(t));
+  sfColor	col;
+
+  if (t->params->depth_rays > 1)
+    col = dof(t, x, y);
+  else
+    {
+      t->ray = t->params->ray;
+      t->ray.dir = calc_dir_vector(t->params->screen_size,
+				   x, y, t->params->fov);
+      rotation_t_eye(t);
+      t->is_primary = 1;
+      t->can_reflect = 0;
+      col = gather_color(t);
+    }
+  return (col);
 }

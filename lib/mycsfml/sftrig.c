@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Fri Dec 23 15:12:35 2016 Nicolas Polomack
-** Last update Sat Jan 14 17:15:21 2017 Nicolas Polomack
+** Last update Mon Mar  6 10:21:35 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -13,15 +13,15 @@
 
 float	cosr(float angle)
 {
-  return (cos(angle * M_PI / 180.0F));
+  return (cosf(angle * M_PI / 180.0F));
 }
 
 float	sinr(float angle)
 {
-  return (sin(angle * M_PI / 180.0F));
+  return (sinf(angle * M_PI / 180.0F));
 }
 
 float	tanr(float angle)
 {
-  return (tan(angle * M_PI / 180.0F));
+  return (tanf(angle * M_PI / 180.0F));
 }

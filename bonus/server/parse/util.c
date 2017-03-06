@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb  9 02:33:42 2017 Nicolas Polomack
-** Last update Sun Feb 26 14:35:17 2017 Nicolas Polomack
+** Last update Mon Mar  6 11:05:48 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
@@ -58,20 +58,19 @@ int	get_number(char *str)
 
 int	parse_first(char *line, t_params *params)
 {
-  int	idxs[8];
+  int	idxs[10];
 
   idxs[0] = -1;
-  idxs[7] = 0;
+  idxs[9] = 0;
   while (line[++(idxs[0])])
     {
       if (line[idxs[0]] == ':')
-	idxs[7] += 1;
+	idxs[9] += 1;
       if ((line[idxs[0]] < '0' || line[idxs[0]] > '9') &&
 	  line[idxs[0]] != ':')
 	return (-1);
     }
-  if ((idxs[7] != 6 && idxs[7] != 5) ||
-      fmodf(sqrtf((float)get_number(line + idxs[5])), 1))
+  if ((idxs[9] != 8 && idxs[9] != 7))
     return (-1);
   gather_idxs(line, idxs);
   params->screen_size.x = get_number(line);

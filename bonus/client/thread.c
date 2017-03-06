@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Sun Feb 12 03:09:48 2017 Nicolas Polomack
-** Last update Thu Mar  2 08:21:11 2017 Nicolas Polomack
+** Last update Mon Mar  6 11:14:34 2017 Nicolas Polomack
 */
 
 #include <float.h>
@@ -37,6 +37,8 @@ void		render_rect(t_thread *t)
 
   if ((col = malloc(sizeof(sfColor) * t->params->ssaa)) == NULL)
     return ;
+  t->start = t->ray.orig;
+  set_focal_dist(t);
   x = t->offs.x - 1;
   while (++x < t->end.x)
     {
@@ -45,6 +47,7 @@ void		render_rect(t_thread *t)
         put_pixel(t->w->buffer, (int)x, (int)y, (t->params->ssaa > 1) ?
 		  ssaa(t, x, y, col) : no_ssaa(t, x, y));
     }
+  free(col);
 }
 
 void		*thread_handler(void *arg)
@@ -59,8 +62,13 @@ void		*thread_handler(void *arg)
   pthread_cond_signal(&t->params->cond);
   pthread_cond_wait(&t->params->start, &t->w->mutex);
   pthread_mutex_unlock(&t->w->mutex);
+  t->depth_col = malloc(t->params->depth_rays *
+			t->params->depth_rays * sizeof(sfColor));
+  if (t->depth_col == NULL)
+    exit(84);
   render_rect(t);
   free(t->dist);
+  free(t->depth_col);
   pthread_mutex_lock(&t->w->mutex);
   my_printf("Thread %d finished, waiting to be joined !\n", t->id);
   pthread_mutex_unlock(&t->w->mutex);

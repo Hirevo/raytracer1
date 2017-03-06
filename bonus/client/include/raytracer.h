@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Sun Feb  5 14:37:35 2017 Nicolas Polomack
-** Last update Thu Mar  2 08:22:12 2017 Nicolas Polomack
+** Last update Mon Mar  6 11:16:27 2017 Nicolas Polomack
 */
 
 #ifndef RAYTRACER_H_
@@ -64,9 +64,12 @@ typedef struct s_thread
   sfVector2i    offs;
   sfVector2i	end;
   float         *dist;
+  float		focal_dist;
   int		is_primary;
+  sfColor	*depth_col;
   sfVector3f	imp;
   sfVector3f	normal;
+  sfVector3f	start;
   sfVector2i    screen_pos;
   t_window	*w;
   t_params      *params;
@@ -95,6 +98,7 @@ typedef struct		s_params
   long int		seed;
   int			ssaa;
   int			shadow_rays;
+  int			depth_rays;
   int			bmp;
   int			live;
   int			progress;
@@ -201,6 +205,14 @@ void	get_impact(t_thread *, float);
 */
 sfColor	ssaa(t_thread *, float, float, sfColor *);
 sfColor	no_ssaa(t_thread *, int, int);
+void	render_pixel(t_thread *, sfVector2f, sfColor *, int, sfVector2f);
+sfColor	aver_col(sfColor *, int);
+
+/*
+** depth_of_field.c
+*/
+sfColor	dof(t_thread *, float, float);
+void	set_focal_dist(t_thread *);
 
 /*
 ** rand.c

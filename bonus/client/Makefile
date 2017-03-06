@@ -5,7 +5,7 @@
 ## Login   <nicolas.polomack@epitech.eu>
 ##
 ## Started on  Tue Nov 15 09:05:43 2016 Nicolas Polomack
-## Last update Thu Mar  2 08:08:21 2017 Nicolas Polomack
+## Last update Mon Mar  6 10:54:49 2017 Nicolas Polomack
 ##
 
 MAKE2	=	make --no-print-directory -C ../../lib/my
@@ -22,6 +22,7 @@ SRC	=	window.c			\
 		multi_lights.c			\
 		reflect.c			\
 		ssaa.c				\
+		depth_of_field.c		\
 		load.c				\
 		free.c				\
 		rand.c				\

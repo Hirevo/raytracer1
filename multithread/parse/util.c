@@ -5,10 +5,11 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb  9 02:33:42 2017 Nicolas Polomack
-** Last update Wed Mar  1 11:05:14 2017 Nicolas Polomack
+** Last update Thu Mar  2 23:27:12 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
+#include <math.h>
 #include "my.h"
 #include "raytracer.h"
 
@@ -68,18 +69,18 @@ int	alloc_all(t_params *params, int objs, int lights)
 
 int	parse_first(char *line, t_params *params)
 {
-  int	idxs[9];
+  int	idxs[10];
 
-  idxs[0] = -1 + (idxs[8] = 0) * 0;
+  idxs[0] = -1 + (idxs[9] = 0) * 0;
   while (line[++(idxs[0])])
     {
       if (line[idxs[0]] == ':')
-	idxs[8] += 1;
+	idxs[9] += 1;
       if ((line[idxs[0]] < '0' || line[idxs[0]] > '9') &&
 	  line[idxs[0]] != ':')
 	return (-1);
     }
-  if (idxs[8] != 7 && idxs[8] != 6)
+  if (idxs[9] != 8 && idxs[9] != 7)
     return (-1);
   gather_idxs(line, idxs);
   params->screen_size.x = get_number(line);
@@ -89,7 +90,8 @@ int	parse_first(char *line, t_params *params)
   params->ambient = get_number(line + idxs[4]) / 1000.0F;
   params->ssaa = get_number(line + idxs[5]);
   params->shadow_rays = get_number(line + idxs[6]);
-  params->t_count = (idxs[8] == 7) ? get_number(line + idxs[7]) : 'x';
+  params->depth_rays = sqrtf(get_number(line + idxs[7]));
+  params->t_count = (idxs[9] == 8) ? get_number(line + idxs[8]) : 'x';
   free(line);
   return (0);
 }

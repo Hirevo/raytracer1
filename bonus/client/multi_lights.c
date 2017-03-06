@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb  9 21:56:13 2017 Nicolas Polomack
-** Last update Thu Mar  2 08:16:58 2017 Nicolas Polomack
+** Last update Mon Mar  6 10:54:20 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -27,7 +27,8 @@ sfColor		get_shadow_color(t_thread *t,  int idx)
   return (col);
 }
 
-sfColor		average_colors(sfColor *col, int nb_l, t_thread *t, int idx)
+sfColor		average_colors(sfColor *col, int nb_l,
+			       t_thread *t, int idx)
 {
   sfColor	final;
   int		rgb[3];
@@ -57,19 +58,19 @@ sfColor		average_colors(sfColor *col, int nb_l, t_thread *t, int idx)
 }
 
 sfVector3f	get_shadow_ray(t_thread *t,
-			       sfVector2i idxs, sfVector3f imp)
+                               sfVector2i idxs, sfVector3f imp)
 {
   sfVector3f	to_light;
 
   to_light = t->params->light[idxs.y].pos;
   to_light.x = (to_light.x + ((t->params->shadow_rays > 1 &&
-			       t->is_primary == 0) ?
-			      ((fmodf((float)my_rand(t->params->seed),
-				      100.0F)) / 10.0F) : 0)) - imp.x;
+                               t->is_primary == 1) ?
+                              ((fmodf((float)my_rand(t->params->seed),
+                                      100.0F)) / 10.0F) : 0)) - imp.x;
   to_light.y = (to_light.y + ((t->params->shadow_rays > 1 &&
-			       t->is_primary == 0) ?
-			      ((fmodf((float)my_rand(t->params->seed),
-				      100.0F)) / 10.0F) : 0)) - imp.y;
+                               t->is_primary == 1) ?
+                              ((fmodf((float)my_rand(t->params->seed),
+                                      100.0F)) / 10.0F) : 0)) - imp.y;
   to_light.z = to_light.z - imp.z;
   return (to_light);
 }
@@ -85,9 +86,10 @@ sfColor		shadow_raytrace(float dist, t_thread *t, sfVector2i idxs)
   imp.y = t->ray.orig.y + t->ray.dir.y * dist;
   imp.z = t->ray.orig.z + t->ray.dir.z * dist;
   x = -1;
-  while (++x < t->params->shadow_rays || (t->is_primary && x == 1))
+  while ((++x < t->params->shadow_rays && t->is_primary) ||
+	 (!(t->is_primary) && x == 0))
     {
-      get_shadow_ray(t, idxs, imp);
+      to_light = get_shadow_ray(t, idxs, imp);
       col[x] = (intersect_light(dist, t, imp, to_light)) ?
 	t->params->objs[idxs.x].col : get_shadow_color(t, idxs.x);
     }
