@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb  9 02:33:42 2017 Nicolas Polomack
-** Last update Mon Mar  6 11:06:36 2017 Nicolas Polomack
+** Last update Thu Mar  9 17:33:10 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
@@ -89,7 +89,7 @@ int	parse_first(char *line, t_params *params)
   params->ambient = get_number(line + idxs[4]) / 1000.0F;
   params->ssaa = get_number(line + idxs[5]);
   params->shadow_rays = get_number(line + idxs[6]);
-    params->shadow_rays = get_number(line + idxs[7]);
+  params->depth_rays = get_number(line + idxs[7]);
   params->t_count = (idxs[9] == 8) ? get_number(line + idxs[8]) : 'x';
   free(line);
   return (0);

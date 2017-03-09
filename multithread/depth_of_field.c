@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Mar  2 18:49:13 2017 Nicolas Polomack
-** Last update Mon Mar  6 10:24:08 2017 Nicolas Polomack
+** Last update Thu Mar  9 17:00:48 2017 Nicolas Polomack
 */
 
 #include <float.h>
@@ -27,8 +27,8 @@ void		calc_focal_vector(t_thread *t, float x, float y)
   aim.z = t->ray.orig.z + t->ray.dir.z * t->focal_dist;
   dx = ((float)my_rand(t->params->seed))/(((float)(INT_MAX) + 1.0F));
   dy = ((float)my_rand(t->params->seed))/(((float)(INT_MAX) + 1.0F));
-  t->ray.orig.y += dx * 3;
-  t->ray.orig.z += dy * 3;
+  t->ray.orig.y += dx;
+  t->ray.orig.z += dy;
   t->ray.dir.x = aim.x - t->ray.orig.x;
   t->ray.dir.y = aim.y - t->ray.orig.y;
   t->ray.dir.z = aim.z - t->ray.orig.z;
@@ -39,8 +39,8 @@ void	set_focal_dist(t_thread *t)
   int	i;
 
   t->ray.dir = calc_dir_vector(t->params->screen_size,
-                               t->params->screen_size.x / 2,
-                               t->params->screen_size.y / 2,
+                               t->params->screen_size.x / 2 + 300,
+                               t->params->screen_size.y - 200,
                                t->params->fov);
   rotation_t_eye(t);
   i = -1;
