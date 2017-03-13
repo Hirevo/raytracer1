@@ -9,6 +9,7 @@
 */
 
 #include <math.h>
+#include <stdlib.h>
 #include <SFML/Graphics.h>
 
 static float	get_value(float root[2])
@@ -29,7 +30,7 @@ float		intersect_cone(sfVector3f eye_pos, sfVector3f dir_vector,
   float		abcd[4];
   float		root[2];
 
-  if (abs(semiangle % 180) == 90)
+  if (abs(fmodf(semiangle, 180)) == 90)
     return (-1);
   abcd[0] = powf(dir_vector.x, 2) + powf(dir_vector.y, 2) -
     powf(dir_vector.z, 2) * pow(tan(semiangle * M_PI / 180.0F), 2);
@@ -54,7 +55,7 @@ float		intersect_cone(sfVector3f eye_pos, sfVector3f dir_vector,
 
 sfVector3f	get_normal_cone(sfVector3f imp, float semiangle)
 {
-  if (abs(semiangle % 180) == 90)
+  if (abs(fmodf(semiangle, 180)) == 90)
     return (imp);
   imp.z *= tan(semiangle * M_PI / 180.0F);
   return (imp);

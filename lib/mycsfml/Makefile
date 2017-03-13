@@ -23,7 +23,7 @@ OBJ2	=	$(SRC2:.c=.o)
 
 NAME	=	libmycsfml.a
 
-NAME2    =       libmycsfml-sa.a
+NAME2   =	libmycsfml-sa.a
 
 CFLAGS	=	-I../../include -W -Wall -Wextra -pedantic -O3 -march=native
 
@@ -35,8 +35,10 @@ $(NAME):$(OBJ) $(OBJ2)
 
 clean:
 	@rm -f $(OBJ)
+	@rm -f $(OBJ2)
 
 fclean:	clean
 	@rm -f $(NAME)
+	@rm -f $(NAME2)
 
 re:	fclean all
