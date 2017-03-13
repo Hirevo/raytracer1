@@ -101,5 +101,6 @@ void	init_thread(int i, t_params *params, t_window *w)
     params->t[i].end.x += (params->s.end.x -
 			   params->s.offs.x) % (params->t_count / 2);
   params->t[i].w = w;
+  params->t[i].ray = params->ray;
   params->t[i].params = params;
 }
