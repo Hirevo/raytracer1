@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 23:30:22 2017 Nicolas Polomack
-** Last update Mon Mar 13 22:57:34 2017 Nicolas Polomack
+** Last update Tue Mar 14 21:40:20 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -57,6 +57,6 @@ sfVector3f	get_normal_cone(sfVector3f imp, float semiangle)
 {
   if (abs(fmodf(semiangle, 180)) == 90)
     return (imp);
-  imp.z *= (semiangle * M_PI / 180.0F);
+  imp.z *= -tan(semiangle * M_PI / 180.0F);
   return (imp);
 }
