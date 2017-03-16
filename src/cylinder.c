@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 23:30:22 2017 Nicolas Polomack
-** Last update Fri Feb 24 15:10:14 2017 Nicolas Polomack
+** Last update Thu Mar 16 10:22:49 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -32,7 +32,8 @@ float		intersect_cylinder(sfVector3f eye_pos, sfVector3f dir_vector,
   float		delta;
   float		root[2];
 
-  a = powf(dir_vector.x, 2) + powf(dir_vector.y, 2);
+  if ((a = powf(dir_vector.x, 2) + powf(dir_vector.y, 2)) == 0)
+    return (-1);
   b = (2 * eye_pos.x * dir_vector.x + 2 * eye_pos.y * dir_vector.y);
   c = (powf(eye_pos.x, 2) + powf(eye_pos.y, 2) - powf(radius, 2));
   delta = b * b - 4 * a * c;
@@ -41,12 +42,12 @@ float		intersect_cylinder(sfVector3f eye_pos, sfVector3f dir_vector,
   else if (delta)
     {
       delta = sqrtf(delta);
-      root[0] = (-b-delta) / (2 * a);
-      root[1] = (-b+delta) / (2 * a);
+      root[0] = (-b - delta) / (2 * a);
+      root[1] = (-b + delta) / (2 * a);
       return (get_value(root));
     }
   else if (!delta)
-    return (-b / (2 * a));
+    return (((-b / (2 * a)) < 0) ? -1 : -b / (2 * a));
   return (-1);
 }
 
