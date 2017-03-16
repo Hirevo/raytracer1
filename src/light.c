@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb 13 20:54:49 2017 Nicolas Polomack
-** Last update Tue Mar 14 21:41:35 2017 Nicolas Polomack
+** Last update Thu Mar 16 09:34:58 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -26,13 +26,13 @@ float	get_light_coef(sfVector3f light, sfVector3f imp)
   float	coef;
 
   coef = norm(light);
-  if (norm == 0)
+  if (coef == 0)
     return (0);
   light.x /= coef;
   light.y /= coef;
   light.z /= coef;
   coef = norm(imp);
-  if (norm == 0)
+  if (coef == 0)
     return (0);
   imp.x /= coef;
   imp.y /= coef;
