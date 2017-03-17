@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 23:30:22 2017 Nicolas Polomack
-** Last update Wed Feb 22 02:39:28 2017 Nicolas Polomack
+** Last update Fri Mar 17 12:29:57 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -31,7 +31,8 @@ void	calc_abcd(float *abcd, sfVector3f *restrict eye_pos,
 {
   abcd[0] = powf(dir_vector->x, 2) + powf(dir_vector->y, 2) -
     powf(dir_vector->z, 2) * pow(tanr(obj->aper), 2);
-  abcd[1] = (2 * eye_pos->x * dir_vector->x + 2 * eye_pos->y * dir_vector->y -
+  abcd[1] = (2 * eye_pos->x * dir_vector->x + 2 *
+	     eye_pos->y * dir_vector->y -
              2 * eye_pos->z * dir_vector->z * pow(tanr(obj->aper), 2));
   abcd[2] = (powf(eye_pos->x, 2) + powf(eye_pos->y, 2) -
              powf(eye_pos->z, 2) * pow(tanr(obj->aper), 2));
@@ -91,7 +92,8 @@ float		intersect_closed_cone(sfVector3f *restrict eye_pos,
   if (roundf(impz) >= -obj->height)
     return (dist);
   eye_pos->z += (obj->height);
-  dist = intersect_disk(eye_pos, dir_vector, tanr(obj->aper) * obj->height);
+  dist = intersect_disk(eye_pos, dir_vector,
+			tanr(obj->aper) * obj->height);
   eye_pos->z -= (obj->height);
   return (dist);
 }

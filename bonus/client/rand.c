@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Wed Mar  1 10:52:23 2017 Nicolas Polomack
-** Last update Thu Mar  2 08:16:38 2017 Nicolas Polomack
+** Last update Fri Mar 17 12:08:09 2017 Nicolas Polomack
 */
 
 #include <stdio.h>
@@ -13,10 +13,10 @@
 #include <string.h>
 #include "my.h"
 
-int	my_rand(long int seed)
+int			my_rand(long int seed)
 {
-  static unsigned int state[4] = {0, 0, 0, 0};
-  unsigned int t;
+  static unsigned int	state[4] = {0, 0, 0, 0};
+  unsigned int		t;
 
   if (state[0] == 0 && state[1] == 0 && state[2] == 0 && state[3] == 0)
     {
@@ -27,7 +27,9 @@ int	my_rand(long int seed)
   t = state[3];
   t ^= t << 11;
   t ^= t >> 8;
-  state[3] = state[2]; state[2] = state[1]; state[1] = state[0];
+  state[3] = state[2];
+  state[2] = state[1];
+  state[1] = state[0];
   t ^= state[0];
   t ^= state[0] >> 19;
   state[0] = t;
@@ -36,10 +38,10 @@ int	my_rand(long int seed)
 
 long int	init_seed(int ac, char **av, char **env, void *main)
 {
-  int	lel;
-  void	*mem;
-  void	*bonus;
-  long int seed;
+  int		lel;
+  void		*mem;
+  void		*bonus;
+  long int	seed;
 
   (void)av;
   mem = malloc(0);

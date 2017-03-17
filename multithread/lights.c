@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Tue Feb  7 00:16:08 2017 Nicolas Polomack
-** Last update Fri Mar 17 09:24:12 2017 Nicolas Polomack
+** Last update Fri Mar 17 11:16:11 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -50,13 +50,12 @@ float	check_distance(t_thread *t, sfVector3f *restrict imp,
   return (d);
 }
 
-float		intersect_light(float dist, t_thread *t,
-				sfVector3f imp, sfVector3f dir)
+float	intersect_light(t_thread *t,
+			sfVector3f imp, sfVector3f dir)
 {
-  float		d;
-  int		n;
+  float	d;
+  int	n;
 
-  (void)dist;
   n = -1;
   while (++n < t->params->nb_obj)
     {

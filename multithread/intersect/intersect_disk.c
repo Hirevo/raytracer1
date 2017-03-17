@@ -5,13 +5,15 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Fri Feb 10 14:42:42 2017 Nicolas Polomack
-** Last update Sat Feb 18 23:02:13 2017 Nicolas Polomack
+** Last update Fri Mar 17 12:24:25 2017 Nicolas Polomack
 */
 
 #include <math.h>
 #include "raytracer.h"
 
-float		intersect_disk(sfVector3f *eye_pos, sfVector3f *dir_vector, float radius)
+float		intersect_disk(sfVector3f *eye_pos,
+			       sfVector3f *dir_vector,
+			       float radius)
 {
   float		dist;
   sfVector3f	imp;

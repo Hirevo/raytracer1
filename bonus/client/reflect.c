@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Wed Feb 22 02:28:54 2017 Nicolas Polomack
-** Last update Sun Feb 26 14:11:44 2017 Nicolas Polomack
+** Last update Fri Mar 17 12:10:03 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -13,9 +13,9 @@
 #include "raytracer.h"
 #include "sfcaster.h"
 
-void		prepare_reflect(t_thread *t)
+void	prepare_reflect(t_thread *t)
 {
-  float		norme;
+  float	norme;
 
   rotation(&t->normal, NULL, &(t->params->objs[t->idx]));
   t->ray.orig.x = t->ray.orig.x + t->ray.dir.x * t->dist[t->idx];
@@ -57,10 +57,10 @@ float		get_specular_coef(t_thread *t, int l)
   return (powf(dot(reflect, n), 50));
 }
 
-sfColor		set_specular_shade(sfColor col, t_thread *t, int l)
+sfColor	set_specular_shade(sfColor col, t_thread *t, int l)
 {
-  float		coef;
-  int		i[3];
+  float	coef;
+  int	i[3];
 
   coef = get_specular_coef(t, l);
   i[0] = (((float)col.r) + 255.0F * fmax(0, coef));

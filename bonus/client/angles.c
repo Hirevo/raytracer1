@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Tue Feb  7 23:16:29 2017 Nicolas Polomack
-** Last update Wed Feb 22 01:35:11 2017 Nicolas Polomack
+** Last update Fri Mar 17 11:55:46 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -24,7 +24,7 @@ float		get_cos_angle_s(t_thread *t, sfVector2i idxs)
   dir.x = light.x - t->imp.x;
   dir.y = light.y - t->imp.y;
   dir.z = light.z - t->imp.z;
-  return (dot(t->normal,dir)/(norm(t->normal)*norm(dir)));
+  return (dot(t->normal,dir) / (norm(t->normal) * norm(dir)));
 }
 
 float		get_cos_angle_p(t_thread *t, sfVector2i idxs)
@@ -37,7 +37,7 @@ float		get_cos_angle_p(t_thread *t, sfVector2i idxs)
   dir.x = light.x - t->imp.x;
   dir.y = light.y - t->imp.y;
   dir.z = light.z - t->imp.z;
-  return (dot(t->normal,dir)/(norm(t->normal)*norm(dir)));
+  return (dot(t->normal,dir) / (norm(t->normal) * norm(dir)));
 }
 
 float		get_cos_angle_c(t_thread *t, sfVector2i idxs)
@@ -51,7 +51,7 @@ float		get_cos_angle_c(t_thread *t, sfVector2i idxs)
   dir.x = light.x - t->imp.x;
   dir.y = light.y - t->imp.y;
   dir.z = light.z - t->imp.z;
-  return (dot(t->normal,dir)/(norm(t->normal)*norm(dir)));
+  return (dot(t->normal,dir) / (norm(t->normal) * norm(dir)));
 }
 
 float		get_cos_angle_o(t_thread *t, sfVector2i idxs)
@@ -65,5 +65,5 @@ float		get_cos_angle_o(t_thread *t, sfVector2i idxs)
   dir.x = light.x - t->imp.x;
   dir.y = light.y - t->imp.y;
   dir.z = light.z - t->imp.z;
-  return (dot(t->normal,dir)/(norm(t->normal)*norm(dir)));
+  return (dot(t->normal,dir) / (norm(t->normal) * norm(dir)));
 }

@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 14:08:22 2017 Nicolas Polomack
-** Last update Fri Feb 17 12:25:28 2017 Nicolas Polomack
+** Last update Fri Mar 17 11:54:25 2017 Nicolas Polomack
 */
 
 #include <SFML/Graphics.h>
@@ -22,7 +22,9 @@
 #include "bmp.h"
 #include "my.h"
 
-int		create_window(sfRenderWindow **w, char *name, sfVector2i screen_size)
+int		create_window(sfRenderWindow **w,
+			      char *name,
+			      sfVector2i screen_size)
 {
   sfVideoMode	mode;
 
@@ -41,6 +43,7 @@ int	init(t_params *params, t_window *w)
   clear_pixels(w->buffer);
   if (!params->bmp)
     sfTexture_updateFromPixels(w->texture, w->buffer->pixels,
-			       w->buffer->width, w->buffer->height, 0, 0);
+			       w->buffer->width, w->buffer->height,
+			       0, 0);
   return (0);
 }

@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Thu Feb  9 13:15:36 2017 Nicolas Polomack
-** Last update Sun Feb 12 03:52:18 2017 Nicolas Polomack
+** Last update Fri Mar 17 12:11:27 2017 Nicolas Polomack
 */
 
 #include "sfcaster.h"
@@ -50,7 +50,8 @@ void		rz(sfVector3f *imp, float r)
     }
 }
 
-void	rotation(sfVector3f *imp, sfVector3f *dir, t_obj *obj)
+void	rotation(sfVector3f *restrict imp,
+		 sfVector3f *restrict dir, t_obj *obj)
 {
   rx(imp, obj->rx);
   ry(imp, obj->ry);

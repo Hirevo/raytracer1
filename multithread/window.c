@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 14:08:22 2017 Nicolas Polomack
-** Last update Fri Mar 17 09:22:19 2017 Nicolas Polomack
+** Last update Fri Mar 17 11:47:01 2017 Nicolas Polomack
 */
 
 #include <SFML/Graphics.h>
@@ -35,8 +35,8 @@ int		create_window(sfRenderWindow **w, char *name, sfVector2i screen_size)
   return (0);
 }
 
-sfColor		evaluate_luminosity(t_thread *t,
-				    sfColor col, sfVector2i idxs)
+sfColor	evaluate_luminosity(t_thread *t,
+			    sfColor col, sfVector2i idxs)
 {
   col = set_luminosity((t->params->objs[idxs.x].type == 's') ?
 		       get_cos_angle_s(t, idxs) :
@@ -95,16 +95,16 @@ int	init(t_params *params, t_window *w)
   clear_pixels(w->buffer);
   if (!params->bmp)
     sfTexture_updateFromPixels(w->texture, w->buffer->pixels,
-			       w->buffer->width, w->buffer->height, 0, 0);
-  srand(getpid() * time(NULL));
+			       w->buffer->width,
+			       w->buffer->height, 0, 0);
   return (0);
 }
 
-int			main(int ac, char **av, char **ae)
+int		main(int ac, char **av, char **ae)
 {
-  t_window		w;
-  sfEvent		event;
-  t_params		params;
+  t_window	w;
+  sfEvent	event;
+  t_params	params;
 
   if (ac != 2)
     return (84);

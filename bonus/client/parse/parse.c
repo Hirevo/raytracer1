@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Wed Feb  8 23:10:21 2017 Nicolas Polomack
-** Last update Wed Feb 22 03:09:37 2017 Nicolas Polomack
+** Last update Fri Mar 17 12:32:15 2017 Nicolas Polomack
 */
 
 #include <fcntl.h>
@@ -32,7 +32,8 @@ void	parse_light(char *line, t_params *params, int l, int *idxs)
   params->light[l].pos.x = get_number(line + idxs[0]);
   params->light[l].pos.y = get_number(line + idxs[1]);
   params->light[l].pos.z = get_number(line + idxs[2]);
-  params->light[l].ambient = ((float)get_number(line + idxs[3])) / 1000.0F;
+  params->light[l].ambient = ((float)get_number(line +
+						idxs[3])) / 1000.0F;
 }
 
 void	parse_object(char *line, t_params *params, int obj, int *idxs)

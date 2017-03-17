@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb 16 13:52:48 2017 Nicolas Polomack
-** Last update Fri Feb 24 14:08:21 2017 Nicolas Polomack
+** Last update Fri Mar 17 12:21:51 2017 Nicolas Polomack
 */
 
 #include <sys/types.h>
@@ -23,13 +23,13 @@ void	prepare_connection(t_socket *s, char *file)
   char	*result;
 
   result = get_config_file(file);
-  my_memset(s->scene, 4096);
+  my_memset(s->scene, 0, 4096);
   my_strcpy(s->scene, result);
   free(result);
   s->addr.sin_addr.s_addr = htonl(INADDR_ANY);
   s->addr.sin_port = htons(4242);
   s->addr.sin_family = AF_INET;
-  if (bind(s->fd,(struct sockaddr *) &s->addr, sizeof(struct sockaddr)) == -1)
+  if (bind(s->fd, (struct sockaddr *)&s->addr, sizeof(struct sockaddr)) == -1)
     handle_error("bind");
   if (listen(s->fd, s->nb_clients) == -1)
     handle_error("listen");
@@ -90,9 +90,9 @@ void		listen_connections(t_socket *s)
     }
 }
 
-void		gather_results(t_params *params, t_window *w)
+void	gather_results(t_params *params, t_window *w)
 {
-  int		i;
+  int	i;
 
   i = -1;
   while (++i < params->s.nb_clients)

@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Fri Jan  6 19:15:36 2017 Nicolas Polomack
-** Last update Sun Feb 12 18:12:01 2017 Nicolas Polomack
+** Last update Fri Mar 17 11:52:55 2017 Nicolas Polomack
 */
 
 #include <unistd.h>
@@ -20,8 +20,6 @@
 #include "my.h"
 #include "bmp.h"
 #include "sfcaster.h"
-
-int	calculate_pad(t_my_framebuffer *);
 
 void			save_bmp(t_my_framebuffer *buffer, char *name)
 {

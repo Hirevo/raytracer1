@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb 16 13:52:48 2017 Nicolas Polomack
-** Last update Wed Feb 22 03:08:06 2017 Nicolas Polomack
+** Last update Fri Mar 17 12:18:41 2017 Nicolas Polomack
 */
 
 #include <sys/types.h>
@@ -26,9 +26,9 @@ void	handle_error(char *msg)
   exit(errno);
 }
 
-void		send_results(t_window *w, t_socket *s)
+void	send_results(t_window *w, t_socket *s)
 {
-  char		buffer[7];
+  char	buffer[7];
 
   recv(s->fd, buffer, 7, 0);
   if (my_strcmp(buffer, "RESULT"))
@@ -55,7 +55,7 @@ void			connect_socket(t_socket *s, char *ip)
   recv(s->fd, &s->end, sizeof(sfVector2i), 0);
   my_printf(" OK !\nWaiting for start signal...");
   send(s->fd, "OK", 3, 0);
-  do
+  my_memset(confirm, '0', 6);
+  while (my_strcmp(confirm, "START"))
     recv(s->fd, confirm, 6, 0);
-  while (my_strcmp(confirm, "START"));
 }

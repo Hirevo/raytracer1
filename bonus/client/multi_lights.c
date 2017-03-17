@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb  9 21:56:13 2017 Nicolas Polomack
-** Last update Mon Mar  6 10:54:20 2017 Nicolas Polomack
+** Last update Fri Mar 17 12:05:54 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -90,12 +90,13 @@ sfColor		shadow_raytrace(float dist, t_thread *t, sfVector2i idxs)
 	 (!(t->is_primary) && x == 0))
     {
       to_light = get_shadow_ray(t, idxs, imp);
-      col[x] = (intersect_light(dist, t, imp, to_light)) ?
+      col[x] = (intersect_light(t, imp, to_light)) ?
 	t->params->objs[idxs.x].col : get_shadow_color(t, idxs.x);
     }
   t->can_reflect = 1;
-  return (average_colors(col, (t->is_primary) ?
-			 t->params->shadow_rays : 1, t, idxs.x));
+  col[0] = average_colors(col, (t->is_primary) ?
+			  t->params->shadow_rays : 1, t, idxs.x);
+  return (col[0]);
 }
 
 sfColor		seek_lights(float *dist, t_thread *t, int i)

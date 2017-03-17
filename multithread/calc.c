@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Tue Feb  7 23:10:06 2017 Nicolas Polomack
-** Last update Sat Feb 18 23:11:56 2017 Nicolas Polomack
+** Last update Fri Mar 17 11:09:55 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
@@ -51,9 +51,9 @@ float	gather_distances(t_obj *objs, t_ray ray, int i)
   return (f);
 }
 
-void		render_frame(t_window *w, t_params *params)
+void	render_frame(t_window *w, t_params *params)
 {
-  int		i;
+  int	i;
 
   i = -1;
   while (++i < (params->t_count))

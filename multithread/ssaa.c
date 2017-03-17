@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Sun Feb 26 14:19:17 2017 Nicolas Polomack
-** Last update Fri Mar 17 09:22:50 2017 Nicolas Polomack
+** Last update Fri Mar 17 11:41:04 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -37,7 +37,7 @@ sfColor		aver_col(sfColor *col, int ssaa)
   return (fin);
 }
 
-void		render_pixel(t_thread *t, sfVector2f v, int i, sfVector2f f)
+void	render_pixel(t_thread *t, sfVector2f v, int i, sfVector2f f)
 {
   if (t->params->depth_rays > 1)
     t->col[i] = dof(t, v.x, v.y);

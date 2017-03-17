@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Sun Feb 12 03:09:48 2017 Nicolas Polomack
-** Last update Fri Mar 17 09:23:31 2017 Nicolas Polomack
+** Last update Fri Mar 17 11:43:57 2017 Nicolas Polomack
 */
 
 #include <float.h>
@@ -14,12 +14,13 @@
 #include "raytracer.h"
 #include "my.h"
 
-static void		update_color(t_thread *t)
+static void	update_color(t_thread *t)
 {
   if (pthread_mutex_trylock(&t->w->mutex) != 0)
     return ;
   sfTexture_updateFromPixels(t->w->texture, t->w->buffer->pixels,
-			     t->w->buffer->width, t->w->buffer->height, 0, 0);
+			     t->w->buffer->width,
+			     t->w->buffer->height, 0, 0);
   sfRenderWindow_drawSprite(t->w->window, t->w->sprite, NULL);
   sfRenderWindow_display(t->w->window);
   pthread_mutex_unlock(&t->w->mutex);
@@ -42,10 +43,10 @@ sfColor		gather_color(t_thread *t)
   return (col);
 }
 
-void		render_rect(t_thread *t)
+void	render_rect(t_thread *t)
 {
-  float		x;
-  float		y;
+  float	x;
+  float	y;
 
   if ((t->col = malloc(sizeof(sfColor) * t->params->ssaa)) == NULL)
     return ;

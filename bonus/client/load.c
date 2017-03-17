@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Sat Feb 11 15:15:00 2017 Nicolas Polomack
-** Last update Sun Feb 26 14:36:47 2017 Nicolas Polomack
+** Last update Fri Mar 17 12:00:26 2017 Nicolas Polomack
 */
 
 #include <unistd.h>
@@ -29,7 +29,8 @@ int	load_assets(t_window *w, t_params *params)
       fmodf(sqrtf((float)params->ssaa), 1))
     return (-1);
   if (params->t_count != 'x' &&
-      (params->t_count == 0 || params->t_count > 50 || params->t_count % 2))
+      (params->t_count == 0 || params->t_count > 50 ||
+       params->t_count % 2))
     return (-1);
   params->bmp = 1;
   if ((w->buffer = my_framebuffer_create(params->screen_size.x,

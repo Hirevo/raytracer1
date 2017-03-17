@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Fri Jan  6 19:15:36 2017 Nicolas Polomack
-** Last update Sun Feb 12 18:12:01 2017 Nicolas Polomack
+** Last update Fri Mar 17 12:12:55 2017 Nicolas Polomack
 */
 
 #include <unistd.h>
@@ -21,8 +21,6 @@
 #include "bmp.h"
 #include "sfcaster.h"
 
-int	calculate_pad(t_my_framebuffer *);
-
 void			save_bmp(t_my_framebuffer *buffer, char *name)
 {
   int			fd;
@@ -33,8 +31,9 @@ void			save_bmp(t_my_framebuffer *buffer, char *name)
 
   my_printf("Saving buffer into %s...", name);
   pad = calculate_pad(buffer);
-  if ((p_buffer = malloc(sizeof (unsigned char) *
-			 (buffer->width * buffer->height * 3 + pad * buffer->height))) == NULL ||
+  if ((p_buffer = malloc(sizeof(unsigned char) *
+			 (buffer->width * buffer->height * 3 +
+			  pad * buffer->height))) == NULL ||
       (fd = open(name, O_WRONLY | O_CREAT | O_TRUNC,
 		 S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) == -1)
     return ;
@@ -62,7 +61,8 @@ bmp_header	set_header(bmp_header head,
 			   t_my_framebuffer *buffer, int pad)
 {
   head.type = 0x4D42;
-  head.size = 54 + (buffer->width * buffer->height * 3 + pad * buffer->height);
+  head.size = 54 + (buffer->width * buffer->height * 3 +
+		    pad * buffer->height);
   head.reserved1 = 0;
   head.reserved2 = 0;
   head.off_bits = 54;
@@ -78,7 +78,8 @@ bmp_info_header	set_info(bmp_info_header info,
   info.planes = 1;
   info.bits_per_pixels = 24;
   info.compression = 0;
-  info.size_image = (buffer->width * buffer->height * 3 + pad * buffer->height);
+  info.size_image = (buffer->width * buffer->height * 3 +
+		     pad * buffer->height);
   info.xppm = 0;
   info.yppm = 0;
   info.clr_used = 0;

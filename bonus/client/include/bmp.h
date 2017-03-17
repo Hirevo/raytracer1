@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Wed Dec 21 19:22:36 2016 Nicolas Polomack
-** Last update Sun Feb 12 17:04:27 2017 Nicolas Polomack
+** Last update Fri Mar 17 12:14:05 2017 Nicolas Polomack
 */
 
 #ifndef BMP_H_
@@ -58,6 +58,7 @@ void			set_bounds(t_my_framebuffer *, sfVector2i *, int *);
 ** save_bmp.c
 */
 void		save_bmp(t_my_framebuffer *, char *);
+int		calculate_pad(t_my_framebuffer *);
 void		write_pixel_buffer(t_my_framebuffer *, int, unsigned char *, int);
 bmp_header	set_header(bmp_header, t_my_framebuffer *, int);
 bmp_info_header	set_info(bmp_info_header, t_my_framebuffer *, int);

@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 23:30:22 2017 Nicolas Polomack
-** Last update Wed Feb 22 02:37:34 2017 Nicolas Polomack
+** Last update Fri Mar 17 12:30:20 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -43,8 +43,8 @@ float		intersect_cyl(sfVector3f *restrict eye_pos,
   else if (delta)
     {
       delta = sqrtf(delta);
-      root[0] = (-b-delta) / (2 * a);
-      root[1] = (-b+delta) / (2 * a);
+      root[0] = (-b - delta) / (2 * a);
+      root[1] = (-b + delta) / (2 * a);
       root[1] = get_value(root);
     }
   if (root[1] == -1)

@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Mar  2 18:49:13 2017 Nicolas Polomack
-** Last update Thu Mar  9 17:00:48 2017 Nicolas Polomack
+** Last update Fri Mar 17 11:12:37 2017 Nicolas Polomack
 */
 
 #include <float.h>
@@ -25,8 +25,8 @@ void		calc_focal_vector(t_thread *t, float x, float y)
   aim.x = t->ray.orig.x + t->ray.dir.x * t->focal_dist;
   aim.y = t->ray.orig.y + t->ray.dir.y * t->focal_dist;
   aim.z = t->ray.orig.z + t->ray.dir.z * t->focal_dist;
-  dx = ((float)my_rand(t->params->seed))/(((float)(INT_MAX) + 1.0F));
-  dy = ((float)my_rand(t->params->seed))/(((float)(INT_MAX) + 1.0F));
+  dx = ((float)my_rand(t->params->seed)) / (((float)(INT_MAX) + 1.0F));
+  dy = ((float)my_rand(t->params->seed)) / (((float)(INT_MAX) + 1.0F));
   t->ray.orig.y += dx;
   t->ray.orig.z += dy;
   t->ray.dir.x = aim.x - t->ray.orig.x;
@@ -57,6 +57,7 @@ sfColor		dof(t_thread *t, float x, float y)
 {
   float		i;
   float		j;
+  sfColor	col;
 
   i = -1;
   while (++i < t->params->depth_rays)
@@ -71,6 +72,7 @@ sfColor		dof(t_thread *t, float x, float y)
 	    gather_color(t);
         }
     }
-  return (aver_col(t->depth_col, t->params->depth_rays *
-		   t->params->depth_rays));
+  col = aver_col(t->depth_col,
+		 t->params->depth_rays * t->params->depth_rays);
+  return (col);
 }

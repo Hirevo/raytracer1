@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Sun Feb 12 03:09:48 2017 Nicolas Polomack
-** Last update Fri Mar 17 09:31:18 2017 Nicolas Polomack
+** Last update Fri Mar 17 12:20:30 2017 Nicolas Polomack
 */
 
 #include <float.h>
@@ -29,10 +29,10 @@ sfColor		gather_color(t_thread *t)
   return (col);
 }
 
-void		render_rect(t_thread *t)
+void	render_rect(t_thread *t)
 {
-  float         x;
-  float         y;
+  float	x;
+  float	y;
 
   if ((t->col = malloc(sizeof(sfColor) * t->params->ssaa)) == NULL)
     return ;
@@ -93,7 +93,7 @@ void	init_thread(int i, t_params *params, t_window *w)
     }
   params->t[i].end.x = (params->t[i].offs.x +
 			((params->s.end.x - params->s.offs.x) /
-					       (params->t_count / 2)));
+			 (params->t_count / 2)));
   params->t[i].end.y = (params->t[i].offs.y +
 			((params->s.end.y - params->s.offs.y) / 2));
   if (i >= (params->t_count - 2) && params->t[i].end.x < params->s.end.x)

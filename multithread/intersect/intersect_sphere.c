@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 23:30:22 2017 Nicolas Polomack
-** Last update Wed Feb 22 02:38:24 2017 Nicolas Polomack
+** Last update Fri Mar 17 12:34:06 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -32,7 +32,8 @@ float	intersect_sphere(sfVector3f *restrict eye_pos,
   float	delta;
   float	root[2];
 
-  a = powf(dir_vector->x, 2) + powf(dir_vector->y, 2) + powf(dir_vector->z, 2);
+  a = powf(dir_vector->x, 2) + powf(dir_vector->y, 2) +
+    powf(dir_vector->z, 2);
   b = (2 * eye_pos->x * dir_vector->x + 2 * eye_pos->y *
        dir_vector->y + 2 * eye_pos->z * dir_vector->z);
   c = (powf(eye_pos->x, 2) + powf(eye_pos->y, 2) +
@@ -43,8 +44,8 @@ float	intersect_sphere(sfVector3f *restrict eye_pos,
   else if (delta)
     {
       delta = sqrtf(delta);
-      root[0] = (-b-delta) / (2 * a);
-      root[1] = (-b+delta) / (2 * a);
+      root[0] = (-b - delta) / (2 * a);
+      root[1] = (-b + delta) / (2 * a);
       return (get_value(root));
     }
   else

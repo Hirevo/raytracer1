@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb  9 02:33:42 2017 Nicolas Polomack
-** Last update Thu Mar  2 23:27:12 2017 Nicolas Polomack
+** Last update Fri Mar 17 12:27:10 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
@@ -58,8 +58,9 @@ int	get_number(char *str)
 
 int	alloc_all(t_params *params, int objs, int lights)
 {
-  if (!objs || !lights || (params->objs = malloc(sizeof(t_obj) *
-						 (objs - 1 - lights))) == NULL ||
+  if (!objs || !lights ||
+      (params->objs = malloc(sizeof(t_obj) *
+			     (objs - 1 - lights))) == NULL ||
       (params->light = malloc(sizeof(t_light) * lights)) == NULL)
     return (-1);
   params->nb_lights = lights;

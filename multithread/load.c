@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Sat Feb 11 15:15:00 2017 Nicolas Polomack
-** Last update Sun Feb 26 14:37:44 2017 Nicolas Polomack
+** Last update Fri Mar 17 11:22:04 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
@@ -53,7 +53,7 @@ int	load_assets(t_window *w, t_params *params, char *file)
       my_printf("Resolution too high for a window to be created\n%s\n",
                 "Directly saving the rendered frame in capture.bmp");
       if ((w->buffer = my_framebuffer_create(params->screen_size.x,
-                                             params->screen_size.y)) == NULL)
+					     params->screen_size.y)) == NULL)
         return (-1);
       return (0);
     }

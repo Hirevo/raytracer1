@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Thu Oct 13 10:04:36 2016 Nicolas POLOMACK
-** Last update Wed Mar  1 10:52:03 2017 Nicolas Polomack
+** Last update Fri Mar 17 12:18:20 2017 Nicolas Polomack
 */
 
 #ifndef MY_H_
@@ -36,7 +36,7 @@ int	my_square_root(int);
 int	my_is_prime(int);
 int	my_find_prime_sup(int);
 void	my_memcpy(void *, void *, int);
-char	*my_memset(char *, int);
+char	*my_memset(char *, char, int);
 char	*my_strcpy(char *, char *);
 char	*my_strncpy(char *, char *, int);
 char	*my_revstr(char *);

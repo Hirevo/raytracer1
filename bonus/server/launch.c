@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb 16 16:22:58 2017 Nicolas Polomack
-** Last update Wed Feb 22 03:12:10 2017 Nicolas Polomack
+** Last update Fri Mar 17 11:50:22 2017 Nicolas Polomack
 */
 
 #include <errno.h>
@@ -32,11 +32,14 @@ void	divide_frame(t_params *params, t_window *w)
   while (++i < params->s.nb_clients)
     {
       params->s.offs[i].x = 0;
-      params->s.offs[i].y = (w->buffer->height / params->s.nb_clients) * i;
+      params->s.offs[i].y = (w->buffer->height /
+			     params->s.nb_clients) * i;
       params->s.end[i].x = w->buffer->width;
-      params->s.end[i].y = (w->buffer->height / params->s.nb_clients) * (i + 1);
-      params->s.end[i].y += (i == 3) ?
-        w->buffer->height % params->s.nb_clients : 0;
+      params->s.end[i].y = (w->buffer->height /
+			    params->s.nb_clients) * (i + 1);
+      params->s.end[i].y += ((i == 3) ?
+			     w->buffer->height %
+			     params->s.nb_clients : 0);
     }
 }
 
@@ -75,9 +78,9 @@ int		main(int ac, char **av)
       return (free_all(&params, &w));
     }
   sfTexture_updateFromPixels(w.texture, w.buffer->pixels,
-                                 w.buffer->width, w.buffer->height, 0, 0);
-      sfRenderWindow_drawSprite(w.window, w.sprite, NULL);
-      sfRenderWindow_display(w.window);
+			     w.buffer->width, w.buffer->height, 0, 0);
+  sfRenderWindow_drawSprite(w.window, w.sprite, NULL);
+  sfRenderWindow_display(w.window);
   while (sfRenderWindow_isOpen(w.window))
     handle_events(&w, &event);
   return (free_all(&params, &w));

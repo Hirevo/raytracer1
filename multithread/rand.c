@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Wed Mar  1 10:52:23 2017 Nicolas Polomack
-** Last update Thu Mar  2 08:17:54 2017 Nicolas Polomack
+** Last update Fri Mar 17 11:17:12 2017 Nicolas Polomack
 */
 
 #include <stdio.h>
@@ -27,7 +27,9 @@ int			my_rand(long int seed)
   t = state[3];
   t ^= t << 11;
   t ^= t >> 8;
-  state[3] = state[2]; state[2] = state[1]; state[1] = state[0];
+  state[3] = state[2];
+  state[2] = state[1];
+  state[1] = state[0];
   t ^= state[0];
   t ^= state[0] >> 19;
   state[0] = t;
