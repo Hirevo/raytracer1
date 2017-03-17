@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Sun Feb  5 14:37:35 2017 Nicolas Polomack
-** Last update Thu Mar  2 23:31:15 2017 Nicolas Polomack
+** Last update Fri Mar 17 09:25:55 2017 Nicolas Polomack
 */
 
 #ifndef RAYTRACER_H_
@@ -57,6 +57,7 @@ typedef struct s_thread
   int		can_reflect;
   int		is_primary;
   sfColor	*depth_col;
+  sfColor	*col;
   float		focal_dist;
   t_ray         ray;
   sfVector2i    offs;
@@ -133,26 +134,28 @@ int		my_rand(long int);
 /*
 ** calc.c
 */
-void		sub_coords(t_thread *, t_obj *);
-void		add_coords(t_thread *, t_obj *);
-float		gather_distances(t_obj *, t_ray, int);
-void		render_frame(t_window *, t_params *);
+void	sub_coords(t_thread *, t_obj *);
+void	add_coords(t_thread *, t_obj *);
+float	gather_distances(t_obj *, t_ray, int);
+void	render_frame(t_window *, t_params *);
 
 /*
 ** angles.c
 */
-float		get_cos_angle_s(t_thread *, sfVector2i);
-float		get_cos_angle_p(t_thread *, sfVector2i);
-float           get_cos_angle_c(t_thread *, sfVector2i);
-float           get_cos_angle_o(t_thread *, sfVector2i);
+float	get_cos_angle_s(t_thread *, sfVector2i);
+float	get_cos_angle_p(t_thread *, sfVector2i);
+float	get_cos_angle_c(t_thread *, sfVector2i);
+float	get_cos_angle_o(t_thread *, sfVector2i);
 
 /*
 ** lights.c
 */
-void		sub_coords_vect(sfVector3f *restrict, sfVector3f *restrict, t_obj *);
-void		add_coords_vect(sfVector3f *restrict, sfVector3f *restrict, t_obj *);
-float		intersect_light(float, t_thread *, sfVector3f, sfVector3f);
-sfColor		set_luminosity(float, sfColor, t_thread *, int);
+void	sub_coords_vect(sfVector3f *restrict,
+			sfVector3f *restrict, t_obj *);
+void	add_coords_vect(sfVector3f *restrict,
+			sfVector3f *restrict, t_obj *);
+float	intersect_light(float, t_thread *, sfVector3f, sfVector3f);
+sfColor	set_luminosity(float, sfColor, t_thread *, int);
 
 /*
 ** multi_lights.c
@@ -163,12 +166,12 @@ sfColor	seek_lights(float *, t_thread *, int);
 /*
 ** window.c
 */
-int		create_window(sfRenderWindow **, char *, sfVector2i);
-int		init(t_params *, t_window *);
-sfColor		evaluate_luminosity(t_thread *,
-				    sfColor, sfVector2i);
-sfColor		color_stuff(float *, t_thread *);
-int		raytracer(t_params *, char *);
+int	create_window(sfRenderWindow **, char *, sfVector2i);
+int	init(t_params *, t_window *);
+sfColor	evaluate_luminosity(t_thread *,
+			    sfColor, sfVector2i);
+sfColor	color_stuff(float *, t_thread *);
+int	raytracer(t_params *, char *);
 
 /*
 ** thread.c
@@ -195,7 +198,7 @@ void	get_impact(t_thread *, float);
 /*
 ** ssaa.c
 */
-sfColor	ssaa(t_thread *, float, float, sfColor *);
+sfColor	ssaa(t_thread *, float, float);
 sfColor	no_ssaa(t_thread *, int, int);
 
 /*
@@ -278,25 +281,25 @@ sfVector3f	calc_dir_vector(sfVector2i, float, float, int);
 /*
 ** intersect/intersect_sphere.c
 */
-float		intersect_sphere(sfVector3f *restrict,
+float	intersect_sphere(sfVector3f *restrict,
 				 sfVector3f *restrict, float);
 
 /*
 ** intersect/intersect_cyl.c
 */
-float		intersect_cyl(sfVector3f *restrict,
-			      sfVector3f *restrict, t_obj *);
-float		intersect_closed_cyl(sfVector3f *restrict,
-				     sfVector3f *restrict,
-				     t_obj *, float);
+float	intersect_cyl(sfVector3f *restrict,
+		      sfVector3f *restrict, t_obj *);
+float	intersect_closed_cyl(sfVector3f *restrict,
+			     sfVector3f *restrict,
+			     t_obj *, float);
 
 /*
 ** intersect/intersect_cone.c
 */
-float		intersect_cone(sfVector3f *restrict,
-			       sfVector3f *restrict, t_obj *);
-float           intersect_closed_cone(sfVector3f *restrict,
-				      sfVector3f *restrict,
+float	intersect_cone(sfVector3f *restrict,
+		       sfVector3f *restrict, t_obj *);
+float	intersect_closed_cone(sfVector3f *restrict,
+			      sfVector3f *restrict,
 				      t_obj *, float);
 
 /*
@@ -314,7 +317,6 @@ float		intersect_plane(sfVector3f *restrict,
 /*
 ** events.c
 */
-void		handle_events(t_window *, sfEvent *,
-			      t_params *);
+void		handle_events(t_window *, sfEvent *);
 
 #endif /* !RAYTRACER_H_ */

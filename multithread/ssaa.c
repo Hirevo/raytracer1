@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Sun Feb 26 14:19:17 2017 Nicolas Polomack
-** Last update Thu Mar  2 23:53:27 2017 Nicolas Polomack
+** Last update Fri Mar 17 09:22:50 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -37,10 +37,10 @@ sfColor		aver_col(sfColor *col, int ssaa)
   return (fin);
 }
 
-void		render_pixel(t_thread *t, sfVector2f v, sfColor *col, int i, sfVector2f f)
+void		render_pixel(t_thread *t, sfVector2f v, int i, sfVector2f f)
 {
   if (t->params->depth_rays > 1)
-    col[i] = dof(t, v.x, v.y);
+    t->col[i] = dof(t, v.x, v.y);
   else
     {
       t->ray = t->params->ray;
@@ -48,11 +48,11 @@ void		render_pixel(t_thread *t, sfVector2f v, sfColor *col, int i, sfVector2f f)
 				   v.x + f.x, v.y + f.y, t->params->fov);
       rotation_t_eye(t);
       t->can_reflect = (t->is_primary = 1) * 0;
-      col[i] = gather_color(t);
+      t->col[i] = gather_color(t);
     }
 }
 
-sfColor		ssaa(t_thread *t, float x, float y, sfColor *col)
+sfColor		ssaa(t_thread *t, float x, float y)
 {
   float		ssaa_offs;
   int		i;
@@ -69,13 +69,13 @@ sfColor		ssaa(t_thread *t, float x, float y, sfColor *col)
         {
 	  v.x = x;
 	  v.y = y;
-	  render_pixel(t, v, col, i, f);
+	  render_pixel(t, v, i, f);
           i += 1;
           f.y += ssaa_offs;
         }
       f.x += ssaa_offs;
     }
-  return (aver_col(col, t->params->ssaa));
+  return (aver_col(t->col, t->params->ssaa));
 }
 
 sfColor		no_ssaa(t_thread *t, int x, int y)

@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 23:30:22 2017 Nicolas Polomack
-** Last update Tue Mar 14 20:50:53 2017 Nicolas Polomack
+** Last update Thu Mar 16 17:41:42 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -54,3 +54,4 @@ sfVector3f	get_normal_sphere(sfVector3f imp)
 {
   return (imp);
 }
+

@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Sun Feb 12 03:09:48 2017 Nicolas Polomack
-** Last update Mon Mar  6 11:14:34 2017 Nicolas Polomack
+** Last update Fri Mar 17 09:31:18 2017 Nicolas Polomack
 */
 
 #include <float.h>
@@ -33,9 +33,8 @@ void		render_rect(t_thread *t)
 {
   float         x;
   float         y;
-  sfColor       *col;
 
-  if ((col = malloc(sizeof(sfColor) * t->params->ssaa)) == NULL)
+  if ((t->col = malloc(sizeof(sfColor) * t->params->ssaa)) == NULL)
     return ;
   t->start = t->ray.orig;
   set_focal_dist(t);
@@ -45,9 +44,9 @@ void		render_rect(t_thread *t)
       y = t->offs.y - 1;
       while (++y < t->end.y)
         put_pixel(t->w->buffer, (int)x, (int)y, (t->params->ssaa > 1) ?
-		  ssaa(t, x, y, col) : no_ssaa(t, x, y));
+		  ssaa(t, x, y) : no_ssaa(t, x, y));
     }
-  free(col);
+  free(t->col);
 }
 
 void		*thread_handler(void *arg)
@@ -77,7 +76,7 @@ void		*thread_handler(void *arg)
 
 void	init_thread(int i, t_params *params, t_window *w)
 {
-  params->t[i].id = i;
+  params->t[i].id = i + 0 * ((long)(params->t[i].w = w));
   params->t[i].dist = malloc(sizeof(float) * params->nb_obj);
   if (!(i % 2))
     {
@@ -100,7 +99,6 @@ void	init_thread(int i, t_params *params, t_window *w)
   if (i >= (params->t_count - 2) && params->t[i].end.x < params->s.end.x)
     params->t[i].end.x += (params->s.end.x -
 			   params->s.offs.x) % (params->t_count / 2);
-  params->t[i].w = w;
   params->t[i].ray = params->ray;
   params->t[i].params = params;
 }

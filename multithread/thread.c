@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Sun Feb 12 03:09:48 2017 Nicolas Polomack
-** Last update Thu Mar  9 16:56:48 2017 Nicolas Polomack
+** Last update Fri Mar 17 09:23:31 2017 Nicolas Polomack
 */
 
 #include <float.h>
@@ -46,9 +46,8 @@ void		render_rect(t_thread *t)
 {
   float		x;
   float		y;
-  sfColor	*col;
 
-  if ((col = malloc(sizeof(sfColor) * t->params->ssaa)) == NULL)
+  if ((t->col = malloc(sizeof(sfColor) * t->params->ssaa)) == NULL)
     return ;
   t->start = t->ray.orig;
   set_focal_dist(t);
@@ -58,12 +57,12 @@ void		render_rect(t_thread *t)
       y = t->offs.y - 1;
       while (++y < t->end.y)
 	put_pixel(t->w->buffer, (int)x, (int)y,
-		  ((t->params->ssaa > 1) ? ssaa(t, x, y, col) :
+		  ((t->params->ssaa > 1) ? ssaa(t, x, y) :
 		   no_ssaa(t, (int)x, (int)y)));
       if (t->params->live && !t->params->bmp)
 	update_color(t);
     }
-  free(col);
+  free(t->col);
 }
 
 void		*thread_handler(void *arg)

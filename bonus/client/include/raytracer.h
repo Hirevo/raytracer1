@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Sun Feb  5 14:37:35 2017 Nicolas Polomack
-** Last update Mon Mar  6 11:16:27 2017 Nicolas Polomack
+** Last update Fri Mar 17 09:31:03 2017 Nicolas Polomack
 */
 
 #ifndef RAYTRACER_H_
@@ -67,6 +67,7 @@ typedef struct s_thread
   float		focal_dist;
   int		is_primary;
   sfColor	*depth_col;
+  sfColor	*col;
   sfVector3f	imp;
   sfVector3f	normal;
   sfVector3f	start;
@@ -147,26 +148,26 @@ void	connect_socket(t_socket *, char *);
 /*
 ** calc.c
 */
-void		sub_coords(t_thread *, t_obj *);
-void		add_coords(t_thread *, t_obj *);
-float		gather_distances(t_obj *, t_ray, int);
-void		render_frame(t_window *, t_params *);
+void	sub_coords(t_thread *, t_obj *);
+void	add_coords(t_thread *, t_obj *);
+float	gather_distances(t_obj *, t_ray, int);
+void	render_frame(t_window *, t_params *);
 
 /*
 ** angles.c
 */
-float		get_cos_angle_s(t_thread *, sfVector2i);
-float		get_cos_angle_p(t_thread *, sfVector2i);
-float           get_cos_angle_c(t_thread *, sfVector2i);
-float           get_cos_angle_o(t_thread *, sfVector2i);
+float	get_cos_angle_s(t_thread *, sfVector2i);
+float	get_cos_angle_p(t_thread *, sfVector2i);
+float	get_cos_angle_c(t_thread *, sfVector2i);
+float	get_cos_angle_o(t_thread *, sfVector2i);
 
 /*
 ** lights.c
 */
-void		sub_coords_vect(sfVector3f *restrict, sfVector3f *restrict, t_obj *);
-void		add_coords_vect(sfVector3f *restrict, sfVector3f *restrict, t_obj *);
-float		intersect_light(float, t_thread *, sfVector3f, sfVector3f);
-sfColor		set_luminosity(float, sfColor, t_thread *, int);
+void	sub_coords_vect(sfVector3f *restrict, sfVector3f *restrict, t_obj *);
+void	add_coords_vect(sfVector3f *restrict, sfVector3f *restrict, t_obj *);
+float	intersect_light(float, t_thread *, sfVector3f, sfVector3f);
+sfColor	set_luminosity(float, sfColor, t_thread *, int);
 
 /*
 ** multi_lights.c
@@ -177,12 +178,12 @@ sfColor	seek_lights(float *, t_thread *, int);
 /*
 ** window.c
 */
-int		create_window(sfRenderWindow **, char *, sfVector2i);
-int		init(t_params *, t_window *);
-sfColor		evaluate_luminosity(t_thread *,
-				    sfColor, sfVector2i);
-sfColor		color_stuff(float *, t_thread *);
-int		raytracer(t_params *, char *);
+int	create_window(sfRenderWindow **, char *, sfVector2i);
+int	init(t_params *, t_window *);
+sfColor	evaluate_luminosity(t_thread *,
+			    sfColor, sfVector2i);
+sfColor	color_stuff(float *, t_thread *);
+int	raytracer(t_params *, char *);
 
 /*
 ** thread.c
@@ -203,9 +204,9 @@ void	get_impact(t_thread *, float);
 /*
 ** ssaa.c
 */
-sfColor	ssaa(t_thread *, float, float, sfColor *);
+sfColor	ssaa(t_thread *, float, float);
 sfColor	no_ssaa(t_thread *, int, int);
-void	render_pixel(t_thread *, sfVector2f, sfColor *, int, sfVector2f);
+void	render_pixel(t_thread *, sfVector2f, int, sfVector2f);
 sfColor	aver_col(sfColor *, int);
 
 /*
@@ -303,21 +304,21 @@ sfVector3f	calc_dir_vector(sfVector2i, int, int, int);
 /*
 ** intersect/intersect_sphere.c
 */
-float		intersect_sphere(sfVector3f *, sfVector3f *, float);
+float	intersect_sphere(sfVector3f *, sfVector3f *, float);
 
 /*
 ** intersect/intersect_cyl.c
 */
-float		intersect_cyl(sfVector3f *, sfVector3f *, t_obj *);
-float		intersect_closed_cyl(sfVector3f *, sfVector3f *,
-				     t_obj *, float);
+float	intersect_cyl(sfVector3f *, sfVector3f *, t_obj *);
+float	intersect_closed_cyl(sfVector3f *, sfVector3f *,
+			     t_obj *, float);
 
 /*
 ** intersect/intersect_cone.c
 */
-float		intersect_cone(sfVector3f *, sfVector3f *, t_obj *);
-float           intersect_closed_cone(sfVector3f *, sfVector3f *,
-				      t_obj *, float);
+float	intersect_cone(sfVector3f *, sfVector3f *, t_obj *);
+float	intersect_closed_cone(sfVector3f *, sfVector3f *,
+			      t_obj *, float);
 
 /*
 ** intersect/intersect_disk.c
@@ -327,12 +328,12 @@ float	intersect_disk(sfVector3f *, sfVector3f *, float);
 /*
 ** intersect/intersect_plane.c
 */
-float		intersect_plane(sfVector3f *, sfVector3f *);
+float	intersect_plane(sfVector3f *, sfVector3f *);
 
 /*
 ** events.c
 */
-void		handle_events(t_window *, sfEvent *,
-			      t_params *);
+void	handle_events(t_window *, sfEvent *,
+		      t_params *);
 
 #endif /* !RAYTRACER_H_ */

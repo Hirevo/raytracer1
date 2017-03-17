@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 **
 ** Started on  Tue Feb  7 00:16:08 2017 Nicolas Polomack
-** Last update Mon Feb 27 20:39:23 2017 Nicolas Polomack
+** Last update Fri Mar 17 09:24:12 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -32,10 +32,10 @@ void	add_coords_vect(sfVector3f *restrict imp,
   imp->z += obj->pos.z;
 }
 
-float		check_distance(t_thread *t, sfVector3f *restrict imp,
-			       sfVector3f *restrict dir, int n)
+float	check_distance(t_thread *t, sfVector3f *restrict imp,
+		       sfVector3f *restrict dir, int n)
 {
-  float		d;
+  float	d;
 
   sub_coords_vect(imp, dir, &(t->params->objs[n]));
   d = (t->params->objs[n].type == 's') ?
@@ -50,7 +50,8 @@ float		check_distance(t_thread *t, sfVector3f *restrict imp,
   return (d);
 }
 
-float		intersect_light(float dist, t_thread *t, sfVector3f imp, sfVector3f dir)
+float		intersect_light(float dist, t_thread *t,
+				sfVector3f imp, sfVector3f dir)
 {
   float		d;
   int		n;

@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 14:08:22 2017 Nicolas Polomack
-** Last update Thu Mar  2 19:35:12 2017 Nicolas Polomack
+** Last update Fri Mar 17 09:22:19 2017 Nicolas Polomack
 */
 
 #include <SFML/Graphics.h>
@@ -125,6 +125,6 @@ int			main(int ac, char **av, char **ae)
   sfRenderWindow_drawSprite(w.window, w.sprite, NULL);
   sfRenderWindow_display(w.window);
   while (sfRenderWindow_isOpen(w.window))
-    handle_events(&w, &event, &params);
+    handle_events(&w, &event);
   return (free_all(&params, &w));
 }
