@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.net>
 **
 ** Started on  Thu Oct 13 10:04:36 2016 Nicolas POLOMACK
-** Last update Sun Jan 22 01:15:30 2017 Nicolas Polomack
+** Last update Sun Mar 19 23:22:21 2017 Nicolas Polomack
 */
 
 #ifndef MY_H_
@@ -77,4 +77,4 @@ char	*complete_str(char *, t_flags *, int *, int);
 char	*convert_base(char *, char *, char *);
 char	*check_parse(char *, t_flags *, int *);
 
-#endif /* MY_H_ */
+#endif /* !MY_H_ */
