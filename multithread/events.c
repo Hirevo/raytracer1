@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Tue Feb  7 00:02:17 2017 Nicolas Polomack
-** Last update Fri Mar 17 09:21:30 2017 Nicolas Polomack
+** Last update Sun Mar 19 21:18:31 2017 Nicolas Polomack
 */
 
 #include <SFML/Window.h>
@@ -15,7 +15,7 @@
 
 void	handle_events(t_window *w, sfEvent *event)
 {
-  if (sfRenderWindow_hasFocus(w->window))
+  if (sfWindow_hasFocus((sfWindow *)w->window))
     while (sfRenderWindow_pollEvent(w->window, event))
       if (event->type == sfEvtClosed ||
 	  (event->type == sfEvtKeyPressed && event->key.code == sfKeyEscape))

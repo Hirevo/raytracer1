@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Sun Feb 12 03:09:48 2017 Nicolas Polomack
-** Last update Fri Mar 17 11:43:57 2017 Nicolas Polomack
+** Last update Sun Mar 19 21:25:36 2017 Nicolas Polomack
 */
 
 #include <float.h>
@@ -81,7 +81,7 @@ void		*thread_handler(void *arg)
   t->depth_col = malloc(t->params->depth_rays *
 			t->params->depth_rays * sizeof(sfColor));
   if (t->depth_col == NULL)
-    exit(84);
+    return (NULL);
   render_rect(t);
   free(t->dist);
   pthread_mutex_lock(&t->w->mutex);

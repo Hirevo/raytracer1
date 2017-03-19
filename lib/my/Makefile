@@ -5,7 +5,7 @@
 ## Login   <nicolas@epitech.net>
 ##
 ## Started on  Tue Nov  1 12:04:24 2016 Nicolas POLOMACK
-## Last update Thu Mar  2 18:13:51 2017 Nicolas Polomack
+## Last update Sun Mar 19 21:23:19 2017 Nicolas Polomack
 ##
 
 SRC	=	my_putstr.c	\
@@ -49,7 +49,7 @@ OBJ	=	$(SRC:.c=.o)
 
 NAME	=	libmy.a
 
-CFLAGS	=	-I../../include -Ofast -march=native
+CFLAGS	=	-I../../include
 
 all:	$(NAME)
 

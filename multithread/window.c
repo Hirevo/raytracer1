@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 14:08:22 2017 Nicolas Polomack
-** Last update Fri Mar 17 11:47:01 2017 Nicolas Polomack
+** Last update Sun Mar 19 21:29:11 2017 Nicolas Polomack
 */
 
 #include <SFML/Graphics.h>
@@ -22,7 +22,8 @@
 #include "bmp.h"
 #include "my.h"
 
-int		create_window(sfRenderWindow **w, char *name, sfVector2i screen_size)
+int		create_window(sfRenderWindow **w, char *name,
+			      sfVector2i screen_size)
 {
   sfVideoMode	mode;
 
