@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Thu Feb  9 02:33:42 2017 Nicolas Polomack
-** Last update Fri Mar 17 12:33:14 2017 Nicolas Polomack
+** Last update Tue Mar 21 09:18:19 2017 Nicolas Polomack
 */
 
 #include <stdlib.h>
@@ -69,7 +69,7 @@ int	alloc_all(t_params *params, int objs, int lights)
 
 int	parse_first(char *line, t_params *params)
 {
-  int	idxs[9];
+  int	idxs[10];
 
   idxs[0] = -1 + (idxs[9] = 0) * 0;
   while (line[++(idxs[0])])

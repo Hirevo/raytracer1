@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 23:30:22 2017 Nicolas Polomack
-** Last update Fri Mar 17 12:29:57 2017 Nicolas Polomack
+** Last update Tue Mar 21 09:20:44 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -66,6 +66,8 @@ float		intersect_cone(sfVector3f *restrict eye_pos,
 
   root[0] = 0;
   root[1] = 0;
+  root[2] = 0;
+  root[3] = 0;
   calc_abcd(abcd, eye_pos, dir_vector, obj);
   if (abcd[3] <= 0)
     return (-1.0F);

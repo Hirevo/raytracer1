@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Wed Dec 21 19:22:36 2016 Nicolas Polomack
-** Last update Fri Mar 17 11:40:30 2017 Nicolas Polomack
+** Last update Mon Mar 20 21:25:43 2017 Nicolas Polomack
 */
 
 #ifndef BMP_H_

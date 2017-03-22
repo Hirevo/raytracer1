@@ -5,7 +5,7 @@
 ** Login   <nicolas.polomack@epitech.eu>
 ** 
 ** Started on  Mon Feb  6 23:30:22 2017 Nicolas Polomack
-** Last update Fri Mar 17 12:30:20 2017 Nicolas Polomack
+** Last update Tue Mar 21 09:20:09 2017 Nicolas Polomack
 */
 
 #include <math.h>
@@ -34,6 +34,8 @@ float		intersect_cyl(sfVector3f *restrict eye_pos,
   float		delta;
   float		root[2];
 
+  root[1] = 0;
+  root[0] = 0;
   a = powf(dir_vector->x, 2) + powf(dir_vector->y, 2);
   b = (2 * eye_pos->x * dir_vector->x + 2 * eye_pos->y * dir_vector->y);
   c = (powf(eye_pos->x, 2) + powf(eye_pos->y, 2) - powf(obj->rad, 2));
