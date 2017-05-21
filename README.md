@@ -7,7 +7,15 @@ A raytracer done in C with the CSFML library as an EPITECH project. Objects can 
 Spheres, planes, cylinders (infinite or finite), cones (infinite or finite), and hourglasses
 
 # Effects supported
-Luminosity, multi-lights, specular highlights, reflections, diffuse shadows and depth of field
+- Luminosity
+- Multi-lights
+- Specular highlights
+- Reflections
+- SSAA
+- Depth of field
+- Diffuse shadows
+- Multi-threading
+- Network clustering
 
 ![Image](http://hirevo.mtxserv.fr/raytracer24.png)
 
